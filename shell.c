@@ -15,14 +15,21 @@ int take_line(char *str)
         return (1);
 }
 
+char **parse_cmds(char *str)
+{
+    char **cmds;
+
+    str = ft_strtrim(str, "\t");
+    cmds = ft_split(str, ' ');
+    return (cmds);
+}
+
 int main()
 {
     char inputString[200];
+    char **cmds;
 
-    while(1)
-    {
-        if (take_line(inputString))
-            continue ;
-        
-    }
+    take_line(inputString);       
+    cmds = parse_cmds(inputString);
+    printf("%s\n",cmds[2]);
 }
