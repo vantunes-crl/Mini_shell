@@ -16,4 +16,16 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+/*exec_functions */
+int	exce_arg(char **cmds);
+void	exec_pipes(char *str);
+
+/* parse function */
+char	**parse_cmds(char *str);
+int		has_pipes(char *str);
+char	**cmds_list(char *str);
+
+/* utils */
+void error(char *str);
+
 #endif
