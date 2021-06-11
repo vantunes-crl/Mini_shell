@@ -25,7 +25,6 @@ int main()
 {
     char inputString[200];
     char **cmds;
-    char **pipes;
 
     while (TRUE)
     {

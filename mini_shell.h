@@ -17,7 +17,7 @@
 #include <readline/history.h>
 
 /*exec_functions */
-int	exce_arg(char **cmds);
+void	exce_arg(char **cmds);
 void	exec_pipes(char *str);
 
 /* parse function */
