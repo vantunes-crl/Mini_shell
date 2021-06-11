@@ -29,11 +29,11 @@ int take_line(char *str)
 {
     char *buff;
 
-    buff = readline("\033[3;32mMiniShell:");
+    buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:");
     if (ft_strlen(buff) != 0)
     {
         add_history(buff);
-        ft_memcpy(str, buff , ft_strlen(buff));
+        strcpy(str, buff);
         return (0);
     }
     else
@@ -43,9 +43,14 @@ int take_line(char *str)
 char **parse_cmds(char *str)
 {
     char **cmds;
+    int i = 0;
 
-    str = ft_strtrim(str, "\t ");
     cmds = ft_split(str, ' ');
+    while (cmds[i] != NULL)
+    {
+        cmds[i] = ft_strtrim(cmds[i], "\t ");
+        i++;
+    }
     return (cmds);
 }
 
@@ -67,6 +72,11 @@ int main()
     //     if (pipes[i])
     //         pipes[i] = ft_strtrim(pipes[i], "\t ");
     // }
-        exce_args(cmds);
+         if (ft_strncmp(cmds[0],"cd", 2) == 0)
+            chdir(cmds[1]);
+         else if (ft_strncmp(cmds[0],"exit", 4) == 0)
+            exit(0);
+         else
+            exce_args(cmds);
     }
 }
