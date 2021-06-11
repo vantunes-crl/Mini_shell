@@ -1,6 +1,12 @@
 #include "mini_shell.h"
 
-int exce_args(char **cmds)
+void error(char *str)
+{
+    perror(str);
+    exit(0);
+}
+
+int exce_arg(char **cmds)
 {
     pid_t pid;
     char **paths;
@@ -54,6 +60,64 @@ char **parse_cmds(char *str)
     return (cmds);
 }
 
+int has_pipes(char *str)
+{
+    int i = 0;
+    while (str[i])
+    {
+        if (str[i] == '|')
+            return (TRUE);
+        i++;
+    }
+    return (FALSE);
+}
+
+/* return a cmd list */
+char **cmds_list(char *str)
+{
+    char **cmds_lst;
+    int i = 0;
+
+    cmds_lst = ft_split(str, '|');
+    while (cmds_lst[i] != NULL)
+    {
+        cmds_lst[i] = ft_strtrim(cmds_lst[i], WHITE_SPACE);
+        i++;
+    }
+    return(cmds_lst);
+}
+
+void exec_pipes(char *str)
+{
+    char **cmds_lst;
+    int fd[2];
+    pid_t pid;
+
+    cmds_lst = cmds_list(str);
+    if (pipe(fd) < 0)
+        error("pipe");
+    pid = fork();
+    if (pid < 0)
+        error("fork");
+    if (pid == 0)
+    {
+        dup2(fd[1], STDOUT_FILENO);
+	    close(fd[0]);
+	    close(fd[1]);
+        exce_arg(parse_cmds(cmds_lst[0]));
+    }
+    else
+    {
+        dup2(fd[0], STDIN_FILENO);
+	    close(fd[0]);
+	    close(fd[1]);
+        exce_arg(parse_cmds(cmds_lst[1]));
+    }
+    close(fd[0]);
+    close(fd[1]);
+    waitpid(pid, NULL, 0);
+}
+
 int main()
 {
     char inputString[200];
@@ -61,22 +125,21 @@ int main()
     char **pipes;
     int i = 0; 
 
-    while (1)
+    while (TRUE)
     {
         if (take_line(inputString))
             continue ;
-    //pipes = ft_split(inputString, '|');
-        cmds = parse_cmds(inputString);
-    // while (pipes[i])
-    // {
-    //     if (pipes[i])
-    //         pipes[i] = ft_strtrim(pipes[i], "\t ");
-    // }
-         if (ft_strncmp(cmds[0],"cd", 2) == 0)
-            chdir(cmds[1]);
-         else if (ft_strncmp(cmds[0],"exit", 4) == 0)
-            exit(0);
-         else
-            exce_args(cmds);
+        if (has_pipes(inputString))
+            exec_pipes(inputString);
+        else
+        {
+            cmds = parse_cmds(inputString);
+            if (ft_strncmp(cmds[0],"cd", 2) == 0)
+                chdir(cmds[1]);
+            else if (ft_strncmp(cmds[0],"exit", 4) == 0)
+                exit(0);
+            else
+                exce_arg(cmds);
+        }
     }
 }

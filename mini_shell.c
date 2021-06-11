@@ -111,7 +111,9 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 			printf("\nCould not execute command 1..");
 			exit(0);
 		}
-	} else {
+	} 
+	else 
+	{
 		// Parent executing
 		p2 = fork();
 
@@ -130,7 +132,8 @@ void execArgsPiped(char** parsed, char** parsedpipe)
 				printf("\nCould not execute command 2..");
 				exit(0);
 			}
-		} else {
+		}
+	else {
 			// parent executing, waiting for two children
 			wait(NULL);
 			wait(NULL);
