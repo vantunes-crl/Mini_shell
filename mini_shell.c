@@ -40,7 +40,14 @@ int main()
             else if (ft_strncmp(cmds[0],"exit", 4) == 0)
                 exit(0);
             else
-                exce_arg(cmds);
+            {
+                pid_t pid;
+                pid = fork();
+                if (pid == 0)
+                    exce_arg(cmds);
+                else
+                    wait(NULL);
+            }
         }
     }
 }
