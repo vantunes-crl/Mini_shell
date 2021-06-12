@@ -10,16 +10,18 @@ char **parse_cmds(char *str)
     return (cmds);
 }
 
+/* return number of pipes */
 int has_pipes(char *str)
 {
     int i = 0;
+    int count = 0;
     while (str[i])
     {
         if (str[i] == '|')
-            return (TRUE);
+            count++;
         i++;
     }
-    return (FALSE);
+    return (count);
 }
 
 /* return a cmd list */

@@ -18,7 +18,7 @@
 
 /*exec_functions */
 void	exce_arg(char **cmds);
-void	exec_pipes(char *str);
+void	exec_pipe(char *str);
 
 /* parse function */
 char	**parse_cmds(char *str);
