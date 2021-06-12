@@ -18,42 +18,39 @@ void exce_arg(char **cmds)
 void exec_pipes(char *str)
 {
     char **cmds_lst;
-    int fd[2];
     pid_t pid1;
     pid_t pid2;
-    int status;
+    int fd[2];
 
     cmds_lst = cmds_list(str);
-    if (pipe(fd) < 0)
+    if(pipe(fd) < 0)
         error("pipe");
     pid1 = fork();
     if (pid1 < 0)
         error("fork");
+
+    //child process 1
     if (pid1 == 0)
     {
         dup2(fd[1], STDOUT_FILENO);
-	    close(fd[0]);
-	    close(fd[1]);
+        close(fd[0]);
+        close(fd[1]);
         exce_arg(parse_cmds(cmds_lst[0]));
     }
-    else
+
+    pid2 = fork();
+    if (pid2 < 0)
+        error("fork");
+    //child process 2
+    if (pid2 == 0)
     {
-        pid2 = fork();
-        if (pid2 < 0)
-            error("fork");
-        if (pid2 == 0)
-        {
-            dup2(fd[0], STDIN_FILENO);
-            close(fd[0]);
-            close(fd[1]);
-            exce_arg(parse_cmds(cmds_lst[1]));
-        }
-        else
-        {
-            wait(NULL);
-            wait(NULL);
-        }
+        dup2(fd[0], STDIN_FILENO);
+        close(fd[0]);
+        close(fd[1]);
+        exce_arg(parse_cmds(cmds_lst[1]));
     }
-    close(fd[1]);
     close(fd[0]);
+    close(fd[1]);
+    wait(NULL);
+    wait(NULL);
 }

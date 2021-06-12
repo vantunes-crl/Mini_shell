@@ -5,12 +5,8 @@ char **parse_cmds(char *str)
     char **cmds;
     int i = 0;
 
+    str = ft_strtrim(str, WHITE_SPACE);
     cmds = ft_split(str, ' ');
-    while (cmds[i] != NULL)
-    {
-        cmds[i] = ft_strtrim(cmds[i], WHITE_SPACE);
-        i++;
-    }
     return (cmds);
 }
 

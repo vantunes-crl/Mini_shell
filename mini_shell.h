@@ -1,5 +1,5 @@
 #ifndef MINI_SHELL
-# define MINISHELL
+# define MINI_SHELL
 
 
 #define TRUE 1
@@ -27,5 +27,6 @@ char	**cmds_list(char *str);
 
 /* utils */
 void error(char *str);
+int take_line(char *str);
 
 #endif
