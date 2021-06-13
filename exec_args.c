@@ -15,7 +15,15 @@ void exce_arg(char **cmds)
     }
 }
 
-void exec_cmd(char **cmds)
+void print_env(char **envp)
+{
+    char **env;
+    env = envp;
+    while (*env != NULL)
+        printf("%s\n", *env++);
+}
+
+void exec_cmd(char **cmds, char **env)
 {
     if (ft_strncmp(cmds[0],"cd", 2) == 0)
         chdir(cmds[1]);
@@ -23,6 +31,8 @@ void exec_cmd(char **cmds)
         owncmds(0);
     else if (ft_strncmp(cmds[0],"help", 4) == 0)
         owncmds(1);
+    else if (ft_strncmp(cmds[0],"env", 4) == 0)
+        print_env(env);
     else
     {
         pid_t pid;

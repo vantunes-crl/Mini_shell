@@ -6,7 +6,7 @@ void error(char *str)
     exit(0);
 }
 
-int main()
+int main(int argc, char **argv, char **env)
 {
     char inputString[200];
     char **cmds;
@@ -18,6 +18,7 @@ int main()
         if (has_pipes(inputString))
             multiple_pipes(cmds_list(inputString));
         else
-            exec_cmd(parse_cmds(inputString));
+            exec_cmd(parse_cmds(inputString), env);
     }
+    return (0);
 }
