@@ -29,7 +29,7 @@ void multiple_pipes(char **cmds_list)
         pid = fork();
         if (pid == 0)
         {   
-            dup2(fd_in, 0); // cpy from stdout to the first pipe
+            dup2(fd_in, 0);
             if (*(cmds_list + 1) != NULL)
                 dup2(fd[1], 1);
             close(fd[0]);
@@ -39,7 +39,7 @@ void multiple_pipes(char **cmds_list)
         {
             wait(NULL);
             close(fd[1]);
-            fd_in = fd[0]; //save the input for the next command
+            fd_in = fd[0];
             cmds_list++;
         }
        i++;
