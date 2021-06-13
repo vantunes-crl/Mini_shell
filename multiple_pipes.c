@@ -17,45 +17,31 @@ void close_fds(int pipes, int **fd)
     }
 }
 
-void multiple_pipes(int pipes)
+void multiple_pipes(char **cmds_list)
 {
     pid_t pid;
-    int i = -1;
-    int **fd;
-
-    fd = ft_calloc(pipes + 1, sizeof(int));
-    while (++i < pipes)
-        fd[i] = ft_calloc(2, sizeof(int));
-    i = -1;
-    while (++i < pipes)
-        pipe(fd[i]);
-
-    pid = fork();
-    if (pid == 0)
-    {   
-        dup2(fd[0][1], 1); // cpy from stdout to the first pipe
-        close_fds(pipes, fd);
-        exce_arg(parse_cmds("ls -l"));
-    }
-
-    pid = fork();
-    if (pid == 0)
-    {   
-        dup2(fd[0][0], 0); // cpy from stdin to the first pipe
-        dup2(fd[1][1],1); // cpy from pipe1 to pipe2
-        close_fds(pipes, fd);
-        exce_arg(parse_cmds("ls -l"));
-    }
-
-    pid = fork();
-    if (pid == 0)
+    int i = 0;
+    int fd[2];
+    int fd_in = 0;
+    while (*cmds_list != NULL)
     {
-        dup2(fd[1][0],0); //cpy from pipe1 to pipe2
-        close_fds(pipes, fd);
-        exce_arg(parse_cmds("cat -e"));
+        pipe(fd);
+        pid = fork();
+        if (pid == 0)
+        {   
+            dup2(fd_in, 0); // cpy from stdout to the first pipe
+            if (*(cmds_list + 1) != NULL)
+                dup2(fd[1], 1);
+            close(fd[0]);
+            exce_arg(parse_cmds(*cmds_list));
+        }
+        else
+        {
+            wait(NULL);
+            close(fd[1]);
+            fd_in = fd[0]; //save the input for the next command
+            cmds_list++;
+        }
+       i++;
     }
-    close_fds(pipes, fd);
-    i = -1;
-    while (++i <= pipes)
-        wait(NULL);
 }

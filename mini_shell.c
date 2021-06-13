@@ -16,7 +16,7 @@ int main()
         if (take_line(inputString))
             continue;
         if (has_pipes(inputString))
-            multiple_pipes(2);
+            multiple_pipes(cmds_list(inputString));
         else
         {
             cmds = parse_cmds(inputString);
