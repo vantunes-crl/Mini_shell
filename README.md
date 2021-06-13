@@ -14,7 +14,7 @@ Your shell should:
  - [x] ◦ pwd with no options
  - [ ] ◦ export with no options
  - [ ] ◦ unset with no options
- - [ ] ◦ env with no options or arguments 
+ - [x] ◦ env with no options or arguments 
  - [x] ◦ exit with no options
  - [ ] • ’ inhibit all interpretation of a sequence of characters.
  - [ ] • " inhibit all interpretation of a sequence of characters except
