@@ -19,6 +19,7 @@
 /*exec_functions */
 void	exce_arg(char **cmds);
 void	exec_pipe(char *str);
+void    exec_cmd(char **cmds);
 void    multiple_pipes(char **cmds_list);
 
 /* parse function */
@@ -29,5 +30,6 @@ char	**cmds_list(char *str);
 /* utils */
 void error(char *str);
 int take_line(char *str);
+void owncmds(int cmd);
 
 #endif
