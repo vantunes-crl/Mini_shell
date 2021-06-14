@@ -10,7 +10,7 @@ Your shell should:
        variable or by using relative or absolute path)
 • It must implement the builtins:
  - [ ] ◦ echo with option -n
- - [ ] ◦ cd with only a relative or absolute path
+ - [x] ◦ cd with only a relative or absolute path
  - [x] ◦ pwd with no options
  - [ ] ◦ export with no options
  - [ ] ◦ unset with no options
