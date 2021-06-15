@@ -9,7 +9,7 @@ Your shell should:
  - [x] • Search and launch the right executable (based on the PATH
        variable or by using relative or absolute path)
 • It must implement the builtins:
- - [ ] ◦ echo with option -n
+ - [x] ◦ echo with option -n
  - [x] ◦ cd with only a relative or absolute path
  - [x] ◦ pwd with no options
  - [ ] ◦ export with no options
