@@ -12,7 +12,14 @@ $(NAME): $(OBJS)
 	$(MAKE) bonus -C ft_libft
 	@gcc $(OBJS) $(FLAGS) -g $(LIBFT) -o $(NAME)
 
-all:
-	$(NAME)
+all: $(NAME)
+
 clean:
+	$(MAKE) clean -C ft_libft
+	rm -rf $(OBJS)
+
+fclean:
 	rm -rf $(NAME) $(OBJS)
+
+re: fclean all clean
+	

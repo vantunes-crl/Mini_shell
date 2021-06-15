@@ -20,6 +20,7 @@
 void	exce_arg(char **cmds);
 void	exec_pipe(char *str);
 void    exec_cmd(char **cmds,char **env);
+void    print_dir();
 void    multiple_pipes(char **cmds_list);
 
 /* parse function */

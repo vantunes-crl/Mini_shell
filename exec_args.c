@@ -1,5 +1,13 @@
 #include "mini_shell.h"
 
+void print_dir()
+{
+    char str[1040];
+
+    getcwd(str, sizeof(str));
+    printf("%s\n",str);
+}
+
 void exce_arg(char **cmds)
 {
     char **paths;
@@ -33,6 +41,8 @@ void exec_cmd(char **cmds, char **env)
         owncmds(1);
     else if (ft_strncmp(cmds[0],"env", 4) == 0)
         print_env(env);
+    else if (ft_strncmp(cmds[0], "pwd", 4) == 0)
+        print_dir();
     else
     {
         pid_t pid;
