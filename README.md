@@ -12,8 +12,8 @@ Your shell should:
  - [x] ◦ echo with option -n
  - [x] ◦ cd with only a relative or absolute path
  - [x] ◦ pwd with no options
- - [ ] ◦ export with no options
- - [ ] ◦ unset with no options
+ - [x] ◦ export with no options
+ - [x] ◦ unset with no options
  - [x] ◦ env with no options or arguments 
  - [x] ◦ exit with no options
  - [ ] • ’ inhibit all interpretation of a sequence of characters.
