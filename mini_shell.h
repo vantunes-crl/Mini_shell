@@ -17,27 +17,27 @@
 #include <readline/history.h>
 
 /*exec_functions */
-void	exce_arg(char **cmds);
+void	exce_arg(char **cmds, t_list *env);
 void	exec_pipe(char *str);
-void    exec_cmd(char **cmds,char **env);
+void    exec_cmd(char **cmds,t_list **env);
 void    print_dir();
-void    multiple_pipes(char **cmds_list);
+void    multiple_pipes(char **cmds_list,t_list **env);
 
 /* parse function */
 char	**parse_cmds(char *str);
 int		has_pipes(char *str);
 char	**cmds_list(char *str);
+t_list *init_env(char **env);
 
 /* utils */
 void error(char *str);
 int take_line(char *str);
 void owncmds(int cmd);
-void print_env(char **env);
 
 /*builtings */
 
 void print_echo(char **cmds);
 void print_dir();
-void print_env(char **envp);
+void print_env(t_list *envp);
 
 #endif

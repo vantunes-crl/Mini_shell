@@ -30,12 +30,3 @@ void print_dir()
     getcwd(str, sizeof(str));
     printf("%s\n",str);
 }
-
-
-void print_env(char **envp)
-{
-    char **env;
-    env = envp;
-    while (*env != NULL)
-        printf("%s\n", *env++);
-}

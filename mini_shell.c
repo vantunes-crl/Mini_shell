@@ -10,15 +10,17 @@ int main(int argc, char **argv, char **env)
 {
     char inputString[200];
     char **cmds;
+    t_list *envp;
 
+    envp = init_env(env);
     while (TRUE)
     {
         if (take_line(inputString))
             continue;
         if (has_pipes(inputString))
-            multiple_pipes(cmds_list(inputString));
+            multiple_pipes(cmds_list(inputString), &envp);
         else
-            exec_cmd(parse_cmds(inputString), env);
+            exec_cmd(parse_cmds(inputString), &envp);
     }
     return (0);
 }

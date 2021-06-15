@@ -4,7 +4,7 @@ FLAGS = -lreadline
 
 LIBFT = ./ft_libft/libft.a
 
-SRCS = mini_shell.c exec_args.c parse.c prompet.c
+SRCS = mini_shell.c exec_args.c parse.c prompet.c builtings.c env_handler.c
 
 OBJS = $(SRCS:.c=.o)
 
