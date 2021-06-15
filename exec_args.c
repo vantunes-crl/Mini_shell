@@ -1,5 +1,28 @@
 #include "mini_shell.h"
 
+void print_echo(char **cmds)
+{
+    int n;
+
+    n = 0;
+    cmds++;
+    if (ft_strncmp(*cmds, "-n", 2) == 0)
+    {    
+        n = 1;
+        cmds++;
+    }
+    while (*cmds)
+    {
+        if (*(cmds + 1) == NULL)
+            printf("%s", *cmds);
+        else
+            printf("%s ", *cmds);
+        cmds++;
+    }
+    if (!n)
+        printf("\n");
+}
+
 void print_dir()
 {
     char str[1040];
@@ -39,10 +62,12 @@ void exec_cmd(char **cmds, char **env)
         owncmds(0);
     else if (ft_strncmp(cmds[0],"help", 4) == 0)
         owncmds(1);
-    else if (ft_strncmp(cmds[0],"env", 4) == 0)
+    else if (ft_strncmp(cmds[0],"env", 3) == 0)
         print_env(env);
-    else if (ft_strncmp(cmds[0], "pwd", 4) == 0)
+    else if (ft_strncmp(cmds[0], "pwd", 3) == 0)
         print_dir();
+    else if (ft_strncmp(cmds[0], "echo", 4) == 0)
+        print_echo(cmds);
     else
     {
         pid_t pid;
