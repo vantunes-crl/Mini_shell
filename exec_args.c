@@ -10,6 +10,8 @@ void exce_arg(char **cmds, t_list *env)
             break ;
         env = env->next;
     }
+    if (!env)
+        error("No such file or directory");
     paths = ft_split((char *)env->content, ':');
     while (paths[i])
     {
