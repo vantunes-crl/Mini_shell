@@ -34,4 +34,10 @@ int take_line(char *str);
 void owncmds(int cmd);
 void print_env(char **env);
 
+/*builtings */
+
+void print_echo(char **cmds);
+void print_dir();
+void print_env(char **envp);
+
 #endif
