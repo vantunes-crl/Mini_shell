@@ -6,7 +6,7 @@ Your shell should:
        like \ or;.
  - [x] • Show a prompt when waiting for a new command.
  - [x] • Have a working History.
- - [x] • Search and launch the right executable (based on the PATH
+ - [ ] • Search and launch the right executable (based on the PATH
        variable or by using relative or absolute path)
 • It must implement the builtins:
  - [x] ◦ echo with option -n
