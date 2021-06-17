@@ -1,11 +1,33 @@
 #include "mini_shell.h"
 
+int is_abspath(char *str)
+{
+    int i = 0;
+    while (str[i])
+    {
+        if (str[i] == '/')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 /* funtion exec a comand based on the path env variavables */
 void exce_arg(char **cmds, t_list *env)
 {
     int i = 0;
     char **paths;
     char *temp_path;
+    int abs_path;
+
+    abs_path = is_abspath(cmds[0]);
+    if (abs_path)
+    {
+        abs_path = execve(cmds[0], cmds,  NULL);
+        if (abs_path < 0)
+            error(cmds[0]);
+        return ;
+    }
     while (env)
     {
         if (ft_strncmp((char *)env->content, "PATH", 4) == 0) /* find the env PATH in the env(cpy) list */
