@@ -32,7 +32,9 @@ t_list *init_env(char **env);
 /* utils */
 void error(char *str);
 int take_line(char *str);
-void owncmds(int cmd);
+void owncmds(int cmd, t_list **env);
+void	free_paths(char **paths);
+void deleteList(t_list **env);
 
 /*builtings */
 

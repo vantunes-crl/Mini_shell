@@ -11,7 +11,8 @@ int take_line(char *str)
     if (ft_strlen(buff) != 0) /* if has something to read */
     {
         add_history(buff); /* cpy the buffer str to history , history can work with arrows down and up , and autocomplete with tabs */
-        strcpy(str, buff); /* cpy the buff str to main str */
+        strcpy(str, buff); 
+        free(buff); /* cpy the buff str to main str */
         return (0);
     }
     else
@@ -19,7 +20,7 @@ int take_line(char *str)
 }
 
 /* function for create own cmds */
-void owncmds(int cmd)
+void owncmds(int cmd, t_list **env)
 {
     char *str;
 
@@ -27,6 +28,7 @@ void owncmds(int cmd)
     if (cmd == 0) // exit
     {
         printf("\033[0;31mGood  Bye\e[0m %s \U0001F97A\U0001F97A\U0001F97A\U0001F97A\n", str);
+        deleteList(env);
         exit(0);
     }
     else if (cmd == 1) /* help comand */

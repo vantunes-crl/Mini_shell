@@ -4,10 +4,11 @@
 char **parse_cmds(char *str)
 {
     char **cmds;
-    int i = 0;
+    char *temp_str;
 
-    str = ft_strtrim(str, WHITE_SPACE); /* take of the withspaces from the begining and end of string */
-    cmds = ft_split(str, ' '); /* split based on spaces */
+    temp_str = ft_strtrim(str, WHITE_SPACE); /* take of the withspaces from the begining and end of string */
+    cmds = ft_split(temp_str , ' '); /* split based on spaces */
+    free(temp_str);
     return (cmds);
 }
 
@@ -29,13 +30,10 @@ int has_pipes(char *str)
 char **cmds_list(char *str)
 {
     char **cmds_lst;
-    int i = 0;
+    char *temp_str;
 
-    cmds_lst = ft_split(str, '|'); /* split the commands by pipes */
-    while (cmds_lst[i] != NULL)
-    {
-        cmds_lst[i] = ft_strtrim(cmds_lst[i], WHITE_SPACE); /* take of all whitespaces from end and begining */
-        i++;
-    }
+    temp_str = ft_strtrim(str, WHITE_SPACE); /* take of all whitespaces from end and begining */
+    cmds_lst = ft_split(temp_str, '|'); /* split the commands by pipes */
+    free(temp_str);
     return(cmds_lst);
 }

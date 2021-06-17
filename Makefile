@@ -1,6 +1,6 @@
 NAME = Mini_shell
 
-FLAGS = -lreadline
+FLAGS = -lreadline -g
 
 LIBFT = ./ft_libft/libft.a
 
@@ -10,7 +10,7 @@ OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
 	$(MAKE) bonus -C ft_libft
-	@gcc $(OBJS) $(FLAGS) -g $(LIBFT) -o $(NAME)
+	@gcc $(OBJS) $(FLAGS) $(LIBFT) -o $(NAME)
 
 all: $(NAME)
 

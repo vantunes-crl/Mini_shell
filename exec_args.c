@@ -5,6 +5,7 @@ void exce_arg(char **cmds, t_list *env)
 {
     int i = 0;
     char **paths;
+    char *temp_path;
     while (env)
     {
         if (ft_strncmp((char *)env->content, "PATH", 4) == 0) /* find the env PATH in the env(cpy) list */
@@ -16,11 +17,16 @@ void exce_arg(char **cmds, t_list *env)
     paths = ft_split((char *)env->content, ':'); /* split all bin directorys */
     while (paths[i]) /* keep trying exec until sucess */
     {
-        paths[i] = ft_strjoin(paths[i], "/");
+        temp_path = paths[i]; /* old pointer */
+        paths[i] = ft_strjoin(paths[i], "/"); /* new pointer */
+        free(temp_path); /* free old */
+        temp_path = paths[i]; 
         paths[i] = ft_strjoin(paths[i], cmds[0]);
+        free(temp_path);
         execve(paths[i], cmds,  NULL);
         i++;
     }
+    free_paths(paths);
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
@@ -29,9 +35,9 @@ void exec_cmd(char **cmds, t_list **env)
     if (ft_strncmp(cmds[0],"cd", 2) == 0) /* handle all commands events */
         chdir(cmds[1]);
     else if (ft_strncmp(cmds[0],"exit", 4) == 0)
-        owncmds(0);
+        owncmds(0, env);
     else if (ft_strncmp(cmds[0],"help", 4) == 0)
-        owncmds(1);
+        owncmds(1, env);
     else if (ft_strncmp(cmds[0],"env", 3) == 0)
         print_env(*env);
     else if (ft_strncmp(cmds[0], "pwd", 3) == 0)
@@ -51,6 +57,7 @@ void exec_cmd(char **cmds, t_list **env)
         else
             wait(NULL);
     }
+    free_paths(cmds);
 }
 
 /* function receive a list of commands and exec one by one in the pipe */
@@ -59,17 +66,23 @@ void multiple_pipes(char **cmds_list, t_list **env)
     pid_t pid;
     int fd[2];
     int fd_in = 0;
+    char **temp_str;
+
     while (*cmds_list != NULL) /* while has commands */
     {
-        pipe(fd); /* function that creates a pipe in the fd */
-        pid = fork(); /* function that creates a children process to be killed by exec*/
+        if (pipe(fd) < 0)   /* function that creates a pipe in the fd */
+            error("pipe");
+        pid = fork(); /* function that creates a children process to be killed by exec */
+        if (pid < 0)
+            error("fork");
         if (pid == 0) /* children process */
         {   
             dup2(fd_in, 0); /* cpy the stdin */
             if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
             close(fd[0]);
-            exce_arg(parse_cmds(*cmds_list), *env); /* exec the comand and kill the process */
+            temp_str = parse_cmds(*cmds_list);
+            exce_arg(temp_str, *env); /* exec the comand and kill the process */
         }
         else
         {

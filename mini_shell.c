@@ -11,7 +11,7 @@ void error(char *str)
 int main(int argc, char **argv, char **env)
 {
     char inputString[200]; /* small buffer for input string from stdin */
-    char **cmds;
+    char **temp_cmds;
     t_list *envp;
 
     envp = init_env(env); /* create a cpy of env variavables */
@@ -20,7 +20,11 @@ int main(int argc, char **argv, char **env)
         if (take_line(inputString)) /* keep going while dont have inputs */
             continue;
         if (has_pipes(inputString))
-            multiple_pipes(cmds_list(inputString), &envp); /* exec multiple pipes */
+        {
+            temp_cmds = cmds_list(inputString); /* exec multiple pipes */
+            multiple_pipes(temp_cmds, &envp);
+            free_paths(temp_cmds);
+        }
         else
             exec_cmd(parse_cmds(inputString), &envp); /* exec normal cmd */
     }
