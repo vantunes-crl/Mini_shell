@@ -86,7 +86,7 @@ void exec_cmd(char **cmds, t_list **env)
 void multiple_pipes(char **cmds_list, t_list **env)
 {
     pid_t pid;
-    int fd[2];
+    int fd[2]; // fd[0] fd[1] */ 
     int fd_in = 0;
     char **temp_str;
 
