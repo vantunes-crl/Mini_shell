@@ -5,6 +5,7 @@
 #define TRUE 1
 #define FALSE 0
 #define WHITE_SPACE "\t "
+#define CLEAN printf("\033[K\r\n")
 
 #include "ft_libft/libft.h"
 #include <stdio.h>
@@ -15,6 +16,10 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+
+
+int flag;
 
 /*exec_functions */
 void	exce_arg(char **cmds, t_list *env);

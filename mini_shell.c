@@ -7,14 +7,32 @@ void error(char *str)
     exit(0);
 }
 
+void    kill_handler(int sig_num)
+{
+    if (flag == 1)
+    {
+        printf("\n");
+        flag = 0;
+    }
+    else 
+    {
+        printf("\n");
+    }
+}
+
+
 /* main prompet its a loop then hold all program and wait for next cmds*/
 int main(int argc, char **argv, char **env)
 {
     char inputString[200]; /* small buffer for input string from stdin */
     char **temp_cmds;
     t_list *envp;
+    flag = 0;
 
     envp = init_env(env); /* create a cpy of env variavables */
+    signal(SIGINT, kill_handler);
+    
+
     while (TRUE)
     {
         if (take_line(inputString)) /* keep going while dont have inputs */

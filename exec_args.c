@@ -74,6 +74,7 @@ void exec_cmd(char **cmds, t_list **env)
     {
         pid_t pid;
         pid = fork();
+        flag = 1;
         if (pid == 0)
             exce_arg(cmds, *env);
         else
@@ -82,6 +83,8 @@ void exec_cmd(char **cmds, t_list **env)
     free_paths(cmds);
 }
 
+
+
 /* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env)
 {
@@ -89,6 +92,7 @@ void multiple_pipes(char **cmds_list, t_list **env)
     int fd[2];
     int fd_in = 0;
     char **temp_str;
+
 
     while (*cmds_list != NULL) /* while has commands */
     {
