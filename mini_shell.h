@@ -43,8 +43,9 @@ void deleteList(t_list **env);
 
 /*builtings */
 
-void print_echo(char **cmds);
+void print_echo(t_list **env, char **cmds);
 void print_dir();
 void print_env(t_list *envp);
+void    handle_var_env(char *var_env, t_list *env, int flag, int n);
 
 #endif
