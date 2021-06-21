@@ -72,6 +72,11 @@ void exec_cmd(char **cmds, t_list **env)
         del_elem_lst(env, cmds[1]);
     else if (ft_strncmp(cmds[0], "export", 6) == 0)
         ft_lstadd_back(env, ft_lstnew(cmds[1]));
+    else if (ft_strncmp(cmds[0], "$?", 2) == 0)
+    {
+        printf("%d\n", exit_status);
+        exit_status = 0;
+    }  
     else if (ft_strncmp(cmds[0], "$", 1) == 0)
     {
         temp = ft_strtrim(*cmds, "$");
@@ -100,6 +105,8 @@ void multiple_pipes(char **cmds_list, t_list **env)
     int fd_in = 0;
     char **temp_str;
 
+    int temp_exit;
+
 
     while (*cmds_list != NULL) /* while has commands */
     {
@@ -119,7 +126,9 @@ void multiple_pipes(char **cmds_list, t_list **env)
         }
         else
         {
-            wait(NULL); /* wait the children end */
+            wait(&temp_exit); /* wait the children end and get the exit status */
+            if (temp_exit)
+                exit_status = temp_exit;
             close(fd[1]);
             fd_in = fd[0]; /* keep tracking the old stdin */
             cmds_list++;

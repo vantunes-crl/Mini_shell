@@ -29,9 +29,9 @@ Your shell should:
        via a pipe to the input of the next command.
  - [Y] • Environment variables ($ followed by characters) should expand
        to their values.
- - [ ] • $? should expands to the exit status of the most recently
+ - [Y] • $? should expands to the exit status of the most recently
        executed foreground pipeline.
  - [ ] • ctrl-C ctrl-D ctrl-\ should work like in bash.
 • When interactive:
  - [ ] ◦ ctrl-C print a new prompt on a newline.
- - [ ] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
+ - [Y] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.

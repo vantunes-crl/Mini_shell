@@ -20,6 +20,7 @@
 
 
 int flag;
+int exit_status;
 
 /*exec_functions */
 void	exce_arg(char **cmds, t_list *env);

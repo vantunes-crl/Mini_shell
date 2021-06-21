@@ -19,6 +19,11 @@ int take_line(char *str)
     //signal(SIGINT, SIG_IGN);
 
     buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:"); /* prompet mensage and get buff with function readline */
+    if (!buff) // JUST FOR THE CASE OF CTRL + D
+    {
+        printf("\r");
+        exit(0);
+    }
     if (ft_strlen(buff) != 0) /* if has something to read */
     {
         add_history(buff); /* cpy the buffer str to history , history can work with arrows down and up , and autocomplete with tabs */
