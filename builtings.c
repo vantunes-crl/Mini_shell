@@ -42,9 +42,16 @@ void print_echo(t_list **env, char **cmds)
     char *temp;
 
     n = 0;
+    if (!cmds[1])
+    {
+        printf("\n");
+        return ;
+    }
+    if (ft_strncmp("-n", cmds[1], 3) == 0 && !cmds[2])
+        return ;
     cmds++;
     if (ft_strncmp(*cmds, "-n", 2) == 0) /* take of the line breaker */
-    {    
+    { 
         n = 1;
         cmds++;
     }

@@ -4,7 +4,7 @@
 /* after add to history you can use the arrows up and down */
 /* return 1 if has no words to read to keep the program on */
 
-// static voidint_handler(int sig_num)
+// static void int_handler(int sig_num)
 // {
 //     printf("\n"); // Move to a new line
 //     rl_on_new_line(); // Regenerate the prompt on a newline
