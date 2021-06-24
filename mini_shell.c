@@ -28,6 +28,7 @@ int main(int argc, char **argv, char **env)
     char **temp_cmds;
     t_list *envp;
     flag = 0;
+    exit_status = 0;
 
     envp = init_env(env); /* create a cpy of env variavables */
     signal(SIGINT, kill_handler);

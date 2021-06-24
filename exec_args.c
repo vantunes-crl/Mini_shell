@@ -54,6 +54,8 @@ void exce_arg(char **cmds, t_list *env)
 /* function then exec the own commands the builtings and the normal shell commands */
 void exec_cmd(char **cmds, t_list **env)
 {
+    char *temp;
+
     if (ft_strncmp(cmds[0],"cd", 2) == 0) /* handle all commands events */
         chdir(cmds[1]);
     else if (ft_strncmp(cmds[0],"exit", 4) == 0)
@@ -65,11 +67,21 @@ void exec_cmd(char **cmds, t_list **env)
     else if (ft_strncmp(cmds[0], "pwd", 3) == 0)
         print_dir();
     else if (ft_strncmp(cmds[0], "echo", 4) == 0)
-        print_echo(cmds);
+        print_echo(env, cmds);
     else if (ft_strncmp(cmds[0], "unset", 5) == 0)
         del_elem_lst(env, cmds[1]);
     else if (ft_strncmp(cmds[0], "export", 6) == 0)
         ft_lstadd_back(env, ft_lstnew(cmds[1]));
+    else if (ft_strncmp(cmds[0], "$?", 2) == 0)
+    {
+        printf("%d\n", exit_status);
+        exit_status = 0;
+    }  
+    else if (ft_strncmp(cmds[0], "$", 1) == 0)
+    {
+        temp = ft_strtrim(*cmds, "$");
+        handle_var_env(temp, *env, 1, 1);
+    }
     else
     {
         pid_t pid;
@@ -93,6 +105,8 @@ void multiple_pipes(char **cmds_list, t_list **env)
     int fd_in = 0;
     char **temp_str;
 
+    int temp_exit;
+
 
     while (*cmds_list != NULL) /* while has commands */
     {
@@ -112,7 +126,9 @@ void multiple_pipes(char **cmds_list, t_list **env)
         }
         else
         {
-            wait(NULL); /* wait the children end */
+            wait(&temp_exit); /* wait the children end and get the exit status */
+            if (temp_exit)
+                exit_status = temp_exit;
             close(fd[1]);
             fd_in = fd[0]; /* keep tracking the old stdin */
             cmds_list++;
