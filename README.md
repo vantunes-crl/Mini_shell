@@ -6,7 +6,7 @@ Your shell should:
        like \ or;.
  - [x] • Show a prompt when waiting for a new command.
  - [x] • Have a working History.
- - [ ] • Search and launch the right executable (based on the PATH
+ - [x] • Search and launch the right executable (based on the PATH
        variable or by using relative or absolute path)
 • It must implement the builtins:
  - [x] ◦ echo with option -n
@@ -27,11 +27,11 @@ Your shell should:
  - [ ] ◦ “>>” should redirect output with append mode.
  - [x] • Pipes | The output of each command in the pipeline is connected
        via a pipe to the input of the next command.
- - [Y] • Environment variables ($ followed by characters) should expand
+ - [X] • Environment variables ($ followed by characters) should expand
        to their values.
- - [Y] • $? should expands to the exit status of the most recently
+ - [X] • $? should expands to the exit status of the most recently
        executed foreground pipeline.
  - [ ] • ctrl-C ctrl-D ctrl-\ should work like in bash.
 • When interactive:
  - [ ] ◦ ctrl-C print a new prompt on a newline.
- - [Y] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
+ - [X] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
