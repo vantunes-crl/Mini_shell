@@ -19,7 +19,9 @@ void exce_arg(char **cmds, t_list *env)
     char **paths;
     char *temp_path;
     int abs_path;
+    int ret;
 
+    ret = 0;
     abs_path = is_abspath(cmds[0]);
     if (abs_path)
     {
@@ -45,10 +47,12 @@ void exce_arg(char **cmds, t_list *env)
         temp_path = paths[i]; 
         paths[i] = ft_strjoin(paths[i], cmds[0]);
         free(temp_path);
-        execve(paths[i], cmds,  NULL);
+        ret = execve(paths[i], cmds,  NULL);
         i++;
     }
     free_paths(paths);
+    if (ret < 0)
+        printf("zsh: command not found: %s\n", cmds[0]);
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
@@ -58,8 +62,6 @@ void exec_cmd(char **cmds, t_list **env)
 
     if (ft_strncmp(cmds[0],"cd", 2) == 0) /* handle all commands events */
         chdir(cmds[1]);
-    else if (ft_strncmp(cmds[0],"exit", 4) == 0)
-        owncmds(0, env);
     else if (ft_strncmp(cmds[0],"help", 4) == 0)
         owncmds(1, env);
     else if (ft_strncmp(cmds[0],"env", 3) == 0)
@@ -76,26 +78,33 @@ void exec_cmd(char **cmds, t_list **env)
     {
         printf("%d\n", exit_status);
         exit_status = 0;
-    }  
+    }
     else if (ft_strncmp(cmds[0], "$", 1) == 0)
     {
         temp = ft_strtrim(*cmds, "$");
         handle_var_env(temp, *env, 1, 1);
     }
     else
-    {
-        pid_t pid;
-        pid = fork();
-        flag = 1;
-        if (pid == 0)
-            exce_arg(cmds, *env);
-        else
-            wait(NULL);
-    }
+        exce_arg(cmds, *env);
     free_paths(cmds);
 }
 
+void has_exit(char **cmds_list)
+{
+    char *temp_str;
 
+    while (*cmds_list)
+    {
+        temp_str = ft_strtrim(*cmds_list, WHITE_SPACE);
+        if (ft_strncmp(temp_str, "exit", 4) == 0)
+        {
+            free(temp_str);
+            exit(0);
+        }
+        free(temp_str);
+        cmds_list++;
+    }
+}
 
 /* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env)
@@ -106,8 +115,6 @@ void multiple_pipes(char **cmds_list, t_list **env)
     char **temp_str;
 
     int temp_exit;
-
-
     while (*cmds_list != NULL) /* while has commands */
     {
         if (pipe(fd) < 0)   /* function that creates a pipe in the fd */
@@ -122,7 +129,8 @@ void multiple_pipes(char **cmds_list, t_list **env)
                 dup2(fd[1], 1);
             close(fd[0]);
             temp_str = parse_cmds(*cmds_list);
-            exce_arg(temp_str, *env); /* exec the comand and kill the process */
+            exec_cmd(temp_str, env); /* exec the comand and kill the process */
+            exit(0);
         }
         else
         {

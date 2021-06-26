@@ -38,14 +38,13 @@ int main(int argc, char **argv, char **env)
     {
         if (take_line(inputString)) /* keep going while dont have inputs */
             continue;
-        if (has_pipes(inputString))
+        else
         {
-            temp_cmds = cmds_list(inputString); /* exec multiple pipes */
-            multiple_pipes(temp_cmds, &envp); 
+            temp_cmds = cmds_list(inputString);
+            has_exit(temp_cmds);
+            multiple_pipes(temp_cmds, &envp); /* exec multiple pipes */
             free_paths(temp_cmds);
         }
-        else
-            exec_cmd(parse_cmds(inputString), &envp); /* exec normal cmd */
     }
     return (0);
 }
