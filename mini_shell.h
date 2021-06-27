@@ -53,6 +53,5 @@ void has_exit(char **cmds_list);
 int which_redirect(char *str);
 char *new_cmds(char *cmds);
 int creat_file(int redirect, char *file_name);
-char *file_name(char *cmds);
 
 #endif

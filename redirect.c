@@ -37,32 +37,43 @@ char *new_cmds(char *cmds)
     return (new_cmds);
 }
 
-char *file_name(char *cmds)
+t_list *file_name(char *cmds)
 {
-    char *new_str;
+    t_list *new_str;
+    new_str = NULL;
     int i;
+    int j;
 
     i = 0;
-    while (cmds[i] != '>' && cmds[i] != '<')
-        i++;
-    while (cmds[i] == '>' || cmds[i] == '<')
-        i++;
-    while (ft_iswhitespace_bonus(cmds[i]))
-        i++;
-    new_str = ft_substr(cmds, i, ft_strlen(cmds) - i);
+    while (cmds[i])
+    {
+        while (cmds[i] != '>' && cmds[i] != '<')
+            i++;
+        while (cmds[i] == '>' || cmds[i] == '<')
+            i++;
+        while (ft_iswhitespace_bonus(cmds[i]))
+            i++;
+        j = i;
+        while (ft_iswhitespace_bonus(cmds[i]))
+            i++;
+        ft_lstadd_back(&new_str,ft_lstnew(ft_substr(cmds, j, i)));
+    }
     return (new_str);
 }
 
-// int main(int argc, char **argv)
-// {
-//     char *str = "ls -l > file1";
-//     char *str1;
-//     char *str2;
+int main(int argc, char **argv)
+{
+    char *str = "ls -l > file1 > file2 > file5";
+    char *str1;
+    char *str2;
 
-//     str1 = redirect(str);
-//     str2 = new_cmds(str);
-//     printf("%s\n", str1);
-//     printf("%s\n", str2);
-    
-//     return (0);
-// }
+    t_list *elem;
+
+    elem = file_name(str);
+    while (elem != NULL)
+    {
+        printf("%s\n", elem->content);
+        elem = elem->next;
+    }
+    return (0);
+}
