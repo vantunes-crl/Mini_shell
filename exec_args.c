@@ -112,6 +112,7 @@ void multiple_pipes(char **cmds_list, t_list **env)
     pid_t pid;
     int fd[2]; // fd[0] fd[1] */ 
     int fd_in = 0;
+    int fd_red;
     char **temp_str;
 
     int temp_exit;

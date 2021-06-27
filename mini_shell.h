@@ -49,4 +49,10 @@ void print_env(t_list *envp);
 void    handle_var_env(char *var_env, t_list *env, int flag, int n);
 void has_exit(char **cmds_list);
 
+/* redirct */
+int which_redirect(char *str);
+char **remake_cmd(char **cmd);
+int creat_file(int redirect, char *file_name);
+int redirect(char ***cmds);
+
 #endif

@@ -35,7 +35,7 @@ int creat_file(int redirect, char *file_name)
 
     if (redirect == 1)
     {
-        fd = open(file_name, O_WRONLY | O_CREAT, 0777);
+        fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0777);
         return (fd);
     }
     return (0);
@@ -62,14 +62,15 @@ int redirect(char ***cmds)
     return 0;
 }
 
-int main(int argc, char **argv)
-{
-    char str[] = "ls -l > file1";
-    char **cmds;
+// int main(int argc, char **argv)
+// {
+//     char str[] = "ls -l > file1";
+//     char **cmds;
+//     int fd;
 
-    cmds = ft_split(str, ' ');
-    redirect(&cmds);
-    remake_cmd(cmds);
-
-    return (0);
-}
+//     cmds = ft_split(str, ' ');
+//     fd = redirect(&cmds);
+//     cmds = remake_cmd(cmds);
+    
+//     return (0);
+// }
