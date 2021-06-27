@@ -2,32 +2,16 @@
 
 int which_redirect(char *str)
 {
-    if (ft_strncmp(">", str, 1) == 0)
+    if (ft_strnstr(str, " > ", ft_strlen(str)))
         return (1);
-    else if(ft_strncmp(">>", str, 2) == 0)
+    else if(ft_strnstr(str , " >> ", ft_strlen(str)))
         return (2);
-    else if(ft_strncmp("<", str, 1) == 0)
+    else if(ft_strnstr(str, " < ", ft_strlen(str)))
         return (3);
-    else if(ft_strncmp("<<", str, 2) == 0)
+    else if(ft_strnstr(str, " << ", ft_strlen(str)))
         return (4);
     return (0);
 }
-
-char **remake_cmd(char **cmd)
-{
-    int ret;
-    char *new_str;
-
-    while (*cmd != NULL)
-    {   
-        if (which_redirect(*(cmd + 1)))
-            break;
-        new_str = ft_super_strjoin(3, *cmd, " ", *(cmd + 1));
-        cmd++;
-    }
-    return (ft_split(new_str, ' '));
-}
-
 
 int creat_file(int redirect, char *file_name)
 {
@@ -41,36 +25,44 @@ int creat_file(int redirect, char *file_name)
     return (0);
 }
 
-int redirect(char ***cmds)
+char *new_cmds(char *cmds)
 {
-    char **new_cmds;
-    int has_redirect;
-    int fd;
+    char *new_cmds;
+    int i;
 
-    has_redirect = 0;
-    new_cmds = *cmds;
-    while (*new_cmds != NULL)
-    {
-        has_redirect = which_redirect(*new_cmds);
-        if (has_redirect)
-        {
-            fd = creat_file(has_redirect, *(new_cmds + 1));
-            return (fd);
-        }
-        new_cmds++;
-    }
-    return 0;
+    i = 0;
+    while (cmds[i] != '>' && cmds[i] != '<')
+        i++;
+    new_cmds = ft_substr(cmds, 0, i);
+    return (new_cmds);
+}
+
+char *file_name(char *cmds)
+{
+    char *new_str;
+    int i;
+
+    i = 0;
+    while (cmds[i] != '>' && cmds[i] != '<')
+        i++;
+    while (cmds[i] == '>' || cmds[i] == '<')
+        i++;
+    while (ft_iswhitespace_bonus(cmds[i]))
+        i++;
+    new_str = ft_substr(cmds, i, ft_strlen(cmds) - i);
+    return (new_str);
 }
 
 // int main(int argc, char **argv)
 // {
-//     char str[] = "ls -l > file1";
-//     char **cmds;
-//     int fd;
+//     char *str = "ls -l > file1";
+//     char *str1;
+//     char *str2;
 
-//     cmds = ft_split(str, ' ');
-//     fd = redirect(&cmds);
-//     cmds = remake_cmd(cmds);
+//     str1 = redirect(str);
+//     str2 = new_cmds(str);
+//     printf("%s\n", str1);
+//     printf("%s\n", str2);
     
 //     return (0);
 // }

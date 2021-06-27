@@ -113,6 +113,7 @@ void multiple_pipes(char **cmds_list, t_list **env)
     int fd[2]; // fd[0] fd[1] */ 
     int fd_in = 0;
     int fd_red;
+    int has_redirect = 0;
     char **temp_str;
 
     int temp_exit;
@@ -126,11 +127,19 @@ void multiple_pipes(char **cmds_list, t_list **env)
         if (pid == 0) /* children process */
         {   
             dup2(fd_in, 0); /* cpy the stdin */
-            if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
+            has_redirect = which_redirect(*cmds_list);
+            if (has_redirect)
+            {
+                fd_red = creat_file(has_redirect, file_name(*cmds_list));
+                *cmds_list = new_cmds(*cmds_list);
+                dup2(fd_red, 1);
+            }
+            else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
             close(fd[0]);
             temp_str = parse_cmds(*cmds_list);
             exec_cmd(temp_str, env); /* exec the comand and kill the process */
+            close(fd_red);
             exit(0);
         }
         else
