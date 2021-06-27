@@ -67,14 +67,16 @@ int main(int argc, char **argv)
     char *str = "ls -l > file1 > file2 > file5";
     char *str1;
     char *str2;
+    int fd;
 
     t_list *elem;
 
     elem = file_name(str);
     while (elem != NULL)
     {
-        printf("%s\n", elem->content);
+        fd = creat_file(1, (char *)elem->content);
         elem = elem->next;
+        close(fd);
     }
     return (0);
 }
