@@ -54,9 +54,10 @@ t_list *file_name(char *cmds)
         while (ft_iswhitespace_bonus(cmds[i]))
             i++;
         j = i;
-        while (ft_iswhitespace_bonus(cmds[i]))
+        while (!ft_iswhitespace_bonus(cmds[i]))
             i++;
-        ft_lstadd_back(&new_str,ft_lstnew(ft_substr(cmds, j, i)));
+        ft_lstadd_back(&new_str, ft_lstnew(ft_substr(cmds, j, i - j)));
+        i++;
     }
     return (new_str);
 }
