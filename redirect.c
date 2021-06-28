@@ -19,7 +19,8 @@ int creat_file(int redirect, char *file_name)
 
     if (redirect == 1)
     {
-        fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+        fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0x777);
+        close(fd);
         return (fd);
     }
     return (0);
@@ -65,18 +66,33 @@ t_list *file_name(char *cmds)
 int main(int argc, char **argv)
 {
     char *str = "ls -l > file1 > file2 > file5";
-    char *str1;
-    char *str2;
+    char buff[20];
     int fd;
+    int i = 0;
+    int ret = 1;
+    int flag = 0;
 
     t_list *elem;
 
     elem = file_name(str);
     while (elem != NULL)
     {
-        fd = creat_file(1, (char *)elem->content);
+        creat_file(1, (char *)elem->content);
         elem = elem->next;
+    }
+    fd = open("file1", O_WRONLY);
+    write(fd, "ola", 3);
+    close(fd);
+    elem = file_name(str);
+    while (elem != NULL)
+    {
+        fd = open((char *)elem->content, O_RDWR);
+        read(fd, buff, sizeof(buff));
+        if (flag == 1)
+            ret = write(fd, buff, 3);
         close(fd);
+        flag = 1;
+        elem = elem->next;
     }
     return (0);
 }
