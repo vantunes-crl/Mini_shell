@@ -42,6 +42,7 @@ void print_echo(t_list **env, char **cmds)
     char *temp;
 
     n = 0;
+    
     if (!cmds[1])
     {
         printf("\n");

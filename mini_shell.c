@@ -40,6 +40,7 @@ int main(int argc, char **argv, char **env)
             continue;
         if (has_pipes(inputString))
         {
+
             temp_cmds = cmds_list(inputString); /* exec multiple pipes */
             multiple_pipes(temp_cmds, &envp);
             free_paths(temp_cmds);

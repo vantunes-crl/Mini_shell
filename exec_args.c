@@ -66,7 +66,7 @@ void exec_cmd(char **cmds, t_list **env)
         print_env(*env);
     else if (ft_strncmp(cmds[0], "pwd", 3) == 0)
         print_dir();
-    else if (ft_strncmp(cmds[0], "echo", 4) == 0)
+    else if (ft_strncmp(cmds[0], "echo", 6) == 0)
         print_echo(env, cmds);
     else if (ft_strncmp(cmds[0], "unset", 5) == 0)
         del_elem_lst(env, cmds[1]);
