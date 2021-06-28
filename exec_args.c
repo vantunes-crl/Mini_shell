@@ -140,6 +140,11 @@ void multiple_pipes(char **cmds_list, t_list **env)
                     fd_red = creat_file(has_redirect, (char *)file_list->content);
                     file_list = file_list->next;
                 }
+                if (fd_red == -1)
+                {
+                    printf("Error open file\n");
+                    exit(0);
+                }
                 dup2(fd_red, 1);
                 *cmds_list = new_cmds(*cmds_list);
             }
