@@ -82,17 +82,6 @@ t_list *file_name(char *cmds)
 //     fd = open("file1", O_WRONLY);
 //     write(fd, "ola", 3);
 //     close(fd);
-//     elem = file_name(str);
-//     while (elem != NULL)
-//     {
-//         fd = open((char *)elem->content, O_RDWR);
-//         read(fd, buff, sizeof(buff));
-//         if (flag == 1)
-//             ret = write(fd, buff, 3);
-//         close(fd);
-//         flag = 1;
-//         printf("%s\n", elem->content);
-//         elem = elem->next;
-//     }
+//  
 //     return (0);
 // }

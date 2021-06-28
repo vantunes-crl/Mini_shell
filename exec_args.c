@@ -114,7 +114,10 @@ void multiple_pipes(char **cmds_list, t_list **env)
     int fd_in = 0;
     int fd_red = 0;
     int has_redirect = 0;
+    int flag = 0;
+    int fd_2 = 0;
     char **temp_str;
+    char buff[1000];
     t_list *file_list = NULL;
 
     int temp_exit;
@@ -153,5 +156,15 @@ void multiple_pipes(char **cmds_list, t_list **env)
             fd_in = fd[0]; /* keep tracking the old stdin */
             cmds_list++;
         }
+    }
+    while (file_list != NULL)
+    {
+        fd_2 = open((char *)file_list->content, O_RDWR);
+        read(fd_2, buff, sizeof(buff));
+        if (flag == 1)
+            write(fd_2, buff, ft_strlen(buff));
+        close(fd_2);
+        flag = 1;
+        file_list = file_list->next;
     }
 }
