@@ -6,8 +6,8 @@ total 312
 -rw-r--r--   1 vantunes  2020_lisbon   2220 Jun 26 13:05 builtings.c
 -rw-r--r--   1 vantunes  2020_lisbon    709 Jun 25 10:49 env_handler.c
 -rw-r--r--   1 vantunes  2020_lisbon   4477 Jun 28 17:18 exec_args.c
--rwxr-xr-x   1 vantunes  2020_lisbon      0 Jun 28 17:20 file1
--rwxr-xr-x   1 vantunes  2020_lisbon    158 Jun 28 17:18 file50
+-rwxr-xr-x   1 vantunes  2020_lisbon   1080 Jun 28 17:20 file1
+-rwxr-xr-x   1 vantunes  2020_lisbon      0 Jun 28 17:20 file50
 drwxr-xr-x  58 vantunes  2020_lisbon   1972 Jun 28 17:19 ft_libft
 -rw-r--r--   1 vantunes  2020_lisbon    967 Jun 27 12:55 mini_shell.c
 -rw-r--r--   1 vantunes  2020_lisbon   1282 Jun 28 16:33 mini_shell.h

@@ -112,10 +112,10 @@ void multiple_pipes(char **cmds_list, t_list **env)
     pid_t pid;
     int fd[2]; // fd[0] fd[1] */ 
     int fd_in = 0;
-    int fd_red;
+    int fd_red = 0;
     int has_redirect = 0;
-    char *file_name1;
     char **temp_str;
+    t_list *file_list = NULL;
 
     int temp_exit;
     while (*cmds_list != NULL) /* while has commands */
@@ -131,8 +131,8 @@ void multiple_pipes(char **cmds_list, t_list **env)
             has_redirect = which_redirect(*cmds_list);
             if (has_redirect)
             {
-                file_name1 = file_name(*cmds_list);
-                fd_red = creat_file(has_redirect, file_name1);
+                file_list = file_name(*cmds_list);
+                fd_red = creat_file(has_redirect, (char *)file_list->content);
                 *cmds_list = new_cmds(*cmds_list);
                 dup2(fd_red, 1);
             }
