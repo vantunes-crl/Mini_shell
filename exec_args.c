@@ -113,11 +113,13 @@ void multiple_pipes(char **cmds_list, t_list **env)
     int fd[2]; // fd[0] fd[1] */ 
     int fd_in = 0;
     int fd_red = 0;
+    int i = 0;
     int has_redirect = 0;
     int flag = 0;
     int fd_2 = 0;
     char **temp_str;
     char buff[1000];
+    pid_t pid2;
     t_list *file_list = NULL;
 
     int temp_exit;
@@ -135,18 +137,26 @@ void multiple_pipes(char **cmds_list, t_list **env)
             if (has_redirect)
             {
                 file_list = file_name(*cmds_list);
-                while (file_list != NULL)
+                *cmds_list = new_cmds(*cmds_list);
+                temp_str = parse_cmds(*cmds_list);
+                while (file_list)
                 {
-                    fd_red = creat_file(has_redirect, (char *)file_list->content);
+                    pid2 = fork();
+                    if (pid2 == 0)
+                    {
+                        fd_red = creat_file(has_redirect, (char *)file_list->content);
+                        dup2(fd_red, 1);
+                        close(fd_red);
+                        exec_cmd(temp_str, env);
+                        exit(0);
+                    }
+                    else
+                    {
+                        wait(NULL);
+                        close(fd_red);
+                    }
                     file_list = file_list->next;
                 }
-                if (fd_red == -1)
-                {
-                    printf("Error open file\n");
-                    exit(0);
-                }
-                dup2(fd_red, 1);
-                *cmds_list = new_cmds(*cmds_list);
             }
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
@@ -168,6 +178,7 @@ void multiple_pipes(char **cmds_list, t_list **env)
     }
    
 }
+
 // while (file_list != NULL)
 // {
 //     fd_2 = open((char *)file_list->content, O_RDWR | O_CREAT , 0777);
@@ -176,5 +187,6 @@ void multiple_pipes(char **cmds_list, t_list **env)
 //         write(fd_2, buff, ft_strlen(buff));
 //     close(fd_2);
 //     flag = 1;
+//     printf("%s\n", (char *)file_list->content);
 //     file_list = file_list->next;
 // }
