@@ -135,9 +135,13 @@ void multiple_pipes(char **cmds_list, t_list **env)
             if (has_redirect)
             {
                 file_list = file_name(*cmds_list);
-                fd_red = creat_file(has_redirect, (char *)file_list->content);
-                *cmds_list = new_cmds(*cmds_list);
+                while (file_list != NULL)
+                {
+                    fd_red = creat_file(has_redirect, (char *)file_list->content);
+                    file_list = file_list->next;
+                }
                 dup2(fd_red, 1);
+                *cmds_list = new_cmds(*cmds_list);
             }
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
@@ -157,14 +161,15 @@ void multiple_pipes(char **cmds_list, t_list **env)
             cmds_list++;
         }
     }
-    while (file_list != NULL)
-    {
-        fd_2 = open((char *)file_list->content, O_RDWR);
-        read(fd_2, buff, sizeof(buff));
-        if (flag == 1)
-            write(fd_2, buff, ft_strlen(buff));
-        close(fd_2);
-        flag = 1;
-        file_list = file_list->next;
-    }
+   
 }
+// while (file_list != NULL)
+// {
+//     fd_2 = open((char *)file_list->content, O_RDWR | O_CREAT , 0777);
+//     read(fd_2, buff, sizeof(buff));
+//     if (flag == 1)
+//         write(fd_2, buff, ft_strlen(buff));
+//     close(fd_2);
+//     flag = 1;
+//     file_list = file_list->next;
+// }
