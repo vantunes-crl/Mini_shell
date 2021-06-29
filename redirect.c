@@ -22,6 +22,11 @@ int creat_file(int redirect, char *file_name)
         fd = open(file_name, O_TRUNC | O_WRONLY | O_CREAT, 0777);
         return (fd);
     }
+    else if (redirect == 2)
+    {
+        fd = open(file_name, O_APPEND | O_WRONLY | O_CREAT, 0777);
+        return (fd);
+    }
     return (0);
 }
 

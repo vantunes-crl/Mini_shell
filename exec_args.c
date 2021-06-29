@@ -113,33 +113,29 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env)
     pid_t pid;
     int fd_red;
 
-    if (has_redirect)
+    file_list = file_name(cmds_list);
+    cmds_list = new_cmds(cmds_list);
+    temp_str = parse_cmds(cmds_list);
+
+    while (file_list != NULL)
     {
-        file_list = file_name(cmds_list);
-        cmds_list = new_cmds(cmds_list);
-        temp_str = parse_cmds(cmds_list);
-    
-        while (file_list != NULL)
+        pid = fork();
+        if (pid == 0)
         {
-            printf("%s\n", (char *)file_list->content);
-            pid = fork();
-            if (pid == 0)
-            {
-                fd_red = creat_file(has_redirect, (char *)file_list->content);
-                dup2(fd_red, 1);
-                close(fd_red);
-                exec_cmd(temp_str, env);
-                exit(0);
-            }
-            else
-            {
-                wait(NULL);
-                close(fd_red);
-            }
-            file_list = file_list->next;
+            fd_red = creat_file(has_redirect, (char *)file_list->content);
+            dup2(fd_red, 1);
+            close(fd_red);
+            exec_cmd(temp_str, env);
+            exit(0);
         }
-        exit(0);
+        else
+        {
+            wait(NULL);
+            close(fd_red);
+        }
+        file_list = file_list->next;
     }
+    exit(0);
 }
 /* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env)

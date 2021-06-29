@@ -21,10 +21,10 @@ Your shell should:
        for $.
  - • Redirections:
  - [ ] ◦ < should redirect input.
- - [ ] ◦ > should redirect output.
+ - [x] ◦ > should redirect output.
  - [ ] ◦ “<<” read input from the current source until a line containing
        only the de- limiter is seen. it doesn’t need to update history!
- - [ ] ◦ “>>” should redirect output with append mode.
+ - [x] ◦ “>>” should redirect output with append mode.
  - [x] • Pipes | The output of each command in the pipeline is connected
        via a pipe to the input of the next command.
  - [X] • Environment variables ($ followed by characters) should expand
