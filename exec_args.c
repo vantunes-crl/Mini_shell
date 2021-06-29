@@ -139,7 +139,7 @@ void multiple_pipes(char **cmds_list, t_list **env)
                 file_list = file_name(*cmds_list);
                 *cmds_list = new_cmds(*cmds_list);
                 temp_str = parse_cmds(*cmds_list);
-                while (file_list)
+                while (file_list != NULL)
                 {
                     pid2 = fork();
                     if (pid2 == 0)
@@ -157,6 +157,7 @@ void multiple_pipes(char **cmds_list, t_list **env)
                     }
                     file_list = file_list->next;
                 }
+                exit(0);
             }
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
