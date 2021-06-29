@@ -7,9 +7,14 @@ void error(char *str)
     exit(0);
 }
 
-void    kill_handler(int sig_num)
+void    kill_handler(int sig)
 {
-    printf("\n");
+    struct termios conf;
+    ioctl(ttyslot(), TIOCGETA, &conf);
+    conf.c_lflag &= ~(ECHOCTL);
+    ioctl(ttyslot(), TIOCSETA, &conf);
+    write(1, "\n\033[3;32mMiniShell\e[0m\U0001F916:", 26);
+    return ;
 }
 
 /* main prompet its a loop then hold all program and wait for next cmds*/
