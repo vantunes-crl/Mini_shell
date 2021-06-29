@@ -33,6 +33,7 @@ char **cmds_list(char *str)
     char *temp_str;
 
     temp_str = ft_strtrim(str, WHITE_SPACE); /* take of all whitespaces from end and begining */
+    temp_str = ft_strjoin(temp_str, " |");
     cmds_lst = ft_split(temp_str, '|'); /* split the commands by pipes */
     free(temp_str);
     return(cmds_lst);

@@ -106,6 +106,41 @@ void has_exit(char **cmds_list)
     }
 }
 
+void multiple_redirect(int has_redirect, char *cmds_list, t_list **env)
+{
+    char **temp_str;
+    t_list *file_list = NULL;
+    pid_t pid;
+    int fd_red;
+
+    if (has_redirect)
+    {
+        file_list = file_name(cmds_list);
+        cmds_list = new_cmds(cmds_list);
+        temp_str = parse_cmds(cmds_list);
+    
+        while (file_list != NULL)
+        {
+            printf("%s\n", (char *)file_list->content);
+            pid = fork();
+            if (pid == 0)
+            {
+                fd_red = creat_file(has_redirect, (char *)file_list->content);
+                dup2(fd_red, 1);
+                close(fd_red);
+                exec_cmd(temp_str, env);
+                exit(0);
+            }
+            else
+            {
+                wait(NULL);
+                close(fd_red);
+            }
+            file_list = file_list->next;
+        }
+        exit(0);
+    }
+}
 /* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env)
 {
@@ -120,7 +155,6 @@ void multiple_pipes(char **cmds_list, t_list **env)
     char **temp_str;
     char buff[1000];
     pid_t pid2;
-    t_list *file_list = NULL;
 
     int temp_exit;
     while (*cmds_list != NULL) /* while has commands */
@@ -131,34 +165,11 @@ void multiple_pipes(char **cmds_list, t_list **env)
         if (pid < 0)
             error("fork");
         if (pid == 0) /* children process */
-        {   
+        {
             dup2(fd_in, 0); /* cpy the stdin */
             has_redirect = which_redirect(*cmds_list);
             if (has_redirect)
-            {
-                file_list = file_name(*cmds_list);
-                *cmds_list = new_cmds(*cmds_list);
-                temp_str = parse_cmds(*cmds_list);
-                while (file_list != NULL)
-                {
-                    pid2 = fork();
-                    if (pid2 == 0)
-                    {
-                        fd_red = creat_file(has_redirect, (char *)file_list->content);
-                        dup2(fd_red, 1);
-                        close(fd_red);
-                        exec_cmd(temp_str, env);
-                        exit(0);
-                    }
-                    else
-                    {
-                        wait(NULL);
-                        close(fd_red);
-                    }
-                    file_list = file_list->next;
-                }
-                exit(0);
-            }
+                multiple_redirect(has_redirect, *cmds_list, env);
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
             close(fd[0]);
