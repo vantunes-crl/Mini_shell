@@ -36,5 +36,6 @@ char **cmds_list(char *str)
     temp_str = ft_strjoin(temp_str, " |");
     cmds_lst = ft_split(temp_str, '|'); /* split the commands by pipes */
     free(temp_str);
+
     return(cmds_lst);
 }

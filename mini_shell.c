@@ -42,3 +42,17 @@ int main(int argc, char **argv, char **env)
     }
     return (0);
 }
+
+
+
+// BUG FOR TABS! 
+// BUG NO HISTORICO! (echo with argument)
+// BUG echo $?
+// Little bug with expr $? + $
+// ctrl + / should quit minishell when there is something written in it
+// blocking command like cat with no arguments + ctrl+c repeats the prompt
+// echo "catlol.c | cat > lol.c"
+// DO SIMPLES QUOTES AND DOUBLE QUOTES
+// cd . and cd .. is not working (I THING cd IS NOT WORKING AT ALL)
+
+
