@@ -55,5 +55,7 @@ int which_redirect(char *str);
 char *new_cmds(char *cmds);
 int creat_file(int redirect, char *file_name);
 t_list *file_name(char *cmds);
+char *new_cmds_in(char *cmd);
+char *redirect_input(int redirect, char *buff);
 
 #endif

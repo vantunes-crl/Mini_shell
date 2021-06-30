@@ -8,13 +8,21 @@ void error(char *str)
 }
 
 void    kill_handler(int sig)
-{
+{/*
     struct termios conf;
+    struct termios oldconf;
     ioctl(ttyslot(), TIOCGETA, &conf);
-    conf.c_lflag &= ~(ECHOCTL);
+    ioctl(ttyslot(), TIOCGETA, &oldconf);
+    //printf("old: %lu\n", conf.c_lflag);
+    conf.c_lflag &= ~(ECHO);
+    conf.c_lflag &= ~(ICANON);
+    //printf("new: %lu\n", conf.c_lflag);
     ioctl(ttyslot(), TIOCSETA, &conf);
+    //conf.c_lflag ^= (ECHOCTL);
+    //printf("new back to old:%lu\n", conf.c_lflag);
     write(1, "\n\033[3;32mMiniShell\e[0m\U0001F916:", 26);
-    return ;
+    ioctl(ttyslot(), TIOCSETA, &oldconf);
+   */ return ;
 }
 
 /* main prompet its a loop then hold all program and wait for next cmds*/

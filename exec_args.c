@@ -164,8 +164,10 @@ void multiple_pipes(char **cmds_list, t_list **env)
         {
             dup2(fd_in, 0); /* cpy the stdin */
             has_redirect = which_redirect(*cmds_list);
-            if (has_redirect)
+            if (has_redirect == 1 || has_redirect == 2)
                 multiple_redirect(has_redirect, *cmds_list, env);
+            else if (has_redirect == 3 || has_redirect == 4)
+                *cmds_list = redirect_input(has_redirect, *cmds_list);
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
             close(fd[0]);
@@ -186,15 +188,3 @@ void multiple_pipes(char **cmds_list, t_list **env)
     }
    
 }
-
-// while (file_list != NULL)
-// {
-//     fd_2 = open((char *)file_list->content, O_RDWR | O_CREAT , 0777);
-//     read(fd_2, buff, sizeof(buff));
-//     if (flag == 1)
-//         write(fd_2, buff, ft_strlen(buff));
-//     close(fd_2);
-//     flag = 1;
-//     printf("%s\n", (char *)file_list->content);
-//     file_list = file_list->next;
-// }

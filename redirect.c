@@ -66,27 +66,3 @@ t_list *file_name(char *cmds)
     }
     return (new_str);
 }
-
-// int main(int argc, char **argv)
-// {
-//     char *str = "ls -l > file1";
-//     char buff[20];
-//     int fd;
-//     int i = 0;
-//     int ret = 1;
-//     int flag = 0;
-
-//     t_list *elem;
-
-//     elem = file_name(str);
-//     while (elem != NULL)
-//     {
-//         creat_file(1, (char *)elem->content);
-//         elem = elem->next;
-//     }
-//     fd = open("file1", O_WRONLY);
-//     write(fd, "ola", 3);
-//     close(fd);
-//  
-//     return (0);
-// }

@@ -15,9 +15,7 @@
 int take_line(char *str)
 {
     char *buff;
-
     //signal(SIGINT, SIG_IGN);
-
     buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:"); /* prompet mensage and get buff with function readline */
     if (!buff) // JUST FOR THE CASE OF CTRL + D
     {
