@@ -20,9 +20,9 @@ Your shell should:
  - [ ] • " inhibit all interpretation of a sequence of characters except
        for $.
  - • Redirections:
- - [ ] ◦ < should redirect input.
+ - [x] ◦ < should redirect input.
  - [x] ◦ > should redirect output.
- - [ ] ◦ “<<” read input from the current source until a line containing
+ - [x] ◦ “<<” read input from the current source until a line containing
        only the de- limiter is seen. it doesn’t need to update history!
  - [x] ◦ “>>” should redirect output with append mode.
  - [x] • Pipes | The output of each command in the pipeline is connected

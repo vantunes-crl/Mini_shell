@@ -171,6 +171,12 @@ void multiple_pipes(char **cmds_list, t_list **env)
                 close(fd[0]);
                 exec_redin(*cmds_list, env);
             }
+            else if (has_redirect == 3)
+            {
+                close(fd[1]);
+                close(fd[0]);
+                simple_redirec_in(*cmds_list, env);
+            }
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
             dup2(fd_in, 0);
