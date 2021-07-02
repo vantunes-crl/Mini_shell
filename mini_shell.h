@@ -60,5 +60,6 @@ char *redirect_input(int redirect, char *buff, int fd);
 void exec_redin(char *cmd, t_list **env);
 char *take_off(char *str);
 char *get_delimiter(char *str);
+char *invert_cmd(char *cmd);
 
 #endif

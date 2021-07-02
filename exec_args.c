@@ -165,11 +165,16 @@ void multiple_pipes(char **cmds_list, t_list **env)
             has_redirect = which_redirect(*cmds_list);
             if (has_redirect == 1 || has_redirect == 2)
                 multiple_redirect(has_redirect, *cmds_list, env);
-            if (has_redirect == 4)
+            else if (has_redirect == 4)
             {
                 close(fd[1]);
                 close(fd[0]);
                 exec_redin(*cmds_list, env);
+            }
+            else if (has_redirect == 3)
+            {
+                *cmds_list = invert_cmd(*cmds_list);
+                //printf("%s\n", *cmds_list);
             }
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
