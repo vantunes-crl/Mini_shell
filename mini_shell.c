@@ -30,6 +30,7 @@ int main(int argc, char **argv, char **env)
 {
     char inputString[200]; /* small buffer for input string from stdin */
     char **temp_cmds;
+    char **temp_dir;
     t_list *envp;
     exit_status = 0;
 
@@ -43,9 +44,17 @@ int main(int argc, char **argv, char **env)
         else
         {
             temp_cmds = cmds_list(inputString);
-            has_exit(temp_cmds);
-            multiple_pipes(temp_cmds, &envp); /* exec multiple pipes */
-            free_paths(temp_cmds);
+            if (ft_strncmp(temp_cmds[0],"cd", 2) == 0) /* handle all commands events */
+            {
+                temp_dir = ft_split(temp_cmds[0], ' ');
+                chdir(temp_dir[1]);
+            }
+            else
+            {
+                has_exit(temp_cmds);
+                multiple_pipes(temp_cmds, &envp); /* exec multiple pipes */
+                free_paths(temp_cmds);
+           }
         }
     }
     return (0);

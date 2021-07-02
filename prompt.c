@@ -15,7 +15,7 @@
 int take_line(char *str)
 {
     char *buff;
-    //signal(SIGINT, SIG_IGN);
+
     buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:"); /* prompet mensage and get buff with function readline */
     if (!buff) // JUST FOR THE CASE OF CTRL + D
     {
@@ -31,25 +31,4 @@ int take_line(char *str)
     }
     else
         return (1);
-}
-
-/* function for create own cmds */
-void owncmds(int cmd, t_list **env)
-{
-    char *str;
-
-    str = getenv("USER"); /* get the env var from sistem with user name*/
-    if (cmd == 0) // exit
-    {
-        printf("\033[0;31mGood  Bye\e[0m %s \U0001F97A\U0001F97A\U0001F97A\U0001F97A\n", str);
-        deleteList(env);
-        exit(0);
-    }
-    else if (cmd == 1) /* help comand */
-    {
-        printf("--------------------------------------Help--------------------------------------\n");
-        printf("exit == quit the program\n");
-        printf("cd `dest` == change the directory\n");
-        printf("--------------------------------------------------------------------------------\n");
-    }
 }

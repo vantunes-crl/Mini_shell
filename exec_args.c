@@ -52,7 +52,7 @@ void exce_arg(char **cmds, t_list *env)
     }
     free_paths(paths);
     if (ret < 0)
-        printf("zsh: command not found: %s\n", cmds[0]);
+        printf("minishell: command not found: %s\n", cmds[0]);
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
@@ -60,11 +60,7 @@ void exec_cmd(char **cmds, t_list **env)
 {
     char *temp;
 
-    if (ft_strncmp(cmds[0],"cd", 2) == 0) /* handle all commands events */
-        chdir(cmds[1]);
-    else if (ft_strncmp(cmds[0],"help", 4) == 0)
-        owncmds(1, env);
-    else if (ft_strncmp(cmds[0],"env", 3) == 0)
+    if (ft_strncmp(cmds[0],"env", 3) == 0)
         print_env(*env);
     else if (ft_strncmp(cmds[0], "pwd", 3) == 0)
         print_dir();
