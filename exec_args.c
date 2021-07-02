@@ -162,15 +162,15 @@ void multiple_pipes(char **cmds_list, t_list **env)
             error("fork");
         if (pid == 0) /* children process */
         {
-            dup2(fd_in, 0); /* cpy the stdin */
             has_redirect = which_redirect(*cmds_list);
             if (has_redirect == 1 || has_redirect == 2)
                 multiple_redirect(has_redirect, *cmds_list, env);
-            else if (has_redirect == 3 || has_redirect == 4)
-                *cmds_list = redirect_input(has_redirect, *cmds_list);
             else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
                 dup2(fd[1], 1);
+            dup2(fd_in, 0);
             close(fd[0]);
+            if (has_redirect == 4)
+                exec_redin(*cmds_list, env);
             temp_str = parse_cmds(*cmds_list);
             exec_cmd(temp_str, env); /* exec the comand and kill the process */
             close(fd_red);
