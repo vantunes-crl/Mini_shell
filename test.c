@@ -13,7 +13,21 @@ char *get_delimiter(char *str)
     return (*list);
 }
 
-char *take_off(char *str)
+char *take_off_begin(char *str)
+{
+    int i;
+    i = 0;
+
+    while (str[i] == '<')
+        i++;
+    while (ft_iswhitespace_bonus(str[i]))
+        i++;
+    while (!ft_iswhitespace_bonus(str[i]))
+        i++;
+    return (ft_substr(str,i, ft_strlen(str) - i));
+}
+
+char *take_off_middle(char *str)
 {
     int i;
     char *new_str;
@@ -48,10 +62,13 @@ void exec_redin(char *cmd, t_list **env)
     char *final_buff = ft_strdup("");
     char *delimiter;
     char *line;
-    pid_t pid2;
 
     delimiter = get_delimiter(cmd);
-    str2 = take_off(cmd);
+
+    if (cmd[0] == '<')
+        str2 = take_off_begin(cmd);
+    else
+        str2 = take_off_middle(cmd);
     pipe(fd);
     pid = fork();
     if (pid == 0)
@@ -82,6 +99,7 @@ void exec_redin(char *cmd, t_list **env)
     }
 }
 
+/* << l cat */
 /* < cat file1 , print the file */
 /* command << delimiter
 document
