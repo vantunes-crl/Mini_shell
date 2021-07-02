@@ -2,30 +2,31 @@
 #include <dirent.h>
 #include <string.h>
 
-char *invert_cmd(char *cmd)
-{
-    int i;
-    char **cmds_list;
-    char *file_name;
-    char *cmd2 = ft_strdup("");
+// char *invert_cmd(char *cmd)
+// {
+//     int i;
+//     char **cmds_list;
+//     char *file_name;
+//     char *cmd2 = ft_strdup("");
 
-    i = 0;
-    cmds_list = ft_split(cmd, ' ');
-    cmds_list++;
-    file_name = ft_strdup(*cmds_list); /* < file1 cat */
-    cmds_list++;
-    while (*cmds_list)
-    {
-        if (ft_strncmp(file_name, *cmds_list, ft_strlen(file_name)) == 0)
-            break;
-        cmd2 = ft_super_strjoin(3, cmd2, " ", *cmds_list);
-        cmds_list++;
-    }
-    if (ft_strnstr(cmd2, "grep", ft_strlen(cmd2)) || ft_strnstr(cmd2, "cat", ft_strlen(cmd2)))
-        return (ft_super_strjoin(3, cmd2, " ", file_name));
-    else
-        return(cmd2);
-}
+//     i = 0;
+//     cmds_list = ft_split(cmd, ' '); /* ls < file1 */
+//     cmds_list++;
+//     file_name = ft_strdup(*cmds_list); /* < file1 cat */
+//     cmds_list++;
+//     while (*cmds_list)
+//     {
+//         if (ft_strncmp(file_name, *cmds_list, ft_strlen(file_name)) == 0)
+//             break;
+//         cmd2 = ft_super_strjoin(3, cmd2, " ", *cmds_list);
+//         cmds_list++;
+//     }
+//     if (ft_strnstr(cmd2, "grep", ft_strlen(cmd2)) || ft_strnstr(cmd2, "cat", ft_strlen(cmd2)))
+//         return (ft_super_strjoin(3, cmd2, " ", file_name));
+//     else
+//         return(cmd2);
+// }
+
 
 char *get_delimiter(char *str)
 {
