@@ -48,6 +48,7 @@ void exec_redin(char *cmd, t_list **env)
     char *final_buff = ft_strdup("");
     char *delimiter;
     char *line;
+    pid_t pid2;
 
     delimiter = get_delimiter(cmd);
     str2 = take_off(cmd);
@@ -64,13 +65,14 @@ void exec_redin(char *cmd, t_list **env)
             line = ft_strdup("\n");
             final_buff = ft_strjoin(final_buff, line);
         }
-        write(1, final_buff, ft_strlen(final_buff));
+        write(fd[1], final_buff, ft_strlen(final_buff));
         close(fd[0]);
         close(fd[1]);
         exit(0);
     }
     else
     {
+        wait(NULL);
         dup2(fd[0], 0);
         close(fd[0]);
         close(fd[1]);
