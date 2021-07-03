@@ -16,17 +16,17 @@ int take_line(char *str)
 {
     char *buff;
 
-    buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:"); /* prompet mensage and get buff with function readline */
-    if (!buff) // JUST FOR THE CASE OF CTRL + D
+    buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:");
+    if (!buff) 
     {
         printf("\r");
         exit(0);
     }
-    if (ft_strlen(buff) != 0) /* if has something to read */
+    if (ft_strlen(buff) != 0)
     {
-        add_history(buff); /* cpy the buffer str to history , history can work with arrows down and up , and autocomplete with tabs */
-        strcpy(str, buff); 
-        free(buff); /* cpy the buff str to main str */
+        add_history(buff);
+        ft_strlcpy(str, buff, ft_strlen(buff) + 1);
+        free(buff);
         return (0);
     }
     else
