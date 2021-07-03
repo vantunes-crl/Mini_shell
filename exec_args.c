@@ -12,16 +12,51 @@ int is_abspath(char *str)
     return (0);
 }
 
-/* funtion exec a comand based on the path env variavables */
-void exce_arg(char **cmds, t_list *env)
+void execve_exec(char **paths, char **cmds)
 {
-    int i = 0;
-    char **paths;
     char *temp_path;
-    int abs_path;
+    int i;
     int ret;
 
+    i = 0;
     ret = 0;
+    while (paths[i])
+    {
+        temp_path = paths[i];
+        paths[i] = ft_strjoin(paths[i], "/");
+        free(temp_path);
+        temp_path = paths[i]; 
+        paths[i] = ft_strjoin(paths[i], cmds[0]);
+        free(temp_path);
+        ret = execve(paths[i], cmds,  NULL);
+        i++;
+    }
+    if (ret < 0)
+        printf("minishell: command not found: %s\n", cmds[0]);
+}
+
+/* funtion exec a comand based on the path env variavables */
+char **find_path(char **cmds, t_list *env)
+{
+    char **paths;
+
+    while (env)
+    {
+        if (ft_strncmp((char *)env->content, "PATH", 4) == 0)
+            break ;
+        env = env->next;
+    }
+    if (!env)
+        error("No such file or directory");
+    paths = ft_split((char *)env->content, ':');
+    return (paths);
+}
+
+void exce_arg(char **cmds, t_list *env)
+{
+    int abs_path;
+    char **paths;
+
     abs_path = is_abspath(cmds[0]);
     if (abs_path)
     {
@@ -30,29 +65,9 @@ void exce_arg(char **cmds, t_list *env)
             error(cmds[0]);
         return ;
     }
-    while (env)
-    {
-        if (ft_strncmp((char *)env->content, "PATH", 4) == 0) /* find the env PATH in the env(cpy) list */
-            break ;
-        env = env->next;
-    }
-    if (!env) /* if dont exists path env var */
-        error("No such file or directory");
-    paths = ft_split((char *)env->content, ':'); /* split all bin directorys */
-    while (paths[i]) /* keep trying exec until sucess */
-    {
-        temp_path = paths[i]; /* old pointer */
-        paths[i] = ft_strjoin(paths[i], "/"); /* new pointer */
-        free(temp_path); /* free old */
-        temp_path = paths[i]; 
-        paths[i] = ft_strjoin(paths[i], cmds[0]);
-        free(temp_path);
-        ret = execve(paths[i], cmds,  NULL);
-        i++;
-    }
+    paths = find_path(cmds, env);
+    execve_exec(paths, cmds);
     free_paths(paths);
-    if (ret < 0)
-        printf("minishell: command not found: %s\n", cmds[0]);
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
@@ -66,10 +81,6 @@ void exec_cmd(char **cmds, t_list **env)
         print_dir();
     else if (ft_strncmp(cmds[0], "echo", 4) == 0)
         print_echo(env, cmds);
-    else if (ft_strncmp(cmds[0], "unset", 5) == 0)
-        del_elem_lst(env, cmds[1]);
-    else if (ft_strncmp(cmds[0], "export", 6) == 0)
-        ft_lstadd_back(env, ft_lstnew(cmds[1]));
     else if (ft_strncmp(cmds[0], "$?", 2) == 0)
     {
         printf("%d\n", exit_status);
@@ -133,20 +144,15 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env)
     }
     exit(0);
 }
+
 /* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env)
 {
     pid_t pid;
     int fd[2]; // fd[0] fd[1] */ 
     int fd_in = 0;
-    int fd_red = 0;
-    int i = 0;
     int has_redirect = 0;
-    int flag = 0;
-    int fd_2 = 0;
     char **temp_str;
-    char buff[1000];
-    pid_t pid2;
 
     int temp_exit;
     while (*cmds_list != NULL) /* while has commands */
@@ -179,7 +185,6 @@ void multiple_pipes(char **cmds_list, t_list **env)
             close(fd[0]);
             temp_str = parse_cmds(*cmds_list);
             exec_cmd(temp_str, env); /* exec the comand and kill the process */
-            close(fd_red);
             exit(0);
         }
         else

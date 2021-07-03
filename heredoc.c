@@ -97,10 +97,3 @@ void exec_redin(char *cmd, t_list **env)
         exit(0);
     }
 }
-
-/* << l cat */
-/* < cat file1 , print the file */
-/* command << delimiter
-document
-delimiter
-*/

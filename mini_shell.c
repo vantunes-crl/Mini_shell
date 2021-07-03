@@ -28,31 +28,45 @@ void    kill_handler(int sig)
 /* main prompet its a loop then hold all program and wait for next cmds*/
 int main(int argc, char **argv, char **env)
 {
-    char inputString[200]; /* small buffer for input string from stdin */
+    char inputString[200];
     char **temp_cmds;
     char **temp_dir;
     t_list *envp;
     exit_status = 0;
 
-    envp = init_env(env); /* create a cpy of env variavables */
+    envp = init_env(env);
+
     signal(SIGINT, kill_handler);
 
     while (TRUE)
     {
-        if (take_line(inputString)) /* keep going while dont have inputs */
+        if (take_line(inputString))
             continue;
         else
         {
             temp_cmds = cmds_list(inputString);
-            if (ft_strncmp(temp_cmds[0],"cd", 2) == 0) /* handle all commands events */
+            if (ft_strncmp(temp_cmds[0],"cd", 2) == 0)
             {
                 temp_dir = ft_split(temp_cmds[0], ' ');
                 chdir(temp_dir[1]);
+                free_paths(temp_dir);
+            }
+            else if (ft_strncmp(temp_cmds[0], "unset", 5) == 0)
+            {
+                temp_dir = ft_split(temp_cmds[0], ' ');
+                del_elem_lst(&envp, temp_dir[1]);
+                free_paths(temp_dir);
+            }
+            else if (ft_strncmp(temp_cmds[0], "export", 6) == 0)
+            {
+                temp_dir = ft_split(temp_cmds[0], ' ');
+                ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
+                free_paths(temp_dir);
             }
             else
             {
                 has_exit(temp_cmds);
-                multiple_pipes(temp_cmds, &envp); /* exec multiple pipes */
+                multiple_pipes(temp_cmds, &envp);
                 free_paths(temp_cmds);
            }
         }

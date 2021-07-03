@@ -7,14 +7,15 @@ void    handle_var_env(char *var_env, t_list *env, int flag, int n)
     
     while (env)
     {
-        if (ft_strncmp((char *)env->content, var_env, 4) == 0) /* find the env PATH in the env(cpy) list */
+        if (ft_strncmp((char *)env->content, var_env, 4) == 0)
             break ;
         env = env->next;
     }
-    if (!env) /* if dont exists path env var */
+    if (!env)
     {
         if (flag == 0)
             printf("\n");
+        free(var_env);
         return ;
     }
     free(var_env);
@@ -26,10 +27,11 @@ void    handle_var_env(char *var_env, t_list *env, int flag, int n)
     var_env = ft_substr(temp, i + 1, ft_strlen(temp));
     free(temp);
     if (flag == 1)
-        printf("zsh: command not found: ");
+        printf("minishell: command not found: ");
     printf("%s", var_env);
     if (n == 1)
         printf("\n");
+    free(var_env);
 }
 
 
