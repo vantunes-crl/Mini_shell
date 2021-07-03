@@ -1,13 +1,12 @@
 #include "mini_shell.h"
 
-/* return a command splited and without white spaces */
 char **parse_cmds(char *str)
 {
     char **cmds;
     char *temp_str;
 
-    temp_str = ft_strtrim(str, WHITE_SPACE); /* take of the withspaces from the begining and end of string */
-    cmds = ft_split(temp_str , ' '); /* split based on spaces */
+    temp_str = ft_strtrim(str, WHITE_SPACE); 
+    cmds = ft_split(temp_str , ' ');
     free(temp_str);
     return (cmds);
 }
@@ -32,7 +31,7 @@ char **cmds_list(char *str)
     char **cmds_lst;
     char *temp_str;
 
-    temp_str = ft_strjoin(temp_str, " |");
+    temp_str = ft_strjoin(str, " |");
     cmds_lst = ft_split(temp_str, '|'); /* split the commands by pipes */
     free(temp_str);
 

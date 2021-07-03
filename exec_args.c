@@ -112,10 +112,11 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
     t_list *file_list = NULL;
     pid_t pid;
     int fd_red;
+    char *new_cmd_list;
 
     file_list = file_name(cmds_list);
-    cmds_list = new_cmds(cmds_list);
-    temp_str = parse_cmds(cmds_list);
+    new_cmd_list = new_cmds(cmds_list);
+    temp_str = parse_cmds(new_cmd_list);
 
     while (file_list != NULL)
     {
@@ -135,6 +136,9 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
         }
         file_list = file_list->next;
     }
+    free(new_cmd_list);
+    free_paths(temp_str);
+    deleteList(&file_list);
     exit(0);
 }
 
@@ -142,21 +146,20 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
 void multiple_pipes(char **cmds_list, t_list **env, char **paths)
 {
     pid_t pid;
-    int fd[2]; // fd[0] fd[1] */ 
+    int fd[2];
     int fd_in = 0;
     int has_redirect = 0;
     char **temp_str;
 
     int temp_exit;
-    while (*cmds_list != NULL) /* while has commands */
+    while (*cmds_list != NULL)
     {
-        temp_str = NULL;
-        if (pipe(fd) < 0)   /* function that creates a pipe in the fd */
+        if (pipe(fd) < 0)
             error("pipe");
-        pid = fork(); /* function that creates a children process to be killed by exec */
+        pid = fork();
         if (pid < 0)
             error("fork");
-        if (pid == 0) /* children process */
+        if (pid == 0) 
         {
             has_redirect = which_redirect(*cmds_list);
             if (has_redirect == 1 || has_redirect == 2)
@@ -173,12 +176,13 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
                 close(fd[0]);
                 simple_redirec_in(*cmds_list, env, paths);
             }
-            else if (*(cmds_list + 1) != NULL) /* when is the last cmd from the list stop cpy the stdout */
+            else if (*(cmds_list + 1) != NULL)
                 dup2(fd[1], 1);
             dup2(fd_in, 0);
             close(fd[0]);
             temp_str = parse_cmds(*cmds_list);
-            exec_cmd(temp_str, env, paths); /* exec the comand and kill the process */
+            exec_cmd(temp_str, env, paths);
+            free_paths(temp_str);
             exit(0);
         }
         else

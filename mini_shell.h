@@ -27,7 +27,7 @@ void	exce_arg(char **cmds, t_list *env, char **paths);
 void	exec_pipe(char *str);
 void    exec_cmd(char **cmds, t_list **env, char **paths);
 void    print_dir();
-void    multiple_pipes(char **cmds_list,t_list **en, char **paths);
+void    multiple_pipes(char **cmds_list,t_list **env, char **paths);
 
 /* parse function */
 char	**parse_cmds(char *str);
