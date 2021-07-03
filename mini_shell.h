@@ -23,11 +23,11 @@
 int exit_status;
 
 /*exec_functions */
-void	exce_arg(char **cmds, t_list *env);
+void	exce_arg(char **cmds, t_list *env, char **paths);
 void	exec_pipe(char *str);
-void    exec_cmd(char **cmds,t_list **env);
+void    exec_cmd(char **cmds, t_list **env, char **paths);
 void    print_dir();
-void    multiple_pipes(char **cmds_list,t_list **env);
+void    multiple_pipes(char **cmds_list,t_list **en, char **paths);
 
 /* parse function */
 char	**parse_cmds(char *str);
@@ -48,7 +48,7 @@ void print_echo(t_list **env, char **cmds);
 void print_dir();
 void print_env(t_list *envp);
 void    handle_var_env(char *var_env, t_list *env, int flag, int n);
-void has_exit(char **cmds_list);
+void has_exit(char **cmds_list, t_list **env);
 
 /* redirct */
 int which_redirect(char *str);
@@ -57,9 +57,10 @@ int creat_file(int redirect, char *file_name);
 t_list *file_name(char *cmds);
 char *new_cmds_in(char *cmd);
 char *redirect_input(int redirect, char *buff, int fd);
-void exec_redin(char *cmd, t_list **env);
+void exec_redin(char *cmd, t_list **env, char **paths);
 char *take_off(char *str);
 char *get_delimiter(char *str);
-void simple_redirec_in(char *cmd, t_list **env);
+void simple_redirec_in(char *cmd, t_list **env, char **paths);
+char **find_path(char **cmds, t_list *env);
 
 #endif

@@ -52,7 +52,7 @@ char *take_off_middle(char *str)
     return (new_str);
 }
 
-void exec_redin(char *cmd, t_list **env)
+void exec_redin(char *cmd, t_list **env, char **paths)
 {
     pid_t pid;
     int fd[2];
@@ -93,7 +93,7 @@ void exec_redin(char *cmd, t_list **env)
         close(fd[0]);
         close(fd[1]);
         str = parse_cmds(str2);
-        exec_cmd(str, env);
+        exec_cmd(str, env, paths);
         exit(0);
     }
 }

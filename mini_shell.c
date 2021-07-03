@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **env)
     char **temp_dir;
     t_list *envp;
     exit_status = 0;
-
+    char **paths;
     envp = init_env(env);
 
     signal(SIGINT, kill_handler);
@@ -50,23 +50,28 @@ int main(int argc, char **argv, char **env)
                 temp_dir = ft_split(temp_cmds[0], ' ');
                 chdir(temp_dir[1]);
                 free_paths(temp_dir);
+                free_paths(temp_cmds);
             }
             else if (ft_strncmp(temp_cmds[0], "unset", 5) == 0)
             {
                 temp_dir = ft_split(temp_cmds[0], ' ');
                 del_elem_lst(&envp, temp_dir[1]);
                 free_paths(temp_dir);
+                free_paths(temp_cmds);
             }
             else if (ft_strncmp(temp_cmds[0], "export", 6) == 0)
             {
                 temp_dir = ft_split(temp_cmds[0], ' ');
                 ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
                 free_paths(temp_dir);
+                free_paths(temp_cmds);
             }
             else
             {
-                has_exit(temp_cmds);
-                multiple_pipes(temp_cmds, &envp);
+                has_exit(temp_cmds , &envp);
+                paths = find_path(temp_cmds, envp);
+                multiple_pipes(temp_cmds, &envp, paths);
+                free_paths(paths);
                 free_paths(temp_cmds);
            }
         }

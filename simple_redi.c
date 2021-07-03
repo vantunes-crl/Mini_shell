@@ -47,7 +47,7 @@ char *new_cmd_in(char *cmd)
     return (NULL);
 }
 
-void simple_redirec_in(char *cmd, t_list **env)
+void simple_redirec_in(char *cmd, t_list **env, char **paths)
 {
     pid_t pid;
     int fd[2];
@@ -72,7 +72,7 @@ void simple_redirec_in(char *cmd, t_list **env)
         close(fd[0]);
         close(fd[1]);
         temp_cmd = parse_cmds(new_cmd);
-        exec_cmd(temp_cmd, env);
+        exec_cmd(temp_cmd, env, paths);
         exit(0);
     }
     else
