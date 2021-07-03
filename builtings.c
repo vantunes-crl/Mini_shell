@@ -34,6 +34,19 @@ void    handle_var_env(char *var_env, t_list *env, int flag, int n)
     free(var_env);
 }
 
+void has_exit(char **cmds_list, t_list **env)
+{
+    while (*cmds_list)
+    {
+        if (ft_strncmp(*cmds_list, "exit", 4) == 0)
+        {
+            deleteList(env);
+            free_paths(cmds_list);
+            exit(0);
+        }
+        cmds_list++;
+    }
+}
 
 /* builting function to simulate echo in shell */
 void print_echo(t_list **env, char **cmds)
@@ -102,4 +115,33 @@ void print_env(t_list *envp)
         printf("%s\n",(char *)envp->content); /* print all env lst */
         envp = envp->next;
     }
+}
+
+void  ft_cd(char **temp_cmds)
+{
+    char **temp_dir;
+
+    temp_dir = ft_split(temp_cmds[0], ' ');
+    chdir(temp_dir[1]);
+    free_paths(temp_dir);
+    free_paths(temp_cmds);
+}
+
+void ft_unset(char **temp_cmds, t_list *envp)
+{
+    char **temp_dir;
+
+    temp_dir = ft_split(temp_cmds[0], ' ');
+    del_elem_lst(&envp, temp_dir[1]);
+    free_paths(temp_dir);
+    free_paths(temp_cmds);
+}
+
+void ft_export(char **temp_cmds, t_list *envp)
+{
+    char **temp_dir;
+
+    temp_dir = ft_split(temp_cmds[0], ' ');
+    ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
+    free_paths(temp_cmds);
 }
