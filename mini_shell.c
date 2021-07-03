@@ -4,7 +4,6 @@
 void error(char *str)
 {
     perror(str); /* function the returns the sistem error + string */
-    exit(0);
 }
 
 void    kill_handler(int sig)
@@ -71,7 +70,6 @@ int main(int argc, char **argv, char **env)
                 has_exit(temp_cmds , &envp);
                 paths = find_path(temp_cmds, envp);
                 multiple_pipes(temp_cmds, &envp, paths);
-                free_paths(paths);
                 free_paths(temp_cmds);
            }
         }
@@ -80,15 +78,5 @@ int main(int argc, char **argv, char **env)
 }
 
 
-
-// BUG FOR TABS! 
-// BUG NO HISTORICO! (echo with argument)
-// BUG echo $?
-// Little bug with expr $? + $
-// ctrl + / should quit minishell when there is something written in it
-// blocking command like cat with no arguments + ctrl+c repeats the prompt
-// echo "catlol.c | cat > lol.c"
-// DO SIMPLES QUOTES AND DOUBLE QUOTES
-// cd . and cd .. is not working (I THING cd IS NOT WORKING AT ALL)
-
+/* fix $? */
 

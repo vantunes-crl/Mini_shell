@@ -18,12 +18,11 @@ void	free_paths(char **paths)
 	int	i;
 
 	i = 0;
-	while (paths[i] != NULL)
+	while (*(paths + 1))
 	{
-		free(paths[i]);
-		i++;
+		free(*paths);
+        paths++;
 	}
-    free(paths);
     paths = NULL;
 }
 

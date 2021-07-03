@@ -48,7 +48,8 @@ char **find_path(char **cmds, t_list *env)
     }
     if (!env)
         error("No such file or directory");
-    paths = ft_split((char *)env->content, ':');
+    else
+        paths = ft_split((char *)env->content, ':');
     return (paths);
 }
 
