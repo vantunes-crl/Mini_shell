@@ -32,7 +32,7 @@ void execve_exec(char **paths, char **cmds)
         i++;
     }
     if (ret < 0)
-        printf("minishell: command not found: %s\n", cmds[0]);
+        error(cmds[0]);
 }
 
 /* funtion exec a comand based on the path env variavables */
@@ -47,7 +47,7 @@ char **find_path(char **cmds, t_list *env)
         env = env->next;
     }
     if (!env)
-        error("No such file or directory");
+        error(cmds[0]);
     else
         paths = ft_split((char *)env->content, ':');
     return (paths);
@@ -188,11 +188,11 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
         }
         else
         {
-            wait(&temp_exit); /* wait the children end and get the exit status */
+            wait(&temp_exit);
             if (temp_exit)
                 exit_status = temp_exit;
             close(fd[1]);
-            fd_in = fd[0]; /* keep tracking the old stdin */
+            fd_in = fd[0];
             cmds_list++;
         }
     }

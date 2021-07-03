@@ -62,5 +62,6 @@ char *take_off(char *str);
 char *get_delimiter(char *str);
 void simple_redirec_in(char *cmd, t_list **env, char **paths);
 char **find_path(char **cmds, t_list *env);
+void    kill_handler(int sig);
 
 #endif

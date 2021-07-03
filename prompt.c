@@ -1,22 +1,25 @@
 #include "mini_shell.h"
 
-/* function create a buffer from the stdout and cpy to a string and add_history*/
-/* after add to history you can use the arrows up and down */
-/* return 1 if has no words to read to keep the program on */
-
-// static void int_handler(int sig_num)
-// {
-//     printf("\n"); // Move to a new line
-//     rl_on_new_line(); // Regenerate the prompt on a newline
-//     rl_replace_line(); // Clear the previous text
-//     rl_redisplay();
-// }
+void    kill_handler(int sig)
+{
+    // struct termios conf;
+    // struct termios oldconf;
+    // ioctl(ttyslot(), TIOCGETA, &conf);
+    // ioctl(ttyslot(), TIOCGETA, &oldconf);
+    // conf.c_lflag &= ~(ECHO);
+    // conf.c_lflag &= ~(ICANON);
+    // ioctl(ttyslot(), TIOCSETA, &conf);
+    // conf.c_lflag ^= (ECHO);
+    write(1, "\r\n\033[3;32mMiniShell\e[0m\U0001F916:", 28);
+    //ioctl(ttyslot(), TIOCSETA, &oldconf);
+     return ;
+}
 
 int take_line(char *str)
 {
     char *buff;
 
-    buff = readline("\033[3;32mMiniShell\e[0m\U0001F916:");
+    buff = readline("\r\033[3;32mMiniShell\e[0m\U0001F916:");
     if (!buff) 
     {
         printf("\r");
