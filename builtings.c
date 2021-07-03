@@ -48,7 +48,6 @@ void has_exit(char **cmds_list, t_list **env)
     }
 }
 
-/* builting function to simulate echo in shell */
 void print_echo(t_list **env, char **cmds)
 {
     int n;
@@ -65,7 +64,7 @@ void print_echo(t_list **env, char **cmds)
     if (ft_strncmp("-n", cmds[1], 3) == 0 && !cmds[2])
         return ;
     cmds++;
-    if (ft_strncmp(*cmds, "-n", 2) == 0) /* take of the line breaker */
+    if (ft_strncmp(*cmds, "-n", 2) == 0)
     { 
         n = 1;
         cmds++;
@@ -98,21 +97,19 @@ void print_echo(t_list **env, char **cmds)
         printf("\n");
 }
 
-/* builting function to simulate pwd in shell */
 void print_dir()
 {
     char str[1040];
 
-    getcwd(str, sizeof(str)); /* function that get the actual Directory from the sistem */
+    getcwd(str, sizeof(str));
     printf("%s\n",str);
 }
 
-/* builting function to simulate env in shell without parameters */
 void print_env(t_list *envp)
 {
     while (envp != NULL)
     {
-        printf("%s\n",(char *)envp->content); /* print all env lst */
+        printf("%s\n",(char *)envp->content);
         envp = envp->next;
     }
 }
