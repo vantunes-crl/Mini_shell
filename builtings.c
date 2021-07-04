@@ -1,25 +1,12 @@
 #include "mini_shell.h"
 
-void    handle_var_env(char *var_env, t_list *env, int flag, int n)
+static void handler_part(char *content, int flag, int n)
 {
+    char *var_env;
     char *temp;
     int i;
-    
-    while (env)
-    {
-        if (ft_strncmp((char *)env->content, var_env, 4) == 0)
-            break ;
-        env = env->next;
-    }
-    if (!env)
-    {
-        if (flag == 0)
-            printf("\n");
-        free(var_env);
-        return ;
-    }
-    free(var_env);
-    var_env = ft_strdup(env->content);
+
+    var_env = ft_strdup(content);
     temp = var_env;
     i = 0;
     while (temp[i] != '=')
@@ -34,7 +21,25 @@ void    handle_var_env(char *var_env, t_list *env, int flag, int n)
     free(var_env);
 }
 
-/* builting function to simulate echo in shell */
+void    handle_var_env(char *var_env, t_list *env, int flag, int n)
+{
+    while (env)
+    {
+        if (ft_strncmp((char *)env->content, var_env, 4) == 0)
+            break ;
+        env = env->next;
+    }
+    if (!env)
+    {
+        if (flag == 0)
+            printf("\n");
+        free(var_env);
+        return ;
+    }
+    free(var_env);
+    handler_part((char *)env->content, flag, n);
+}
+
 void print_echo(t_list **env, char **cmds)
 {
     int n;
@@ -51,7 +56,7 @@ void print_echo(t_list **env, char **cmds)
     if (ft_strncmp("-n", cmds[1], 3) == 0 && !cmds[2])
         return ;
     cmds++;
-    if (ft_strncmp(*cmds, "-n", 2) == 0) /* take of the line breaker */
+    if (ft_strncmp(*cmds, "-n", 2) == 0)
     { 
         n = 1;
         cmds++;
@@ -84,21 +89,19 @@ void print_echo(t_list **env, char **cmds)
         printf("\n");
 }
 
-/* builting function to simulate pwd in shell */
 void print_dir()
 {
     char str[1040];
 
-    getcwd(str, sizeof(str)); /* function that get the actual Directory from the sistem */
+    getcwd(str, sizeof(str));
     printf("%s\n",str);
 }
 
-/* builting function to simulate env in shell without parameters */
 void print_env(t_list *envp)
 {
     while (envp != NULL)
     {
-        printf("%s\n",(char *)envp->content); /* print all env lst */
+        printf("%s\n",(char *)envp->content);
         envp = envp->next;
     }
 }
