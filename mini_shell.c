@@ -1,13 +1,17 @@
 #include "mini_shell.h"
 
-/* function to hold all error events in the program */
-void error(char *str)
+t_list *init_env(char **env)
 {
-    perror(str); /* function the returns the sistem error + string */
+    t_list *elem;
+    char **envp;
+
+    elem = NULL;
+    envp = env;
+    while (*envp != NULL)
+        ft_lstadd_back(&elem,ft_lstnew(*envp++));
+    return (elem);
 }
 
-
-/* main prompet its a loop then hold all program and wait for next cmds*/
 int main(int argc, char **argv, char **env)
 {
     char inputString[200];
@@ -58,7 +62,3 @@ int main(int argc, char **argv, char **env)
     }
     return (0);
 }
-
-
-/* fix $? */
-

@@ -34,7 +34,6 @@ void    handle_var_env(char *var_env, t_list *env, int flag, int n)
     free(var_env);
 }
 
-
 /* builting function to simulate echo in shell */
 void print_echo(t_list **env, char **cmds)
 {

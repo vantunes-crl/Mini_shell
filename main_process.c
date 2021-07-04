@@ -1,5 +1,6 @@
 #include "mini_shell.h"
 
+/* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env, char **paths)
 {
     pid_t pid;
@@ -51,6 +52,5 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
             fd_in = fd[0];
             cmds_list++;
         }
-    }
-   
+    }  
 }

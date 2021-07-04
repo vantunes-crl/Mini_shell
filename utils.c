@@ -56,3 +56,8 @@ char **find_path(char **cmds, t_list *env)
         paths = ft_split((char *)env->content, ':');
     return (paths);
 }
+
+void error(char *str)
+{
+    perror(str);
+}
