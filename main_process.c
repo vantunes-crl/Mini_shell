@@ -1,5 +1,13 @@
 #include "mini_shell.h"
 
+void heredoc_redin(char *cmds_list, t_list **env, char **paths, int has_redirect)
+{
+	if (has_redirect == 3)
+		simple_redirec_in(cmds_list, env, paths);
+	else
+		exec_redin(cmds_list, env, paths);
+}
+
 void	main_process(char **cmds_list, t_list **env, char **paths)
 {
 	pid_t	pid;
@@ -23,18 +31,8 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 			has_redirect = which_redirect(*cmds_list);
 			if (has_redirect == 1 || has_redirect == 2)
 				multiple_redirect(has_redirect, *cmds_list, env, paths);
-			else if (has_redirect == 4)
-			{
-				close(fd[1]);
-				close(fd[0]);
-				exec_redin(*cmds_list, env, paths);
-			}
-			else if (has_redirect == 3)
-			{
-				close(fd[1]);
-				close(fd[0]);
-				simple_redirec_in(*cmds_list, env, paths);
-			}
+			else if (has_redirect == 4 || has_redirect == 3)
+				heredoc_redin(*cmds_list, env, paths, has_redirect);
 			else if (*(cmds_list + 1) != NULL)
 				dup2(fd[1], 1);
 			dup2(fd_in, 0);
