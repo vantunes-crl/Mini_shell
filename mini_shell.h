@@ -28,7 +28,6 @@ void	exec_pipe(char *str);
 void    exec_cmd(char **cmds, t_list **env, char **paths);
 void    print_dir();
 void    multiple_pipes(char **cmds_list,t_list **env, char **paths);
-void    multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **paths);
 
 /* parse function */
 char	**parse_cmds(char *str);
@@ -37,23 +36,19 @@ char	**cmds_list(char *str);
 t_list *init_env(char **env);
 
 /* utils */
-void    error(char *str);
-int     take_line(char *str);
+void error(char *str);
+int take_line(char *str);
+void owncmds(int cmd, t_list **env);
 void	free_paths(char **paths);
-void    deleteList(t_list **env);
-int     is_abspath(char *str);
-char    **find_path(char **cmds, t_list *env);
+void deleteList(t_list **env);
+int is_abspath(char *str);
 
 /*builtings */
-
 void print_echo(t_list **env, char **cmds);
 void print_dir();
 void print_env(t_list *envp);
 void    handle_var_env(char *var_env, t_list *env, int flag, int n);
 void has_exit(char **cmds_list, t_list **env);
-void  ft_cd(char **temp_cmds);
-void ft_unset(char **temp_cmds, t_list *envp);
-void ft_export(char **temp_cmds, t_list *envp);
 
 /* redirct */
 int which_redirect(char *str);
