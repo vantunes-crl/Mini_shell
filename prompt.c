@@ -10,7 +10,7 @@ void    kill_handler(int sig)
     // conf.c_lflag &= ~(ICANON);
     // ioctl(ttyslot(), TIOCSETA, &conf);
     // conf.c_lflag ^= (ECHO);
-    write(1, "\r\n\033[3;32mMiniShell\e[0m\U0001F916:", 28);
+    write(1, "\b\n\033[3;32mMiniShell\e[0m\U0001F916:", 28);
     //ioctl(ttyslot(), TIOCSETA, &oldconf);
      return ;
 }
@@ -19,7 +19,7 @@ int take_line(char *str)
 {
     char *buff;
 
-    buff = readline("\r\033[3;32mMiniShell\e[0m\U0001F916:");
+    buff = readline("\b\033[3;32mMiniShell\e[0m\U0001F916:");
     if (!buff) 
     {
         printf("\r");
