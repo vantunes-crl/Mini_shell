@@ -43,6 +43,7 @@ void owncmds(int cmd, t_list **env);
 void	free_paths(char **paths);
 void deleteList(t_list **env);
 int is_abspath(char *str);
+void	double_free(char *elem1, char *elem2);
 
 /*builtings */
 void print_echo(t_list **env, char **cmds);
