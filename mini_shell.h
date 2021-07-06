@@ -22,6 +22,18 @@
 
 int exit_status;
 
+typedef struct s_process
+{
+    pid_t	pid;
+	int		fd[2];
+	int		fd_in;
+	int		has_redirect;
+	char	**temp_str;
+	int		temp_exit;
+	int		i;
+
+}              t_process;
+
 /*exec_functions */
 void	exce_arg(char **cmds, t_list *env, char **paths);
 void	exec_pipe(char *str);
