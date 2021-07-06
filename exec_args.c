@@ -50,8 +50,8 @@ void	exec_cmd(char **cmds, t_list **env, char **paths)
 		print_echo(env, cmds);
 	else if (ft_strncmp(cmds[0], "$?", 2) == 0)
 	{
-		printf("%d\n", exit_status);
-		exit_status = 0;
+		printf("%d\n", g_exit_status);
+		g_exit_status = 0;
 	}
 	else if (ft_strncmp(cmds[0], "$", 1) == 0)
 	{
