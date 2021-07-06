@@ -18,7 +18,7 @@
 # define FALSE 0
 # define WHITE_SPACE "\t "
 
-int exit_status;
+int g_exit_status;
 
 typedef struct s_process
 {
@@ -30,7 +30,6 @@ typedef struct s_process
 	int		temp_exit;
 	char	*fn;
 	int		i;
-
 }              t_process;
 
 /*exec_functions */

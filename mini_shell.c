@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **env)
 	char	**temp_cmds;
 	t_list	*envp;
 
-	exit_status = 0;
+	g_exit_status = 0;
 	envp = init_env(env);
 	signal(SIGINT, kill_handler);
 	while (TRUE)

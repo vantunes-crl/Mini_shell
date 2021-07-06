@@ -45,7 +45,7 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 		{
 			wait(&process.temp_exit);
 			if (process.temp_exit)
-				exit_status = process.temp_exit;
+				g_exit_status = process.temp_exit;
 			close(process.fd[1]);
 			process.fd_in = process.fd[0];
 			process.i++;
