@@ -9,7 +9,8 @@ void	heredoc_redin(char *cmds_list, t_list **env,
 		exec_redin(cmds_list, env, paths);
 }
 
-void	main_process_child(t_process *process, char **cmds_list, t_list **env, char **paths)
+void	main_process_child(t_process *process,
+	char **cmds_list, t_list **env, char **paths)
 {
 	process->has_redirect = which_redirect(cmds_list[process->i]);
 	if (process->has_redirect == 1 || process->has_redirect == 2)
@@ -28,7 +29,7 @@ void	main_process_child(t_process *process, char **cmds_list, t_list **env, char
 
 void	main_process(char **cmds_list, t_list **env, char **paths)
 {
-	t_process process;
+	t_process	process;
 
 	process.i = 0;
 	while (cmds_list[process.i])

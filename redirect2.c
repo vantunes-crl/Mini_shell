@@ -1,6 +1,7 @@
 #include "mini_shell.h"
 
-void	loop_file_list(t_process *files, char *content, t_list **env, char **paths)
+void	loop_file_list(t_process *files, char *content,
+	t_list **env, char **paths)
 {
 	pid_t	pid;
 	int		fd_red;
@@ -23,10 +24,11 @@ void	loop_file_list(t_process *files, char *content, t_list **env, char **paths)
 	}
 }
 
-void	multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **paths)
+void	multiple_redirect(int has_redirect, char *cmds_list,
+	t_list **env, char **paths)
 {
-	t_list	*file_list;
-	char	*new_cmd_list;
+	t_list		*file_list;
+	char		*new_cmd_list;
 	t_process	files;
 
 	files.has_redirect = has_redirect;
