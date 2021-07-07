@@ -1,5 +1,5 @@
-#ifndef	MINI_SHELL
-# define MINI_SHELL
+#ifndef		MINI_SHELL
+# define	MINI_SHELL
 
 # include "ft_libft/libft.h"
 # include <stdio.h>
