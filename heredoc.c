@@ -61,10 +61,9 @@ char *take_off_middle(char *str)
     return (new_str);
 }
 
-void exec_redin(char *cmd, t_list **env, char **paths)
+void exec_redin(char *cmd, t_list **env, char **paths, int fd[2])
 {
     pid_t pid;
-    int fd[2];
     char *buff;
     char **str;
     char *str2;

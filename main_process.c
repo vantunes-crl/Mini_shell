@@ -24,39 +24,7 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
             if (has_redirect == 1 || has_redirect == 2)
                 multiple_redirect(has_redirect, *cmds_list, env, paths);
             else if (has_redirect == 4)
-            {
-                char *buff;
-                char **str;
-                char *str2;
-                char *final_buff;
-                char *temp;
-                char *delimiter;
-                char *line;
-
-                final_buff = ft_strdup("");
-                delimiter = get_delimiter(*cmds_list);
-                if (*cmds_list[0] == '<')
-                    str2 = take_off_begin(*cmds_list);
-                else
-                    str2 = take_off_middle(*cmds_list);
-                while(1)
-                {
-                    buff = readline(">");
-                    if (ft_strncmp(buff, delimiter, ft_strlen(buff)) == 0)
-                        break;
-                    temp = final_buff;
-                    final_buff = ft_strjoin(final_buff, buff);
-                    free(temp);
-                    line = ft_strdup("\n");
-                    final_buff = ft_strjoin(final_buff, line);
-                    free(buff);
-                    free(line);
-                }
-                free(delimiter);
-                write(fd_in, final_buff, ft_strlen(final_buff));
-                free(final_buff);
-
-            }
+                exec_redin(*cmds_list, env, paths, fd);
             else if (has_redirect == 3)
             {
                 if (*(cmds_list + 1) != NULL)
@@ -79,6 +47,7 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
             else if (*(cmds_list + 1) != NULL)
                 dup2(fd[1], 1);
             close(fd[0]);
+            close(fd[1]);
             temp_str = parse_cmds(*cmds_list);
             exec_cmd(temp_str, env, paths);
             free_paths(temp_str);
