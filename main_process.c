@@ -31,9 +31,22 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
             }
             else if (has_redirect == 3)
             {
+                if (*(cmds_list + 1) != NULL)
+                    dup2(fd[1], 1);
+                char *fn = find_filename(*cmds_list);
+                char *new_cmd = new_cmd_in(*cmds_list);
+                fd_in = open(fn, O_RDWR, 0777);
+                if (fd_in < 0)
+                {
+                    perror("minishell");
+                    exit(0);
+                }
+                char **temp_cmd = parse_cmds(new_cmd);
+                free(new_cmd);
                 close(fd[1]);
                 close(fd[0]);
-                simple_redirec_in(*cmds_list, env, paths);
+                exec_cmd(temp_cmd, env, paths);
+                exit(0);
             }
             else if (*(cmds_list + 1) != NULL)
                 dup2(fd[1], 1);
