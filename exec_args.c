@@ -35,7 +35,8 @@ void exce_arg(char **cmds, t_list *env, char **paths)
             error(cmds[0]);
         return ;
     }
-    execve_exec(paths, cmds);
+    else
+        execve_exec(paths, cmds);
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
