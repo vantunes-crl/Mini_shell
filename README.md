@@ -1,5 +1,6 @@
 # Mini_shell
 Your shell should:
+ 
 
  - [x]  Not interpret unclosed quotes or unspecified special characters
        like \ or;.
@@ -15,8 +16,8 @@ Your shell should:
  - [x] ◦ unset with no options
  - [x] ◦ env with no options or arguments 
  - [x] ◦ exit with no options
- - [x] • ’ inhibit all interpretation of a sequence of characters.
- - [x] • " inhibit all interpretation of a sequence of characters except
+ - [ ] • ’ inhibit all interpretation of a sequence of characters.
+ - [ ] • " inhibit all interpretation of a sequence of characters except
        for $.
  - • Redirections:
  - [x] ◦ < should redirect input.
@@ -26,18 +27,11 @@ Your shell should:
  - [x] ◦ “>>” should redirect output with append mode.
  - [x] • Pipes | The output of each command in the pipeline is connected
        via a pipe to the input of the next command.
- - [x] • Environment variables ($ followed by characters) should expand
+ - [X] • Environment variables ($ followed by characters) should expand
        to their values.
- - [x] • $? should expands to the exit status of the most recently
+ - [X] • $? should expands to the exit status of the most recently
        executed foreground pipeline.
- - [x] • ctrl-C ctrl-D ctrl-\ should work like in bash.
+ - [ ] • ctrl-C ctrl-D ctrl-\ should work like in bash.
 • When interactive:
- - [x] ◦ ctrl-C print a new prompt on a newline.
- - [x] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
-
-# Tests
-
-- [x] Search and launch the right executable (based on the PATH variable or by using relative or absolute path)
-|Test abs Path   | /bin/ls -l                     |[x]|
-|Test abs Path pipe | ls -l '|' /bin/ls           |[x]|
-|Test all normal cmds |                           |[x]|
+ - [ ] ◦ ctrl-C print a new prompt on a newline.
+ - [X] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.

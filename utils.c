@@ -1,49 +1,63 @@
 #include "mini_shell.h"
 
-char	**find_path(char **cmds, t_list *env)
+void deleteList(t_list **env)
 {
-	char	**paths;
+    t_list *current = *env;
+    t_list *next;
 
-	while (env)
-	{
-		if (ft_strncmp((char *)env->content, "PATH", 4) == 0)
-			break ;
-		env = env->next;
-	}
-	if (!env)
-		error(cmds[0]);
-	else
-		paths = ft_split((char *)env->content, ':');
-	return (paths);
+    while (current != NULL)
+    {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    *env = NULL;
 }
 
-void	error(char *str)
+void	free_paths(char **paths)
 {
-	perror(str);
-}
-
-void	double_free(char *elem1, char *elem2)
-{
-	free(elem1);
-	free(elem2);
-}
-
-char	*get_delimiter(char *str)
-{
-	char	**list;
-	char	*temp;
-	int		i;
+	int	i;
 
 	i = 0;
-	list = ft_split(str, ' ');
-	while (ft_strncmp(*list, "<<", 2))
-		list++;
-	list++;
-	temp = ft_strdup(*list);
-	while (list[i] != NULL)
+	while (paths[i] != NULL)
 	{
-		free(list[i]);
+		free(paths[i]);
 		i++;
 	}
-	return (temp);
+    free(paths);
+    paths = NULL;
+}
+
+int is_abspath(char *str)
+{
+    int i = 0;
+    while (str[i])
+    {
+        if (str[i] == '/')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+char **find_path(char **cmds, t_list *env)
+{
+    char **paths;
+
+    while (env)
+    {
+        if (ft_strncmp((char *)env->content, "PATH", 4) == 0)
+            break ;
+        env = env->next;
+    }
+    if (!env)
+        error(cmds[0]);
+    else
+        paths = ft_split((char *)env->content, ':');
+    return (paths);
+}
+
+void error(char *str)
+{
+    perror(str);
 }
