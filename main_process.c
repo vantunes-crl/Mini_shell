@@ -25,9 +25,37 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
                 multiple_redirect(has_redirect, *cmds_list, env, paths);
             else if (has_redirect == 4)
             {
-                close(fd[1]);
-                close(fd[0]);
-                exec_redin(*cmds_list, env, paths);
+                char *buff;
+                char **str;
+                char *str2;
+                char *final_buff;
+                char *temp;
+                char *delimiter;
+                char *line;
+
+                final_buff = ft_strdup("");
+                delimiter = get_delimiter(*cmds_list);
+                if (*cmds_list[0] == '<')
+                    str2 = take_off_begin(*cmds_list);
+                else
+                    str2 = take_off_middle(*cmds_list);
+                while(1)
+                {
+                    buff = readline(">");
+                    if (ft_strncmp(buff, delimiter, ft_strlen(buff)) == 0)
+                        break;
+                    temp = final_buff;
+                    final_buff = ft_strjoin(final_buff, buff);
+                    free(temp);
+                    line = ft_strdup("\n");
+                    final_buff = ft_strjoin(final_buff, line);
+                    free(buff);
+                    free(line);
+                }
+                free(delimiter);
+                write(fd_in, final_buff, ft_strlen(final_buff));
+                free(final_buff);
+
             }
             else if (has_redirect == 3)
             {

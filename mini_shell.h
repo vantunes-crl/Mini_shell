@@ -66,5 +66,8 @@ char **find_path(char **cmds, t_list *env);
 void    kill_handler(int sig);
 char *find_filename(char *cmd);
 char *new_cmd_in(char *cmd);
+char *take_off_middle(char *str);
+char *take_off_begin(char *str);
+char *get_delimiter(char *str);
 
 #endif
