@@ -82,4 +82,5 @@ void print_echo(t_list **env, char **cmds)
     }
     if (!n)
         printf("\n");
+    exit(0);
 }

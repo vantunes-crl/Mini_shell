@@ -4,9 +4,11 @@ char **parse_cmds(char *str)
 {
     char **cmds;
     char *temp_str;
-
-    temp_str = ft_strtrim(str, WHITE_SPACE); 
-    cmds = ft_split(temp_str , ' ');
+    temp_str = ft_strtrim(str, WHITE_SPACE);
+    if (check_quotes(str) == 1)
+        cmds = parse_quotes(temp_str);
+    else
+        cmds = ft_split(temp_str , ' ');
     free(temp_str);
     return (cmds);
 }

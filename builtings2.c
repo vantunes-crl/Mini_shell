@@ -6,6 +6,7 @@ void	print_dir(void)
 
 	getcwd(str, sizeof(str));
 	printf("%s\n", str);
+	exit(0);
 }
 
 void	print_env(t_list *envp)
@@ -15,6 +16,7 @@ void	print_env(t_list *envp)
 		printf("%s\n", (char *)envp->content);
 		envp = envp->next;
 	}
+	exit(0);
 }
 
 void	has_exit(char **cmds_list, t_list **env)

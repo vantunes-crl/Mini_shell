@@ -50,9 +50,9 @@ char **find_path(char **cmds, t_list *env)
             break ;
         env = env->next;
     }
-    if (!env && !is_abspath(*cmds) && is_abspath(*cmds))
-        error(cmds[0]);
-    else if (env)
+    if (!env && !is_abspath(*cmds) && env)
+       error(cmds[0]);
+    if (env)
         paths = ft_split((char *)env->content, ':');
     return (paths);
 }
