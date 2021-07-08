@@ -62,17 +62,3 @@ void exec_cmd(char **cmds, t_list **env, char **paths)
     else
         exce_arg(cmds, *env, paths);
 }
-
-void has_exit(char **cmds_list, t_list **env)
-{
-    while (*cmds_list)
-    {
-        if (ft_strncmp(*cmds_list, "exit", 4) == 0)
-        {
-            deleteList(env);
-            free_paths(cmds_list);
-            exit(0);
-        }
-        cmds_list++;
-    }
-}

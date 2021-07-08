@@ -19,14 +19,18 @@ void	print_env(t_list *envp)
 
 void	has_exit(char **cmds_list, t_list **env)
 {
+	char *temp_str;
+
 	while (*cmds_list)
 	{
-		if (ft_strncmp(*cmds_list, "exit", 4) == 0)
+		temp_str = ft_strtrim(*cmds_list, " ");
+		if (ft_strncmp(temp_str, "exit", 4) == 0)
 		{
 			deleteList(env);
-			free_paths(cmds_list);
+			free(temp_str);
 			exit(0);
 		}
+		free(temp_str);
 		cmds_list++;
 	}
 }

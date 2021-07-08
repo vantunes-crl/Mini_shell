@@ -83,22 +83,3 @@ void print_echo(t_list **env, char **cmds)
     if (!n)
         printf("\n");
 }
-
-/* builting function to simulate pwd in shell */
-void print_dir()
-{
-    char str[1040];
-
-    getcwd(str, sizeof(str)); /* function that get the actual Directory from the sistem */
-    printf("%s\n",str);
-}
-
-/* builting function to simulate env in shell without parameters */
-void print_env(t_list *envp)
-{
-    while (envp != NULL)
-    {
-        printf("%s\n",(char *)envp->content); /* print all env lst */
-        envp = envp->next;
-    }
-}
