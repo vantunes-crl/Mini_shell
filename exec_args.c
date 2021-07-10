@@ -20,7 +20,10 @@ void execve_exec(char **paths, char **cmds)
         i++;
     }
     if (ret < 0)
+    {
+        exit_status = 127;
         error(cmds[0]);
+    }
 }
 
 void exce_arg(char **cmds, t_list *env, char **paths)
@@ -37,6 +40,7 @@ void exce_arg(char **cmds, t_list *env, char **paths)
     }
     else
         execve_exec(paths, cmds);
+    
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
@@ -58,11 +62,12 @@ void exec_cmd(char **cmds, t_list **env, char **paths)
     }
     else if (ft_strncmp(cmds[0], "$", 1) == 0)
     {
+
         temp = ft_strtrim(*cmds, "$");
         handle_var_env(temp, *env, 1, 1);
         exit(0);
     }
     else
-        exce_arg(cmds, *env, paths);
+        exce_arg(cmds, *env, paths);    
     exit(0);
 }

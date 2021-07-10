@@ -56,11 +56,12 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
         else
         {
             wait(&temp_exit);
-            if (temp_exit)
-                exit_status = temp_exit;
+            if (WIFEXITED(temp_exit))
+                exit_status = WEXITSTATUS(temp_exit);
             close(fd[1]);
             fd_in = fd[0];
             cmds_list++;
         }
     }  
+
 }

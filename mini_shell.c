@@ -54,8 +54,11 @@ int main(int argc, char **argv, char **env)
             else
             {
                 has_exit(temp_cmds , &envp);
+            printf("%d ... \n", exit_status);
+
                 paths = find_path(temp_cmds, envp);
                 multiple_pipes(temp_cmds, &envp, paths);
+
                 free_paths(temp_cmds);
            }
         }

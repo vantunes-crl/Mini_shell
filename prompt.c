@@ -11,8 +11,9 @@ void    kill_handler(int sig)
     // ioctl(ttyslot(), TIOCSETA, &conf);
     // conf.c_lflag ^= (ECHO);
     write(1, "\r\n\033[3;32mMiniShell\e[0m\U0001F916:", 28);
+    exit_status = 130;
     //ioctl(ttyslot(), TIOCSETA, &oldconf);
-     return ;
+    return ;
 }
 
 int take_line(char *str)

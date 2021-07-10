@@ -72,6 +72,8 @@ void exec_redin(char *cmd, t_list **env, char **paths, int fd[2])
     char *delimiter;
     char *line;
 
+
+
     final_buff = ft_strdup("");
     delimiter = get_delimiter(cmd);
     if (cmd[0] == '<')
