@@ -61,7 +61,7 @@ char *take_off_middle(char *str)
     return (new_str);
 }
 
-void exec_redin(char *cmd, t_list **env, char **paths, int fd[2])
+char *exec_redin(char *cmd, t_list **env, char **paths, int fd)
 {
     pid_t pid;
     char *buff;
@@ -72,48 +72,27 @@ void exec_redin(char *cmd, t_list **env, char **paths, int fd[2])
     char *delimiter;
     char *line;
 
-
-
     final_buff = ft_strdup("");
     delimiter = get_delimiter(cmd);
     if (cmd[0] == '<')
         str2 = take_off_begin(cmd);
     else
         str2 = take_off_middle(cmd);
-    pipe(fd);
-    pid = fork();
-    if (pid == 0)
+    while(1)
     {
-        while(1)
-        {
-            buff = readline(">");
-            if (ft_strncmp(buff, delimiter, ft_strlen(buff)) == 0)
-                break;
-            temp = final_buff;
-            final_buff = ft_strjoin(final_buff, buff);
-            free(temp);
-            line = ft_strdup("\n");
-            final_buff = ft_strjoin(final_buff, line);
-            free(buff);
-            free(line);
-        }
-        free(delimiter);
-        write(fd[1], final_buff, ft_strlen(final_buff));
-        free(final_buff);
-        close(fd[0]);
-        close(fd[1]);
-        exit(0);
+        buff = readline(">");
+        if (ft_strncmp(buff, delimiter, ft_strlen(buff)) == 0)
+            break;
+        temp = final_buff;
+        final_buff = ft_strjoin(final_buff, buff);
+        free(temp);
+        line = ft_strdup("\n");
+        final_buff = ft_strjoin(final_buff, line);
+        free(buff);
+        free(line);
     }
-    else
-    {
-        wait(NULL);
-        dup2(fd[0], 0);
-        close(fd[0]);
-        close(fd[1]);
-        str = parse_cmds(str2);
-        free(str2);
-        exec_cmd(str, env, paths);
-        exit(0);
-    }
-    free_paths(str);
+    free(delimiter);
+    write(fd, final_buff, ft_strlen(final_buff));
+    free(final_buff);
+    return (str2);
 }

@@ -1,5 +1,14 @@
 #include "mini_shell.h"
 
+int cont_list(char **cmds_list)
+{
+    int i;
+
+    i = 0;
+    while (cmds_list[i])
+        i++;
+    return (i);
+}
 /* function receive a list of commands and exec one by one in the pipe */
 void multiple_pipes(char **cmds_list, t_list **env, char **paths)
 {
@@ -8,9 +17,10 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
     int fd_in = 0;
     int has_redirect = 0;
     char **temp_str;
+    int i = 0;
 
     int temp_exit;
-    while (*cmds_list != NULL)
+    while (cmds_list[i] != NULL)
     {
         if (pipe(fd) < 0)
             error("pipe");
@@ -19,18 +29,28 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
             error("fork");
         if (pid == 0) 
         {
-            dup2(fd_in, 0);
-            has_redirect = which_redirect(*cmds_list);
+            has_redirect = which_redirect(cmds_list[i]);
             if (has_redirect == 1 || has_redirect == 2)
-                multiple_redirect(has_redirect, *cmds_list, env, paths);
+                multiple_redirect(has_redirect, cmds_list[i], env, paths);
             else if (has_redirect == 4)
-                exec_redin(*cmds_list, env, paths, fd);
+            {
+                int fd_new;
+                if (cont_list(cmds_list) > 1)
+                    fd_new = fd[1];
+                else
+                    fd_new = 1;
+                cmds_list[i] = exec_redin(cmds_list[i], env, paths, fd_new);
+                i--;
+                close(fd[0]);
+                close(fd[1]);
+                exit(0);
+            }
             else if (has_redirect == 3)
             {
-                if (*(cmds_list + 1) != NULL)
+                if (cmds_list[i + 1] != NULL)
                     dup2(fd[1], 1);
-                char *fn = find_filename(*cmds_list);
-                char *new_cmd = new_cmd_in(*cmds_list);
+                char *fn = find_filename(cmds_list[i]);
+                char *new_cmd = new_cmd_in(cmds_list[i]);
                 fd_in = open(fn, O_RDWR, 0777);
                 if (fd_in < 0)
                 {
@@ -44,23 +64,24 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
                 exec_cmd(temp_cmd, env, paths);
                 exit(0);
             }
-            else if (*(cmds_list + 1) != NULL)
+            else if (cmds_list[i + 1] != NULL)
                 dup2(fd[1], 1);
+            dup2(fd_in, 0);
             close(fd[0]);
             close(fd[1]);
-            temp_str = parse_cmds(*cmds_list);
+            temp_str = parse_cmds(cmds_list[i]);
             exec_cmd(temp_str, env, paths);
             free_paths(temp_str);
             exit(0);
         }
         else
         {
-            wait(&temp_exit);
             if (WIFEXITED(temp_exit))
                 exit_status = WEXITSTATUS(temp_exit);
             close(fd[1]);
             fd_in = fd[0];
-            cmds_list++;
+            wait(&temp_exit);
+            i++;
         }
     }  
 
