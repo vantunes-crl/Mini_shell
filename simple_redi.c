@@ -8,7 +8,7 @@ char *find_filename(char *cmd)
 
     i = 0;
     cmd_list = ft_split(cmd, ' ');
-    if (cmd[0] == '<')
+    if (ft_strncmp(cmd_list[0], "<", 1) == 0)
     {
         temp = ft_strdup(cmd_list[1]);
         free_paths(cmd_list);
@@ -18,9 +18,9 @@ char *find_filename(char *cmd)
     {
         while (*(cmd_list + 1))
             cmd_list++;
+        temp = ft_strdup(*cmd_list);
         while (cmd_list[i] != NULL)
             free(cmd_list[i++]);
-        temp = ft_strdup(*cmd_list);
         return(temp);
     }
 }
@@ -36,7 +36,7 @@ char *new_cmd_in(char *cmd)
     i = 0;
     new_str = ft_strdup("");
     cmd_list = ft_split(cmd, ' ');
-    if (cmd[0] == '<')
+    if (ft_strncmp(cmd_list[0], "<", 1) == 0)
     {
         cmd_list++;
         cmd_list++;
