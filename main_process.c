@@ -39,7 +39,10 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
                     fd_new = fd[1];
                 else
                     fd_new = 1;
+                char *temp;
+                temp = cmds_list[i];
                 cmds_list[i] = exec_redin(cmds_list[i], env, paths, fd_new);
+                free(temp);
                 i--;
                 close(fd[0]);
                 close(fd[1]);

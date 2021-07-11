@@ -69,8 +69,9 @@ char *new_cmd_in(char *cmd);
 char *take_off_middle(char *str);
 char *take_off_begin(char *str);
 char *get_delimiter(char *str);
-char **parse_quotes(char *str);
-int choose_quote(char *str);
+char    **parse_quotes(char *str);
+int     choose_quote(char *str);
 int     check_quotes(char *str);
+int     cont_list(char **cmds_list);
 
 #endif
