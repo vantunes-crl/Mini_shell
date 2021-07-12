@@ -73,5 +73,6 @@ char    **parse_quotes(char *str);
 int     choose_quote(char *str);
 int     check_quotes(char *str);
 int     cont_list(char **cmds_list);
+char	*child_readin();
 
 #endif
