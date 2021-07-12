@@ -38,12 +38,12 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
                 char *final_buff = child_readin();
                 if (cmds_list[i + 1] != NULL)
                     dup2(fd[1], 1);
+                if (cont_list(cmds_list) == 1)
+                    dup2(fd[0],0);
                 temp = cmds_list[i];
                 write(fd[1], final_buff, ft_strlen(final_buff));
                 cmds_list[i] = exec_redin(cmds_list[i], env, paths, fd[1]);
                 free(temp);
-                close(fd[0]);
-                close(fd[1]);
             }
             else if (has_redirect == 3)
             {
@@ -76,11 +76,11 @@ void multiple_pipes(char **cmds_list, t_list **env, char **paths)
         }
         else
         {
-            if (WIFEXITED(temp_exit))
-                exit_status = WEXITSTATUS(temp_exit);
             close(fd[1]);
             fd_in = fd[0];
             wait(&temp_exit);
+            if (WIFEXITED(temp_exit))
+                exit_status = WEXITSTATUS(temp_exit);
             i++;
         }
     }  
