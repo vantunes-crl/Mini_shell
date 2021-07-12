@@ -3,6 +3,7 @@
 int     check_quotes(char *str)
 {
     int i;
+
     while (str[i])
     {
         if (str[i] == 34 || str[i] == 39)
@@ -38,6 +39,7 @@ char **parse_quotes(char *str)
     end = 0;
     list = NULL;
     cmds = NULL;
+
     while(str[start])
     {
         if (str[start] == '"')
