@@ -61,18 +61,21 @@ char *take_off_middle(char *str)
     return (new_str);
 }
 
-char	*child_readin()
+char	*child_readin(char *cmd)
 {
 	char	*line;
 	char	*final_buff;
 	char	*buff;
 	char	*temp;
+	char	*delimiter;
 
+	final_buff = ft_strdup("");
+    delimiter = get_delimiter(cmd);
 	final_buff = ft_strdup("");
 	while (1)
 	{
 		buff = readline(">>");
-		if (ft_strncmp(buff, "l", ft_strlen(buff)) == 0)
+		if (ft_strncmp(buff, delimiter, ft_strlen(buff)) == 0)
 			break ;
 		temp = final_buff;
 		final_buff = ft_strjoin(final_buff, buff);
@@ -82,8 +85,10 @@ char	*child_readin()
 		free(line);
         free(buff);
 	}
+	free(delimiter);
 	return (final_buff);
 }
+
 
 char *exec_redin(char *cmd, t_list **env, char **paths, int fd)
 {

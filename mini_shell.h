@@ -73,6 +73,7 @@ char    **parse_quotes(char *str);
 int     choose_quote(char *str);
 int     check_quotes(char *str);
 int     cont_list(char **cmds_list);
-char	*child_readin();
+char	*child_readin(char *cmd);
+void	main_process(char **cmds_list, t_list **env, char **paths);
 
 #endif

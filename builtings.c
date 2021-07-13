@@ -50,16 +50,16 @@ void print_echo(t_list **env, char **cmds)
     }
     if (ft_strncmp("-n", cmds[1], 3) == 0 && !cmds[2])
         return ;
-    cmds++;
-    if (ft_strncmp(*cmds, "-n", 2) == 0) /* take of the line breaker */
+    i = 1;
+    if (ft_strncmp(cmds[i], "-n", 2) == 0) /* take of the line breaker */
     { 
         n = 1;
-        cmds++;
+        i++;
     }
-    if (ft_strncmp(*cmds, "$", 1) == 0)
+    if (ft_strncmp(cmds[i], "$", 1) == 0)
     {
         i = 0;
-        var_env = ft_strdup(*cmds);
+        var_env = ft_strdup(cmds[i]);
         temp = var_env;
         var_env = ft_strtrim(temp, "$");
         free(temp);
@@ -71,13 +71,16 @@ void print_echo(t_list **env, char **cmds)
     }
     else
     {
-        while (*cmds)
+        while (cmds[i])
         {
-            if (*(cmds + 1) == NULL)
-                printf("%s", *cmds);
+            if (!cmds[i + 1])
+                ft_putstr_fd(cmds[i], 1);
             else
-                printf("%s ", *cmds);
-            cmds++;
+            {
+                ft_putstr_fd(cmds[i], 1);
+                write(1, " ", 1);
+            }
+            i++;
         }
     }
     if (!n)
