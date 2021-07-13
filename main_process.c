@@ -70,6 +70,8 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
                 multiple_redirect(has_redirect, cmds_list[i], env, paths);
 			else if (has_redirect == 4)
 			{
+                printf("CHEGOU\n");
+
 				char *temp_str;
 				temp_str = cmds_list[i];
 				if (cmds_list[i][0] == '<')
@@ -111,5 +113,7 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 		write(fd[1], str, ft_strlen(str));
 		close(fd[1]);   // signal EOF to child
 	}
-	while (wait(NULL) > 0) ;    
+	while (wait(&temp_exit) > 0) ; 
+	if (WIFEXITED(temp_exit))
+		exit_status = WEXITSTATUS(temp_exit);
 }

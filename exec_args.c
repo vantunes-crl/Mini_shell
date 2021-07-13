@@ -35,12 +35,14 @@ void exce_arg(char **cmds, t_list *env, char **paths)
     {
         abs_path = execve(cmds[0], cmds,  NULL);
         if (abs_path < 0)
+        {
+            exit_status = 127;
             error(cmds[0]);
+        }
         return ;
     }
     else
         execve_exec(paths, cmds);
-    
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */
@@ -68,5 +70,5 @@ void exec_cmd(char **cmds, t_list **env, char **paths)
     }
     else
         exce_arg(cmds, *env, paths);    
-    exit(0);
+    exit(127);
 }

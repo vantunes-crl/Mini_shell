@@ -24,6 +24,8 @@ char    *take_care_of_env(char *str, t_list *env)
     if (str[i] == '$' && quote == 0)
     {
         i++;
+        if (str[i] == '?')
+            return (str);
         end = i;
         while (str[end] >= 'A' && str[end] <= 'Z')
             end++;
