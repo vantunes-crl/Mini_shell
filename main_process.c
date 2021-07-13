@@ -78,6 +78,19 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
         			cmds_list[i] = take_off_middle(cmds_list[i]);
 				free(temp_str);
 			}
+			else if (has_redirect == 3)
+			{
+                char *fn = find_filename(cmds_list[i]);
+				char *new_cmd = cmds_list[i];
+                cmds_list[i] = new_cmd_in(cmds_list[i]);
+				free(new_cmd);
+                int fd_in = open(fn, O_RDWR, 0777);
+                if (fd_in < 0)
+                {
+                    perror("minishell");
+                    exit(0);
+                }
+			}
 			dup2(fdd, 1);   // child's output
             dup2(fd[0], 0);
             close(fd[0]);
