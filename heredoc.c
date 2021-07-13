@@ -88,24 +88,3 @@ char	*child_readin(char *cmd)
 	free(delimiter);
 	return (final_buff);
 }
-
-
-char *exec_redin(char *cmd, t_list **env, char **paths, int fd)
-{
-    pid_t pid;
-    char *buff;
-    char **str;
-    char *str2;
-    char *final_buff;
-    char *temp;
-    char *delimiter;
-    char *line;
-
-    final_buff = ft_strdup("");
-    delimiter = get_delimiter(cmd);
-    if (cmd[0] == '<')
-        str2 = take_off_begin(cmd);
-    else
-        str2 = take_off_middle(cmd);
-    return (str2);
-}

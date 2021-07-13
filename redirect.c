@@ -78,7 +78,6 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
     file_list = file_name(cmds_list);
     new_cmd_list = new_cmds(cmds_list);
     temp_str = parse_cmds(new_cmd_list);
-
     while (file_list != NULL)
     {
         pid = fork();
@@ -90,13 +89,10 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
             exec_cmd(temp_str, env, paths);
             exit(0);
         }
-        else
-        {
-            wait(NULL);
-            close(fd_red);
-        }
+        close(fd_red);
         file_list = file_list->next;
     }
+    while (wait(NULL) > 0);
     free(new_cmd_list);
     free_paths(temp_str);
     deleteList(&file_list);
