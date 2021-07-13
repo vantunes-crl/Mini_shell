@@ -77,7 +77,7 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
 
     file_list = file_name(cmds_list);
     new_cmd_list = new_cmds(cmds_list);
-    temp_str = parse_cmds(new_cmd_list);
+    temp_str = parse_cmds(new_cmd_list, env);
     while (file_list != NULL)
     {
         pid = fork();

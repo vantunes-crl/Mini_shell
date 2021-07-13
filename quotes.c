@@ -29,6 +29,20 @@ int choose_quote(char *str)
     return (0);
 }
 
+int handle_cif_env(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '$' && str[i] != '\0')
+        i++;
+    if (str[i] == '$' && str[i - 1] == '\'')
+        return (1);
+    else
+        return (0);
+    
+}
+
 char **parse_quotes(char *str)
 {
     int end;
@@ -41,6 +55,7 @@ char **parse_quotes(char *str)
     list = NULL;
     cmds = NULL;
 
+    flag_env = handle_cif_env(str);
     while(str[start])
     {
         if (str[start] == '"')

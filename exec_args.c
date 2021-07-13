@@ -60,9 +60,8 @@ void exec_cmd(char **cmds, t_list **env, char **paths)
         exit_status = 0;
         exit(0);
     }
-    else if (ft_strncmp(cmds[0], "$", 1) == 0)
+    else if (ft_strncmp(cmds[0], "$", 1) == 0 && flag_env == 0)
     {
-
         temp = ft_strtrim(*cmds, "$");
         handle_var_env(temp, *env, 1, 1);
         exit(0);

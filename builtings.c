@@ -56,19 +56,6 @@ void print_echo(t_list **env, char **cmds)
         n = 1;
         i++;
     }
-    if (ft_strncmp(cmds[i], "$", 1) == 0)
-    {
-        i = 0;
-        var_env = ft_strdup(cmds[i]);
-        temp = var_env;
-        var_env = ft_strtrim(temp, "$");
-        free(temp);
-        if (n)
-            handle_var_env(var_env, *env, 0, 0);
-        else
-            handle_var_env(var_env, *env, 0, 1);
-        return ;
-    }
     else
     {
         while (cmds[i])

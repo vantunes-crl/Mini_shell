@@ -21,6 +21,7 @@
 #include <termios.h>
 
 int exit_status;
+int flag_env;
 
 /*exec_functions */
 void	exce_arg(char **cmds, t_list *env, char **paths);
@@ -30,7 +31,7 @@ void    print_dir();
 void    multiple_pipes(char **cmds_list,t_list **env, char **paths);
 
 /* parse function */
-char	**parse_cmds(char *str);
+char	**parse_cmds(char *str, t_list **env);
 int		has_pipes(char *str);
 char	**cmds_list(char *str);
 t_list *init_env(char **env);

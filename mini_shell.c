@@ -19,6 +19,7 @@ int main(int argc, char **argv, char **env)
     char **temp_dir;
     t_list *envp;
     exit_status = 0;
+    flag_env = 0;
     char **paths;
     envp = init_env(env);
 

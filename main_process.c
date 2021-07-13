@@ -95,7 +95,7 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
             dup2(fd[0], 0);
             close(fd[0]);
             close(fd[1]);
-			temp_str = parse_cmds(cmds_list[i]);
+			temp_str = parse_cmds(cmds_list[i], env);
 			exec_cmd(temp_str, env, paths);
 			free_paths(temp_str);
 			perror("error");
