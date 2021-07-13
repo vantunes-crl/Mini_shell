@@ -4,6 +4,7 @@ int     check_quotes(char *str)
 {
     int i;
 
+    i = 0;
     while (str[i])
     {
         if (str[i] == 34 || str[i] == 39)

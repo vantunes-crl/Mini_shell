@@ -70,10 +70,13 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
                 multiple_redirect(has_redirect, cmds_list[i], env, paths);
 			else if (has_redirect == 4)
 			{
+				char *temp_str;
+				temp_str = cmds_list[i];
 				if (cmds_list[i][0] == '<')
         			cmds_list[i] = take_off_begin(cmds_list[i]);
     			else
         			cmds_list[i] = take_off_middle(cmds_list[i]);
+				free(temp_str);
 			}
 			dup2(fdd, 1);   // child's output
             dup2(fd[0], 0);
