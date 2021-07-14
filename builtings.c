@@ -51,7 +51,7 @@ void print_echo(t_list **env, char **cmds)
     if (ft_strncmp("-n", cmds[1], 3) == 0 && !cmds[2])
         return ;
     i = 1;
-    if (ft_strncmp(cmds[i], "-n", 2) == 0) /* take of the line breaker */
+    if (ft_strncmp(cmds[i], "-n", 2) == 0)
     { 
         n = 1;
         i++;

@@ -61,3 +61,19 @@ void error(char *str)
 {
     perror(str);
 }
+
+char **list_to_matriz(t_list *env)
+{
+    char **matriz;
+    int i;
+
+    i = 0;
+    matriz = malloc(sizeof(char *) * ft_lstsize(env) + 1);
+    while (env)
+    {
+        matriz[i] = ft_strdup((char *)env->content);
+        env = env->next;
+        i++;
+    }
+    return (matriz);
+}

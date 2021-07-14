@@ -1,6 +1,6 @@
 #include "mini_shell.h"
 
-void execve_exec(char **paths, char **cmds)
+void execve_exec(char **paths, char **cmds, char **env_matriz)
 {
     char *temp_path;
     int i;
@@ -29,11 +29,13 @@ void execve_exec(char **paths, char **cmds)
 void exce_arg(char **cmds, t_list *env, char **paths)
 {
     int abs_path;
-
+    char **env_matriz;
+    
+    env_matriz = list_to_matriz(env);
     abs_path = is_abspath(cmds[0]);
     if (abs_path)
     {
-        abs_path = execve(cmds[0], cmds,  NULL);
+        abs_path = execve(cmds[0], cmds,  env_matriz);
         if (abs_path < 0)
         {
             exit_status = 127;
@@ -42,7 +44,7 @@ void exce_arg(char **cmds, t_list *env, char **paths)
         return ;
     }
     else
-        execve_exec(paths, cmds);
+        execve_exec(paths, cmds, env_matriz);
 }
 
 /* function then exec the own commands the builtings and the normal shell commands */

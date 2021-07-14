@@ -29,6 +29,7 @@ void	exec_pipe(char *str);
 void    exec_cmd(char **cmds, t_list **env, char **paths);
 void    print_dir();
 void    multiple_pipes(char **cmds_list,t_list **env, char **paths);
+void    execve_exec(char **paths, char **cmds, char **env_matriz);
 
 /* parse function */
 char	**parse_cmds(char *str, t_list **env);
@@ -43,6 +44,7 @@ void owncmds(int cmd, t_list **env);
 void	free_paths(char **paths);
 void deleteList(t_list **env);
 int is_abspath(char *str);
+char **list_to_matriz(t_list *env);
 
 /*builtings */
 void print_echo(t_list **env, char **cmds);
