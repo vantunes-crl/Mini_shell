@@ -41,6 +41,29 @@ char *heredoc_input(char **cmds)
 	return(str);
 }
 
+void take_off(char **cmds_list, int i)
+{
+	char *temp_str;
+
+	temp_str = cmds_list[i];
+	if (cmds_list[i][0] == '<')
+		cmds_list[i] = take_off_begin(cmds_list[i]);
+	else
+		cmds_list[i] = take_off_middle(cmds_list[i]);
+	free(temp_str);
+}
+
+void red_in_simple(char **cmds_list, int i)
+{
+	char *fn = find_filename(cmds_list[i]);
+	char *new_cmd = cmds_list[i];
+	cmds_list[i] = new_cmd_in(cmds_list[i]);
+	free(new_cmd);
+	int fd_in = open(fn, O_RDWR, 0777);
+	if (fd_in < 0)
+		error("minishell");
+}
+
 void	main_process(char **cmds_list, t_list **env, char **paths)
 {
 	pid_t	pid;
@@ -69,39 +92,17 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 			if (has_redirect == 1 || has_redirect == 2)
                 multiple_redirect(has_redirect, cmds_list[i], env, paths);
 			else if (has_redirect == 4)
-			{
-                printf("CHEGOU\n");
-
-				char *temp_str;
-				temp_str = cmds_list[i];
-				if (cmds_list[i][0] == '<')
-        			cmds_list[i] = take_off_begin(cmds_list[i]);
-    			else
-        			cmds_list[i] = take_off_middle(cmds_list[i]);
-				free(temp_str);
-			}
+				take_off(cmds_list, i);
 			else if (has_redirect == 3)
-			{
-                char *fn = find_filename(cmds_list[i]);
-				char *new_cmd = cmds_list[i];
-                cmds_list[i] = new_cmd_in(cmds_list[i]);
-				free(new_cmd);
-                int fd_in = open(fn, O_RDWR, 0777);
-                if (fd_in < 0)
-                {
-                    perror("minishell");
-                    exit(0);
-                }
-			}
-			dup2(fdd, 1);   // child's output
+				red_in_simple(cmds_list, i);
+			dup2(fdd, 1);
             dup2(fd[0], 0);
             close(fd[0]);
             close(fd[1]);
 			temp_str = parse_cmds(cmds_list[i], env);
 			exec_cmd(temp_str, env, paths);
 			free_paths(temp_str);
-			perror("error");
-			exit(1);
+			error("minishell");
 		}
 		if (fdd != 1) 
 			close(fdd);   // close if a pipe write end
@@ -113,7 +114,7 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 		write(fd[1], str, ft_strlen(str));
 		close(fd[1]);   // signal EOF to child
 	}
-	while (wait(&temp_exit) > 0) ; 
+	while (wait(&temp_exit) > 0);
 	if (WIFEXITED(temp_exit))
 		exit_status = WEXITSTATUS(temp_exit);
 }

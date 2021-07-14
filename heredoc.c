@@ -1,6 +1,4 @@
 #include "mini_shell.h"
-#include <dirent.h>
-#include <string.h>
 
 char *get_delimiter(char *str)
 {

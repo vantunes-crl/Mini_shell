@@ -62,7 +62,6 @@ t_list *file_name(char *cmds);
 char *new_cmds_in(char *cmd);
 char *redirect_input(int redirect, char *buff, int fd);
 char *exec_redin(char *cmd, t_list **env, char **paths, int fd);
-char *take_off(char *str);
 char *get_delimiter(char *str);
 void simple_redirec_in(char *cmd, t_list **env, char **paths);
 char **find_path(char **cmds, t_list *env);
