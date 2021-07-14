@@ -56,19 +56,16 @@ void print_echo(t_list **env, char **cmds)
         n = 1;
         i++;
     }
-    else
+    while (cmds[i])
     {
-        while (cmds[i])
+        if (!cmds[i + 1])
+            ft_putstr_fd(cmds[i], 1);
+        else
         {
-            if (!cmds[i + 1])
-                ft_putstr_fd(cmds[i], 1);
-            else
-            {
-                ft_putstr_fd(cmds[i], 1);
-                write(1, " ", 1);
-            }
-            i++;
+            ft_putstr_fd(cmds[i], 1);
+            write(1, " ", 1);
         }
+        i++;
     }
     if (!n)
         printf("\n");
