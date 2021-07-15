@@ -23,8 +23,8 @@ char *get_delimiter(char *str)
 char *take_off_begin(char *str)
 {
     int i;
-    i = 0;
 
+    i = 0;
     while (str[i] == '<')
         i++;
     while (ft_iswhitespace_bonus(str[i]))
@@ -42,7 +42,6 @@ char *take_off_middle(char *str)
 
     j = 0;
     i = 0;
-
     new_str = malloc(sizeof(char *) * ft_strlen(str) - 1);
     while (str[i])
     {
