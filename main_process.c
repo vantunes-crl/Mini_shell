@@ -5,6 +5,7 @@ typedef struct s_fds
 	int fdd;
 	int fd[2];
 	int i;
+	pid_t pid;
 } t_fds;
 
 void child_main_process(char **cmds_list, t_fds *fds, t_list **env, char **paths)
@@ -28,37 +29,39 @@ void child_main_process(char **cmds_list, t_fds *fds, t_list **env, char **paths
 	exec_cmd(temp_str, env, paths);
 	free_paths(temp_str);
 	error("minishell");
- }
+}
+
+void write_heredoc(char *heredoc_buff,int fd)
+{
+	write(fd, heredoc_buff, ft_strlen(heredoc_buff));
+	close(fd);
+}
 
 void	main_process(char **cmds_list, t_list **env, char **paths)
 {
-	pid_t	pid;
 	t_fds	fds;
-	fds.fdd = 1;
 	int		temp_exit;
-	char	*str;
+	char	*heredoc_buff;
 
-	str = heredoc_input(cmds_list);
+	fds.fdd = 1;
+	heredoc_buff = heredoc_input(cmds_list);
 	fds.i = cont_list(cmds_list) - 1;
 	while (fds.i-- > 0)
 	{
 		if (pipe(fds.fd) < 0)
 			error("pipe");
-		pid = fork();
-		if (pid < 0)
+		fds.pid = fork();
+		if (fds.pid < 0)
 			error("fork");
-		if (pid == 0)
+		if (fds.pid == 0)
 			child_main_process(cmds_list, &fds, env, paths);
 		if (fds.fdd != 1) 
 			close(fds.fdd);
 		fds.fdd = fds.fd[1];
 		close(fds.fd[0]);
 	}
-	if (str)
-	{
-		write(fds.fd[1], str, ft_strlen(str));
-		close(fds.fd[1]);
-	}
+	if (heredoc_buff)
+		write_heredoc(heredoc_buff, fds.fd[1]);
 	while (wait(&temp_exit) > 0);
 	if (WIFEXITED(temp_exit))
 		exit_status = WEXITSTATUS(temp_exit);
