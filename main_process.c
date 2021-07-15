@@ -6,6 +6,9 @@ typedef struct s_fds
 	int fd[2];
 	int i;
 	pid_t pid;
+	int		temp_exit;
+	char	*heredoc_buff;
+
 } t_fds;
 
 void child_main_process(char **cmds_list, t_fds *fds, t_list **env, char **paths)
@@ -40,11 +43,9 @@ void write_heredoc(char *heredoc_buff,int fd)
 void	main_process(char **cmds_list, t_list **env, char **paths)
 {
 	t_fds	fds;
-	int		temp_exit;
-	char	*heredoc_buff;
 
 	fds.fdd = 1;
-	heredoc_buff = heredoc_input(cmds_list);
+	fds.heredoc_buff = heredoc_input(cmds_list);
 	fds.i = cont_list(cmds_list) - 1;
 	while (fds.i-- > 0)
 	{
@@ -60,9 +61,9 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 		fds.fdd = fds.fd[1];
 		close(fds.fd[0]);
 	}
-	if (heredoc_buff)
-		write_heredoc(heredoc_buff, fds.fd[1]);
-	while (wait(&temp_exit) > 0);
-	if (WIFEXITED(temp_exit))
-		exit_status = WEXITSTATUS(temp_exit);
+	if (fds.heredoc_buff)
+		write_heredoc(fds.heredoc_buff, fds.fd[1]);
+	while (wait(&fds.temp_exit) > 0);
+	if (WIFEXITED(fds.temp_exit))
+		exit_status = WEXITSTATUS(fds.temp_exit);
 }
