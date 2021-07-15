@@ -70,11 +70,12 @@ t_list *file_name(char *cmds)
 void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **paths)
 {
     char **temp_str;
-    t_list *file_list = NULL;
+    t_list *file_list;
     pid_t pid;
     int fd_red;
     char *new_cmd_list;
 
+    file_list = NULL;
     file_list = file_name(cmds_list);
     new_cmd_list = new_cmds(cmds_list);
     temp_str = parse_cmds(new_cmd_list, env);
