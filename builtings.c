@@ -71,3 +71,32 @@ void print_echo(t_list **env, char **cmds)
         printf("\n");
     exit(0);
 }
+
+void ft_cd(char **temp_cmds)
+{
+    char **temp_dir;
+
+    temp_dir = ft_split(temp_cmds[0], ' ');
+    chdir(temp_dir[1]);
+    free_paths(temp_dir);
+    free_paths(temp_cmds);
+}
+
+void ft_unset(t_list *envp, char **temp_cmds)
+{
+    char **temp_dir;
+
+    temp_dir = ft_split(temp_cmds[0], ' ');
+    del_elem_lst(&envp, temp_dir[1]);
+    free_paths(temp_dir);
+    free_paths(temp_cmds);
+}
+
+void ft_export(t_list *envp, char **temp_cmds)
+{
+    char **temp_dir;
+
+    temp_dir = ft_split(temp_cmds[0], ' ');
+    ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
+    free_paths(temp_cmds);
+}

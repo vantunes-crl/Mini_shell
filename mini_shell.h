@@ -22,6 +22,17 @@
 int exit_status;
 int flag_env;
 
+typedef struct s_fds
+{
+	int fdd;
+	int fd[2];
+	int i;
+	pid_t pid;
+	int		temp_exit;
+	char	*heredoc_buff;
+
+} t_fds;
+
 /*exec_functions */
 void	exce_arg(char **cmds, t_list *env, char **paths);
 void	exec_pipe(char *str);
@@ -50,6 +61,9 @@ void    print_env(t_list *envp);
 void    handle_var_env(char *var_env, t_list *env, int flag, int n);
 void    has_exit(char **cmds_list, t_list **env);
 void    print_dir();
+void	ft_cd(char **temp_cmds);
+void	ft_unset(t_list *envp, char **temp_cmds);
+void	ft_export(t_list *envp, char **temp_cmds);
 
 /* redirct out*/
 int		which_redirect(char *str);
@@ -77,5 +91,6 @@ char	*heredoc_input(char **cmds);
 char	*child_readin(char *cmd);
 void	take_off(char **cmds_list, int i);
 void	red_in_simple(char **cmds_list, int i);
+void	write_heredoc(char *heredoc_buff,int fd);
 
 #endif

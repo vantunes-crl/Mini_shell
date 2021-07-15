@@ -85,3 +85,9 @@ char	*child_readin(char *cmd)
 	free(delimiter);
 	return (final_buff);
 }
+
+void write_heredoc(char *heredoc_buff,int fd)
+{
+	write(fd, heredoc_buff, ft_strlen(heredoc_buff));
+	close(fd);
+}

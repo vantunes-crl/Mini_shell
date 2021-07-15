@@ -1,16 +1,5 @@
 #include "mini_shell.h"
 
-typedef struct s_fds
-{
-	int fdd;
-	int fd[2];
-	int i;
-	pid_t pid;
-	int		temp_exit;
-	char	*heredoc_buff;
-
-} t_fds;
-
 void child_main_process(char **cmds_list, t_fds *fds, t_list **env, char **paths)
 {
 	int has_redirect;
@@ -32,12 +21,6 @@ void child_main_process(char **cmds_list, t_fds *fds, t_list **env, char **paths
 	exec_cmd(temp_str, env, paths);
 	free_paths(temp_str);
 	error("minishell");
-}
-
-void write_heredoc(char *heredoc_buff,int fd)
-{
-	write(fd, heredoc_buff, ft_strlen(heredoc_buff));
-	close(fd);
 }
 
 void	main_process(char **cmds_list, t_list **env, char **paths)
