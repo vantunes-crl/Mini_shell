@@ -65,11 +65,15 @@ void	take_off(char **cmds_list, int i)
 
 void	red_in_simple(char **cmds_list, int i)
 {
-	char *fn = find_filename(cmds_list[i]);
-	char *new_cmd = cmds_list[i];
+	char	*fn;
+	char	*new_cmd;
+	int		fd_in;
+
+	fn = find_filename(cmds_list[i]);
+	new_cmd = cmds_list[i];
 	cmds_list[i] = new_cmd_in(cmds_list[i]);
 	free(new_cmd);
-	int fd_in = open(fn, O_RDWR, 0777);
+	fd_in = open(fn, O_RDWR, 0777);
 	if (fd_in < 0)
 		error("minishell");
 }
