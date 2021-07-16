@@ -1,49 +1,59 @@
 #include "mini_shell.h"
 
-int cont_list(char **list)
+int	cont_list(char **list)
 {
-	int i = 0;
-	while(list[i++]);
+	int	i;
+
+	i = 0;
+	while (list[i++])
+		;
 	return (i);
 }
 
-char *heredoc_input(char **cmds)
+char	*first_heredoc(char *str, char **cmds, int i)
 {
-	int i;
-	char *str;
-	char *temp_str;
-	int count = 0;
-	int flag = 0;
-	i = 0;
+	char	*temp_str;
 
-	while (cmds[i])
+	temp_str = str;
+	str = ft_strjoin(str, child_readin(cmds[i]));
+	free(temp_str);
+	return (str);
+}
+
+char	*heredoc_input(char **cmds)
+{
+	int		i;
+	char	*str;
+	char	*temp_str;
+	int		count;
+	int		flag;
+
+	i = -1;
+	count = 0;
+	flag = 0;
+	while (cmds[++i])
 	{
 		if (which_redirect(cmds[i]) == 4)
 		{
 			if (flag == 1)
-			{
-				temp_str = str;
-				str = ft_strjoin(str, child_readin(cmds[i]));
-				free(temp_str);
-			}
+				str = first_heredoc(str, cmds, i);
 			else
 			{
 				str = child_readin(cmds[i]);
-				flag == 1;
+				flag = 1;
 			}
 		}
 		else
 			count++;
-		i++;
 	}
 	if (count == i)
 		return (NULL);
-	return(str);
+	return (str);
 }
 
-void take_off(char **cmds_list, int i)
+void	take_off(char **cmds_list, int i)
 {
-	char *temp_str;
+	char	*temp_str;
 
 	temp_str = cmds_list[i];
 	if (cmds_list[i][0] == '<')
@@ -53,7 +63,7 @@ void take_off(char **cmds_list, int i)
 	free(temp_str);
 }
 
-void red_in_simple(char **cmds_list, int i)
+void	red_in_simple(char **cmds_list, int i)
 {
 	char *fn = find_filename(cmds_list[i]);
 	char *new_cmd = cmds_list[i];

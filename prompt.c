@@ -4,7 +4,7 @@ void    kill_handler(int sig)
 {
     printf("\b\n"); // Move to a new line
     rl_on_new_line(); // Regenerate the prompt on a newline
-    rl_replace_line("", 0); // Clear the previous text
+    //rl_replace_line("", 0); // Clear the previous text
     rl_redisplay();
     exit_status = 130;
     return ;

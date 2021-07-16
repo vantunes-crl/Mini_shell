@@ -39,7 +39,7 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 			error("fork");
 		if (fds.pid == 0)
 			child_main_process(cmds_list, &fds, env, paths);
-		if (fds.fdd != 1) 
+		if (fds.fdd != 1)
 			close(fds.fdd);
 		fds.fdd = fds.fd[1];
 		close(fds.fd[0]);
