@@ -28,7 +28,7 @@ void	has_exit(char **cmds_list, t_list **env)
 		temp_str = ft_strtrim(*cmds_list, " ");
 		if (ft_strncmp(temp_str, "exit", 4) == 0)
 		{
-			deleteList(env);
+			ft_deletelist(env);
 			free(temp_str);
 			exit(0);
 		}

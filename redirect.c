@@ -96,6 +96,6 @@ void multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **p
     while (wait(NULL) > 0);
     free(new_cmd_list);
     free_paths(temp_str);
-    deleteList(&file_list);
+    ft_deletelist(&file_list);
     exit(0);
 }
