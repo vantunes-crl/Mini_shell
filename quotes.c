@@ -17,6 +17,7 @@ int     check_quotes(char *str)
 int choose_quote(char *str)
 {
     int i;
+
     i = 0;
     while (str[i])
     {
@@ -42,6 +43,7 @@ int handle_cif_env(char *str)
         return (0);
     
 }
+
 typedef struct s_quotes
 {
     int start;
@@ -52,6 +54,7 @@ static void case1(t_quotes *qt, char *str, t_list *list)
 {
     char *temp;
 
+    temp = NULL;
     qt->start++;
     qt->end = qt->start;
     while (str[qt->end] != 34 && str[qt->end] != '\0')
@@ -66,6 +69,7 @@ static void case2(t_quotes *qt, char *str, t_list *list)
 {
     char *temp;
 
+    temp = NULL;
     qt->start++;
     qt->end = qt->start;
     while (str[qt->end] != 39 && str[qt->end] != '\0')
@@ -76,15 +80,17 @@ static void case2(t_quotes *qt, char *str, t_list *list)
     qt->start = qt->end;
 }
 
-static void last_case(t_quotes *qt, char *str, t_list *list, char *temp)
+static t_quotes last_case(t_quotes qt, char *str, t_list *list, char *temp)
 {
-    qt->end = qt->start;
-    while (str[qt->end] != 32 && str[qt->end] != '\0')
-        qt->end++;
-    temp = ft_substr(str, qt->start, qt->end - qt->start);
+    temp = NULL;
+    qt.end = qt.start;
+    while (str[qt.end] != 32 && str[qt.end] != '\0')
+        qt.end++;
+    temp = ft_substr(str, qt.start, qt.end - qt.start);
     ft_lstadd_back(&list, ft_lstnew(temp));
-    qt->end++;
-    qt->start = qt->end;
+    qt.end++;
+    qt.start = qt.end;
+    return (qt);
 }
 
 char **parse_quotes(char *str)
@@ -92,12 +98,9 @@ char **parse_quotes(char *str)
     t_quotes qt;
     t_list *list;
     char *temp;
-    char **cmds;
 
     list = NULL;
-    qt.start = 0;
-    qt.end = 0;
-    flag_env = handle_cif_env(str);
+    ft_bzero(&qt, sizeof(qt));
     while(str[qt.start])
     {
         if (str[qt.start] == '"')
@@ -115,10 +118,7 @@ char **parse_quotes(char *str)
             ft_lstadd_back(&list, ft_lstnew(temp));
             qt.end++;
             qt.start = qt.end;
-          //  last_case(&qt, str, list, temp);
         }
     }
-    cmds = list_to_matriz(list);
-    //ft_deletelist(list);
-    return (cmds);
+    return (list_to_matriz(list));
 }
