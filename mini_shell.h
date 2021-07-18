@@ -1,7 +1,6 @@
 #ifndef MINI_SHELL
 # define MINI_SHELL
 
-
 #define TRUE 1
 #define FALSE 0
 #define WHITE_SPACE "\t "
