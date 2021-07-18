@@ -1,0 +1,20 @@
+total 108
+-rw-rw-r-- 1 valerio valerio   474 Jul 18 13:54 Makefile
+-rwxrwxr-x 1 valerio valerio 38112 Jul 18 16:21 Mini_shell
+-rw-rw-r-- 1 valerio valerio  1623 Jul 18 13:44 README.md
+-rw-rw-r-- 1 valerio valerio  1751 Jul 18 14:12 builtings.c
+-rw-rw-r-- 1 valerio valerio   940 Jul 18 13:53 builtings2.c
+-rw-rw-r-- 1 valerio valerio  1740 Jul 18 13:44 exec_args.c
+-rw-rw-r-- 1 valerio valerio     0 Jul 18 16:33 file1
+drwxrwxr-x 3 valerio valerio  4096 Jul 18 16:21 ft_libft
+-rw-rw-r-- 1 valerio valerio  1632 Jul 18 13:44 heredoc.c
+-rw-rw-r-- 1 valerio valerio  1298 Jul 18 13:44 main_process.c
+-rw-rw-r-- 1 valerio valerio  1203 Jul 18 16:21 mini_shell.c
+-rw-rw-r-- 1 valerio valerio  2506 Jul 18 14:14 mini_shell.h
+-rw-rw-r-- 1 valerio valerio  2373 Jul 18 14:51 parse.c
+-rw-rw-r-- 1 valerio valerio   546 Jul 18 16:21 prompt.c
+-rw-rw-r-- 1 valerio valerio  2512 Jul 18 16:18 quotes.c
+-rw-rw-r-- 1 valerio valerio  2227 Jul 18 13:44 redirect.c
+-rw-rw-r-- 1 valerio valerio  1179 Jul 18 15:00 simple_redi.c
+-rw-rw-r-- 1 valerio valerio   880 Jul 18 13:44 utils.c
+-rw-rw-r-- 1 valerio valerio  1186 Jul 18 13:44 utils2.c

@@ -2,7 +2,7 @@
 
 void    kill_handler(int sig)
 {
-    printf("\b\n");
+    printf("\n");
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();

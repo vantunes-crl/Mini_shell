@@ -9,7 +9,7 @@ static char *env_to_print(char *content, int i, int end, char *str)
     char *temp;
 
     x = 0;
-    while (temp_var[x] != '=')
+    while (content[x] != '=')
         x++;
     x++;
     temp_var = ft_strdup(content);
@@ -19,10 +19,7 @@ static char *env_to_print(char *content, int i, int end, char *str)
     temp = ft_strjoin(new, def_var);
     free(def_var);
     free(new);
-    temp_var = ft_substr(str, end, ft_strlen(str) - end);
-    new = ft_strjoin(temp, temp_var);
-    free(temp_var);
-    return (new);
+    return (temp);
 }
 
 char *no_env(char *str, int i, int end)
@@ -64,7 +61,7 @@ char    *take_care_of_env(char *str, t_list *env)
     int i;
     int quote;
     int end;
-
+    char *temp_str;
     i = 0;
     quote = 0;
     end = 0;
@@ -77,7 +74,7 @@ char    *take_care_of_env(char *str, t_list *env)
         i++;
     }
     if (str[i] == '$' && quote == 0)
-        return (is_env(i, str, end, env));
+        temp_str = is_env(i, str, end, env);
     else
         return (str);
 }
@@ -93,7 +90,6 @@ char **parse_cmds(char *str, t_list **env)
     {
         if (temp_str[i] == '$')
             temp_str = take_care_of_env(temp_str, *env);
-        
         i++;
     }
     if (check_quotes(str) == 1)
