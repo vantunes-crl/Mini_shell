@@ -48,8 +48,10 @@ typedef struct s_quotes
     int end;
 }           t_quotes;
 
-static char *case1(t_quotes *qt, char *str, char *temp, t_list *list)
+static void case1(t_quotes *qt, char *str, t_list *list)
 {
+    char *temp;
+
     qt->start++;
     qt->end = qt->start;
     while (str[qt->end] != 34 && str[qt->end] != '\0')
@@ -60,6 +62,30 @@ static char *case1(t_quotes *qt, char *str, char *temp, t_list *list)
     qt->start = qt->end;
 }
 
+static void case2(t_quotes *qt, char *str, t_list *list)
+{
+    char *temp;
+
+    qt->start++;
+    qt->end = qt->start;
+    while (str[qt->end] != 39 && str[qt->end] != '\0')
+        qt->end++;
+    temp = ft_substr(str, qt->start, qt->end - qt->start);
+    ft_lstadd_back(&list, ft_lstnew(temp));
+    qt->end++;
+    qt->start = qt->end;
+}
+
+static void last_case(t_quotes *qt, char *str, t_list *list, char *temp)
+{
+    qt->end = qt->start;
+    while (str[qt->end] != 32 && str[qt->end] != '\0')
+        qt->end++;
+    temp = ft_substr(str, qt->start, qt->end - qt->start);
+    ft_lstadd_back(&list, ft_lstnew(temp));
+    qt->end++;
+    qt->start = qt->end;
+}
 
 char **parse_quotes(char *str)
 {
@@ -67,27 +93,17 @@ char **parse_quotes(char *str)
     t_list *list;
     char *temp;
     char **cmds;
-    list = NULL;
-    cmds = NULL;
 
+    list = NULL;
     qt.start = 0;
     qt.end = 0;
     flag_env = handle_cif_env(str);
     while(str[qt.start])
     {
         if (str[qt.start] == '"')
-            case1(&qt, str, temp, list);
+            case1(&qt, str, list);
         else if (str[qt.start] == '\'')
-        {
-            qt.start++;
-            qt.end = qt.start;
-            while (str[qt.end] != 39 && str[qt.end] != '\0')
-                qt.end++;
-            temp = ft_substr(str, qt.start, qt.end - qt.start);
-            ft_lstadd_back(&list, ft_lstnew(temp));
-            qt.end++;
-            qt.start = qt.end;
-        }
+            case2(&qt, str, list);
         else if(str[qt.start] == ' ')
             qt.start++;
         else
@@ -99,16 +115,10 @@ char **parse_quotes(char *str)
             ft_lstadd_back(&list, ft_lstnew(temp));
             qt.end++;
             qt.start = qt.end;
+          //  last_case(&qt, str, list, temp);
         }
     }
-    cmds = malloc(sizeof(char *) * ft_lstsize(list) + 1);
-    int i = 0;
-    while (list)
-    {
-        cmds[i] = ft_strdup((char *)list->content);
-        list = list->next;
-        i++;
-    }
-    cmds[i] = 0;
+    cmds = list_to_matriz(list);
+    //ft_deletelist(list);
     return (cmds);
 }
