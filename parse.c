@@ -104,14 +104,13 @@ char **parse_cmds(char *str, t_list **env)
     return (cmds);
 }
 
-/* return a cmd list  if have more then one with pipe */
 char **cmds_list(char *str)
 {
     char **cmds_lst;
     char *temp_str;
 
     temp_str = ft_strjoin(str, " |");
-    cmds_lst = ft_split(temp_str, '|'); /* split the commands by pipes */
+    cmds_lst = ft_split(temp_str, '|');
     free(temp_str);
 
     return(cmds_lst);
