@@ -38,17 +38,17 @@ char	**find_path(char **cmds, t_list *env)
 			break ;
 		env = env->next;
 	}
-	if (!env && !is_abspath(*cmds) && env)
-		error(cmds[0]);
 	if (env)
 		paths = ft_split((char *)env->content, ':');
+	else
+		paths = NULL;
 	return (paths);
 }
 
 void	error(char *str)
 {
 	perror(str);
-	exit(1);
+	exit(0);
 }
 
 char	**list_to_matriz(t_list *env)

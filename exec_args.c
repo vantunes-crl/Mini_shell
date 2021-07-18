@@ -8,6 +8,8 @@ void execve_exec(char **paths, char **cmds, char **env_matriz)
 
     i = 0;
     ret = 0;
+    if (!paths)
+        printf("bash: %s: No such file or directory\n", cmds[0]);
     while (paths[i])
     {
         temp_path = paths[i];
@@ -41,7 +43,6 @@ void exce_arg(char **cmds, t_list *env, char **paths)
             exit_status = 127;
             error(cmds[0]);
         }
-        return ;
     }
     else
         execve_exec(paths, cmds, env_matriz);
