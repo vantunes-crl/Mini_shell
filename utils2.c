@@ -22,31 +22,29 @@ char	*first_heredoc(char *str, char **cmds, int i)
 
 char	*heredoc_input(char **cmds)
 {
-	int		i;
 	char	*str;
 	char	*temp_str;
-	int		count;
-	int		flag;
+	t_vars	vars;
 
-	i = -1;
-	count = 0;
-	flag = 0;
-	while (cmds[++i])
+	vars.i = -1;
+	vars.count = 0;
+	vars.flag = 0;
+	while (cmds[++vars.i])
 	{
-		if (which_redirect(cmds[i]) == 4)
+		if (which_redirect(cmds[vars.i]) == 4)
 		{
-			if (flag == 1)
-				str = first_heredoc(str, cmds, i);
+			if (vars.flag == 1)
+				str = first_heredoc(str, cmds, vars.i);
 			else
 			{
-				str = child_readin(cmds[i]);
-				flag = 1;
+				str = child_readin(cmds[vars.i]);
+				vars.flag = 1;
 			}
 		}
 		else
-			count++;
+			vars.count++;
 	}
-	if (count == i)
+	if (vars.count == vars.i)
 		return (NULL);
 	return (str);
 }

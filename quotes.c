@@ -1,124 +1,73 @@
 #include "mini_shell.h"
 
-int     check_quotes(char *str)
+static void	case1(t_quotes *qt, char *str, t_list *list)
 {
-    int i;
+	char	*temp;
 
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == 34 || str[i] == 39)
-            return (1);
-        i++;
-    }
-    return (0);
+	temp = NULL;
+	qt->start++;
+	qt->end = qt->start;
+	while (str[qt->end] != 34 && str[qt->end] != '\0')
+		qt->end++;
+	temp = ft_substr(str, qt->start, qt->end - qt->start);
+	ft_lstadd_back(&list, ft_lstnew(temp));
+	qt->end++;
+	qt->start = qt->end;
 }
 
-int choose_quote(char *str)
+static void	case2(t_quotes *qt, char *str, t_list *list)
 {
-    int i;
+	char	*temp;
 
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == 34)
-            return (1);
-        else if (str[i] == 39)
-            return (2);
-        i++;
-    }
-    return (0);
+	temp = NULL;
+	qt->start++;
+	qt->end = qt->start;
+	while (str[qt->end] != 39 && str[qt->end] != '\0')
+		qt->end++;
+	temp = ft_substr(str, qt->start, qt->end - qt->start);
+	ft_lstadd_back(&list, ft_lstnew(temp));
+	qt->end++;
+	qt->start = qt->end;
 }
 
-int handle_cif_env(char *str)
+static	t_quotes	last_case(t_quotes qt, char *str, t_list *list, char *temp)
 {
-    int i;
-
-    i = 0;
-    while (str[i] != '$' && str[i] != '\0')
-        i++;
-    if (str[i] == '$' && str[i - 1] == '\'')
-        return (1);
-    else
-        return (0);
-    
+	temp = NULL;
+	qt.end = qt.start;
+	while (str[qt.end] != 32 && str[qt.end] != '\0')
+		qt.end++;
+	temp = ft_substr(str, qt.start, qt.end - qt.start);
+	ft_lstadd_back(&list, ft_lstnew(temp));
+	qt.end++;
+	qt.start = qt.end;
+	return (qt);
 }
 
-typedef struct s_quotes
+char	**parse_quotes(char *str)
 {
-    int start;
-    int end;
-}           t_quotes;
+	t_quotes	qt;
+	t_list		*list;
 
-static void case1(t_quotes *qt, char *str, t_list *list)
-{
-    char *temp;
-
-    temp = NULL;
-    qt->start++;
-    qt->end = qt->start;
-    while (str[qt->end] != 34 && str[qt->end] != '\0')
-        qt->end++;
-    temp = ft_substr(str, qt->start, qt->end - qt->start);
-    ft_lstadd_back(&list, ft_lstnew(temp));
-    qt->end++;
-    qt->start = qt->end;
-}
-
-static void case2(t_quotes *qt, char *str, t_list *list)
-{
-    char *temp;
-
-    temp = NULL;
-    qt->start++;
-    qt->end = qt->start;
-    while (str[qt->end] != 39 && str[qt->end] != '\0')
-        qt->end++;
-    temp = ft_substr(str, qt->start, qt->end - qt->start);
-    ft_lstadd_back(&list, ft_lstnew(temp));
-    qt->end++;
-    qt->start = qt->end;
-}
-
-static t_quotes last_case(t_quotes qt, char *str, t_list *list, char *temp)
-{
-    temp = NULL;
-    qt.end = qt.start;
-    while (str[qt.end] != 32 && str[qt.end] != '\0')
-        qt.end++;
-    temp = ft_substr(str, qt.start, qt.end - qt.start);
-    ft_lstadd_back(&list, ft_lstnew(temp));
-    qt.end++;
-    qt.start = qt.end;
-    return (qt);
-}
-
-char **parse_quotes(char *str)
-{
-    t_quotes qt;
-    t_list *list;
-    char *temp;
-
-    list = NULL;
-    ft_bzero(&qt, sizeof(qt));
-    while(str[qt.start])
-    {
-        if (str[qt.start] == '"')
-            case1(&qt, str, list);
-        else if (str[qt.start] == '\'')
-            case2(&qt, str, list);
-        else if(str[qt.start] == ' ')
-            qt.start++;
-        else
-        {
-            qt.end = qt.start;
-            while (str[qt.end] != 32 && str[qt.end] != '\0')
-                qt.end++;
-            temp = ft_substr(str, qt.start, qt.end - qt.start);
-            ft_lstadd_back(&list, ft_lstnew(temp));
-            qt.end++;
-            qt.start = qt.end;
-        }
-    }
-    return (list_to_matriz(list));
+	list = NULL;
+	ft_bzero(&qt, sizeof(qt));
+	while (str[qt.start])
+	{
+		if (str[qt.start] == '"')
+			case1(&qt, str, list);
+		else if (str[qt.start] == '\'')
+			case2(&qt, str, list);
+		else if (str[qt.start] == ' ')
+			qt.start++;
+		else
+		{
+			qt.end = qt.start;
+			while (str[qt.end] != 32 && str[qt.end] != '\0')
+				qt.end++;
+			qt.temp = ft_substr(str, qt.start, qt.end - qt.start);
+			ft_lstadd_back(&list, ft_lstnew(qt.temp));
+			qt.end++;
+			qt.start = qt.end;
+		}
+	}
+	return (list_to_matriz(list));
 }

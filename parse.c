@@ -62,6 +62,7 @@ char    *take_care_of_env(char *str, t_list *env)
     int quote;
     int end;
     char *temp_str;
+
     i = 0;
     quote = 0;
     end = 0;
@@ -77,6 +78,7 @@ char    *take_care_of_env(char *str, t_list *env)
         temp_str = is_env(i, str, end, env);
     else
         return (str);
+    return (NULL);
 }
 
 char **parse_cmds(char *str, t_list **env)

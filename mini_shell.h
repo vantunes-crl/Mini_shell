@@ -32,6 +32,24 @@ typedef struct s_fds
 
 } t_fds;
 
+typedef struct s_vars
+{
+	int i;
+	int count;
+	int flag;
+	char	**temp_str;
+	pid_t	pid;
+	int		fd_red;
+	char	*new_cmd_list;
+}			t_vars;
+
+typedef struct s_quotes
+{
+	int start;
+	int end;
+	char		*temp;
+}           t_quotes;
+
 /*exec_functions */
 void	exce_arg(char **cmds, t_list *env, char **paths);
 void	exec_pipe(char *str);

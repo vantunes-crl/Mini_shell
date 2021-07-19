@@ -25,10 +25,10 @@ char	*find_filename(char *cmd)
 	}
 }
 
-static char *begin_red(char **cmd_list, char *new_str)
+static char	*begin_red(char **cmd_list, char *new_str)
 {
-	int i;
-	char *temp;
+	int		i;
+	char	*temp;
 
 	i = 2;
 	while (cmd_list[i])
