@@ -28,8 +28,8 @@ int main(int argc, char **argv, char **env)
     char inputString[200];
     char **temp_cmds;
     t_list *envp;
-    exit_status = 0;
-    flag_env = 0;
+    g_exit_status = 0;
+    g_flag_env = 0;
     envp = init_env(env);
 
     signal(SIGINT, kill_handler);

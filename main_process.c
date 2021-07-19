@@ -1,9 +1,10 @@
 #include "mini_shell.h"
 
-void child_main_process(char **cmds_list, t_fds *fds, t_list **env, char **paths)
+void	child_main_process(char **cmds_list, t_fds *fds,
+	t_list **env, char **paths)
 {
-	int has_redirect;
-	char **temp_str;
+	int		has_redirect;
+	char	**temp_str;
 
 	has_redirect = 0;
 	has_redirect = which_redirect(cmds_list[fds->i]);
@@ -46,7 +47,8 @@ void	main_process(char **cmds_list, t_list **env, char **paths)
 	}
 	if (fds.heredoc_buff)
 		write_heredoc(fds.heredoc_buff, fds.fd[1]);
-	while (wait(&fds.temp_exit) > 0);
+	while (wait(&fds.temp_exit) > 0)
+		;
 	if (WIFEXITED(fds.temp_exit))
-		exit_status = WEXITSTATUS(fds.temp_exit);
+		g_exit_status = WEXITSTATUS(fds.temp_exit);
 }

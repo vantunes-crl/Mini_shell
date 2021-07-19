@@ -18,8 +18,8 @@
 #include <signal.h>
 #include <termios.h>
 
-int exit_status;
-int flag_env;
+int g_exit_status;
+int g_flag_env;
 
 typedef struct s_fds
 {
@@ -100,6 +100,7 @@ char	*get_delimiter(char *str);
 char    **parse_quotes(char *str);
 int     choose_quote(char *str);
 int     check_quotes(char *str);
+char	*take_care_of_env(char *str, t_list *env);
 int     cont_list(char **cmds_list);
 void    multiple_redirect(int has_redirect, char *cmds_list, t_list **env, char **paths);
 

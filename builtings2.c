@@ -21,7 +21,7 @@ void	print_env(t_list *envp)
 
 void	has_exit(char **cmds_list, t_list **env)
 {
-	char *temp_str;
+	char	*temp_str;
 
 	while (*cmds_list)
 	{
@@ -37,21 +37,21 @@ void	has_exit(char **cmds_list, t_list **env)
 	}
 }
 
-void ft_unset(t_list *envp, char **temp_cmds)
+void	ft_unset(t_list *envp, char **temp_cmds)
 {
-    char **temp_dir;
+	char	**temp_dir;
 
-    temp_dir = ft_split(temp_cmds[0], ' ');
-    del_elem_lst(&envp, temp_dir[1]);
-    free_paths(temp_dir);
-    free_paths(temp_cmds);
+	temp_dir = ft_split(temp_cmds[0], ' ');
+	del_elem_lst(&envp, temp_dir[1]);
+	free_paths(temp_dir);
+	free_paths(temp_cmds);
 }
 
-void ft_export(t_list *envp, char **temp_cmds)
+void	ft_export(t_list *envp, char **temp_cmds)
 {
-    char **temp_dir;
+	char	**temp_dir;
 
-    temp_dir = ft_split(temp_cmds[0], ' ');
-    ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
-    free_paths(temp_cmds);
+	temp_dir = ft_split(temp_cmds[0], ' ');
+	ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
+	free_paths(temp_cmds);
 }
