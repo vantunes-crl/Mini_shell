@@ -23,20 +23,20 @@ int g_flag_env;
 
 typedef struct s_fds
 {
-	int fdd;
-	int fd[2];
-	int i;
-	pid_t pid;
+	int		fdd;
+	int		fd[2];
+	int 	i;
+	pid_t	pid;
 	int		temp_exit;
 	char	*heredoc_buff;
 
-} t_fds;
+}				t_fds;
 
 typedef struct s_vars
 {
-	int i;
-	int count;
-	int flag;
+	int		i;
+	int		count;
+	int		flag;
 	char	**temp_str;
 	pid_t	pid;
 	int		fd_red;
@@ -45,9 +45,9 @@ typedef struct s_vars
 
 typedef struct s_quotes
 {
-	int start;
-	int end;
-	char		*temp;
+	int		start;
+	int		end;
+	char	*temp;
 }           t_quotes;
 
 /*exec_functions */

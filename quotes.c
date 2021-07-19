@@ -47,6 +47,7 @@ char	**parse_quotes(char *str)
 {
 	t_quotes	qt;
 	t_list		*list;
+	char		*temp;
 
 	list = NULL;
 	ft_bzero(&qt, sizeof(qt));
@@ -63,8 +64,8 @@ char	**parse_quotes(char *str)
 			qt.end = qt.start;
 			while (str[qt.end] != 32 && str[qt.end] != '\0')
 				qt.end++;
-			qt.temp = ft_substr(str, qt.start, qt.end - qt.start);
-			ft_lstadd_back(&list, ft_lstnew(qt.temp));
+			temp = ft_substr(str, qt.start, qt.end - qt.start);
+			ft_lstadd_back(&list, ft_lstnew(temp));
 			qt.end++;
 			qt.start = qt.end;
 		}
