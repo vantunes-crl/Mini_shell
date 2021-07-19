@@ -36,9 +36,6 @@ Your shell should:
  - [ ] ◦ ctrl-C print a new prompt on a newline.
  - [X] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
 
-$? not printing
 echo "cat lol.c | cat > lol.c"
 - Export environment variables, create new ones, and replace old ones- Check them with env
->> and >
-echo "quotes norm problem" memory problem
 $PATH memory problem
