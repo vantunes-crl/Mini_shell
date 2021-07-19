@@ -1,18 +1,18 @@
 #include "mini_shell.h"
 
-static void	case1(t_quotes *qt, char *str, t_list *list)
+t_list	*case1(t_quotes *qt, char *str, t_list *list)
 {
 	char	*temp;
 
-	temp = NULL;
 	qt->start++;
 	qt->end = qt->start;
 	while (str[qt->end] != 34 && str[qt->end] != '\0')
 		qt->end++;
 	temp = ft_substr(str, qt->start, qt->end - qt->start);
-	ft_lstadd_back(&list, ft_lstnew(temp));
+	ft_lstadd_back(&list, ft_lstnew((void *)temp));
 	qt->end++;
 	qt->start = qt->end;
+	return (list);
 }
 
 static void	case2(t_quotes *qt, char *str, t_list *list)
@@ -48,13 +48,16 @@ char	**parse_quotes(char *str)
 	t_quotes	qt;
 	t_list		*list;
 	char		*temp;
+	char		**cmds;
 
 	list = NULL;
-	ft_bzero(&qt, sizeof(qt));
+	qt.end = 0;
+	qt.start = 0;
+	temp = NULL;
 	while (str[qt.start])
 	{
 		if (str[qt.start] == '"')
-			case1(&qt, str, list);
+			list = case1(&qt, str, list);
 		else if (str[qt.start] == '\'')
 			case2(&qt, str, list);
 		else if (str[qt.start] == ' ')
@@ -70,5 +73,6 @@ char	**parse_quotes(char *str)
 			qt.start = qt.end;
 		}
 	}
-	return (list_to_matriz(list));
+	cmds = list_to_matriz(list);
+	return (cmds);
 }
