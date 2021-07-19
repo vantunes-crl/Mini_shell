@@ -75,7 +75,7 @@ char	*take_care_of_env(char *str, t_list *env)
 		i++;
 	}
 	if (str[i] == '$' && quote == 0)
-		temp_str = is_env(i, str, end, env);
+		return (temp_str = is_env(i, str, end, env));
 	else
 		return (str);
 	return (NULL);
