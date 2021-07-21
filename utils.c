@@ -64,5 +64,6 @@ char	**list_to_matriz(t_list *env)
 		env = env->next;
 		i++;
 	}
+	matriz[i] = 0;
 	return (matriz);
 }
