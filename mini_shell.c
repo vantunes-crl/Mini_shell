@@ -39,7 +39,9 @@ int main(int argc, char **argv, char **env)
             continue;
         else
         {
-            temp_cmds = cmds_list(inputString);
+
+            temp_cmds = list_cmds(inputString);
+            
             if (ft_strncmp(temp_cmds[0],"cd", 2) == 0)
                 ft_cd(temp_cmds);
             else if (ft_strncmp(temp_cmds[0], "unset", 5) == 0)

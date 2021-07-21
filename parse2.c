@@ -22,13 +22,3 @@ char	**parse_cmds(char *str, t_list **env)
 	return (cmds);
 }
 
-char	**cmds_list(char *str)
-{
-	char	**cmds_lst;
-	char	*temp_str;
-
-	temp_str = ft_strjoin(str, " |");
-	cmds_lst = ft_split(temp_str, '|');
-	free(temp_str);
-	return (cmds_lst);
-}

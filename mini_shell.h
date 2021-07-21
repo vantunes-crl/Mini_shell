@@ -70,6 +70,7 @@ void    deleteList(t_list **env);
 char    **list_to_matriz(t_list *env);
 int		is_abspath(char *str);
 int		cont_list(char **list);
+char	**list_cmds(char *str);
 
 /*builtings */
 void    print_echo(t_list **env, char **cmds);
