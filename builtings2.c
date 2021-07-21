@@ -50,8 +50,23 @@ void	ft_unset(t_list *envp, char **temp_cmds)
 void	ft_export(t_list *envp, char **temp_cmds)
 {
 	char	**temp_dir;
+	int i;
+	t_list	*temp;
 
 	temp_dir = ft_split(temp_cmds[0], ' ');
+	i = 0;
+	while (temp_dir[1][i] != '=' && temp_dir[1][i])
+		i++;
+	temp = envp;
+	while (temp)
+	{
+		if (ft_strncmp(temp_dir[1], (char *)temp->content, i) == 0)
+		{
+			del_elem_lst(&envp, (char *)temp->content);
+			break ;
+		}
+		temp = temp->next;
+	}
 	ft_lstadd_back(&envp, ft_lstnew(temp_dir[1]));
 	free_paths(temp_cmds);
 }

@@ -48,7 +48,7 @@ char	**find_path(char **cmds, t_list *env)
 void	error(char *str)
 {
 	perror(str);
-	exit(0);
+	exit(127);
 }
 
 char	**list_to_matriz(t_list *env)

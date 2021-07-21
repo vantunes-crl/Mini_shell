@@ -2,10 +2,20 @@
 
 void	kill_handler(int sig)
 {
-	printf("\n");
-	rl_on_new_line();
-	//rl_replace_line("", 0);
-	rl_redisplay();
+	// rl_replace_line("", 0);
+	if (g_flag == 0)
+	{
+		rl_on_new_line();
+		write(1, "\n\033[3;32mMiniShell\e[0m\U0001F916:", 26);
+		rl_redisplay();
+	}
+	else
+	{
+		rl_on_new_line();
+		write(1, "\n", 1);
+		rl_redisplay();
+		g_flag = 0;
+	}
 	g_exit_status = 130;
 	return ;
 }

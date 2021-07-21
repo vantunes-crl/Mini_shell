@@ -36,6 +36,10 @@ Your shell should:
  - [ ] ◦ ctrl-C print a new prompt on a newline.
  - [X] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
 
-echo "cat lol.c | cat > lol.c"
-- Export environment variables, create new ones, and replace old ones- Check them with env
-$PATH memory problem
+CRL-C
+CRL-\
+CRL-D
+'$USER'
+unset PATH segment fault
+redrect error FORK
+echo $user

@@ -20,6 +20,7 @@
 
 int g_exit_status;
 int g_flag_env;
+int g_flag;
 
 typedef struct s_fds
 {

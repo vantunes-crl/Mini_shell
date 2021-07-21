@@ -16,6 +16,7 @@ void enter_main(char **temp_cmds, t_list *envp)
 {
     char **paths;
 
+    g_flag = 1;
     has_exit(temp_cmds , &envp);
     paths = find_path(temp_cmds, envp);
     main_process(temp_cmds, &envp, paths);
@@ -27,11 +28,12 @@ int main(int argc, char **argv, char **env)
 {
     char inputString[200];
     char **temp_cmds;
+
     t_list *envp;
     g_exit_status = 0;
     g_flag_env = 0;
     envp = init_env(env);
-
+    g_flag = 0;
     signal(SIGINT, kill_handler);
     while (TRUE)
     {
