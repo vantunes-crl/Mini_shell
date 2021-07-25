@@ -4,9 +4,17 @@ void	kill_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_on_new_line();
-		write(1,"\n",1);
-		rl_redisplay();
+		if (g_flag == 0)
+		{
+			rl_on_new_line();
+			write(1,"\n",1);
+			rl_redisplay();
+		}
+		else
+		{
+			write(1,"\n",1);
+			g_flag = 0;
+		}
 	}
 	else if (sig == SIGQUIT)
 	{
