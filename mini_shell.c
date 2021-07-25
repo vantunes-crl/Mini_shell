@@ -35,14 +35,16 @@ int main(int argc, char **argv, char **env)
     g_flag_env = 0;
     envp = init_env(env);
     g_flag = 0;
+
     signal(SIGINT, kill_handler);
+    signal(SIGQUIT, kill_handler);
+
     while (TRUE)
     {
         if (take_line(inputString))
             continue;
         else
         {
-
             temp_cmds = list_cmds(inputString);
             if (ft_strncmp(temp_cmds[0],"cd", 2) == 0)
                 ft_cd(temp_cmds);

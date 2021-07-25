@@ -2,20 +2,14 @@
 
 void	kill_handler(int sig)
 {
-	// 
-	if (g_flag == 0)
+	if (sig == SIGINT)
 	{
 		rl_on_new_line();
-		rl_replace_line("", 0);
-		//write(1, "\n\033[3;32mMiniShell\e[0m\U0001F916:", 26);
+		write(1,"\n",1);
 		rl_redisplay();
 	}
-	else
+	else if (sig == SIGQUIT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_flag = 0;
 	}
 	g_exit_status = 130;
 	return ;
