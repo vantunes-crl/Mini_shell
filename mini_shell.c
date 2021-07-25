@@ -21,7 +21,8 @@ void enter_main(char **temp_cmds, t_list *envp)
     paths = find_path(temp_cmds, envp);
     main_process(temp_cmds, &envp, paths);
     free_paths(temp_cmds);
-    free_paths(paths);
+    if (paths)
+        free_paths(paths);
 }
 
 int main(int argc, char **argv, char **env)

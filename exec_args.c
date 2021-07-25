@@ -31,13 +31,11 @@ void	execve_exec(char **paths, char **cmds, char **env_matriz)
 void	exce_arg(char **cmds, t_list *env, char **paths)
 {
 	int		abs_path;
-	char	**env_matriz;
 
-	env_matriz = list_to_matriz(env);
 	abs_path = is_abspath(cmds[0]);
 	if (abs_path)
 	{
-		abs_path = execve(cmds[0], cmds, env_matriz);
+		abs_path = execve(cmds[0], cmds, NULL);
 		if (abs_path < 0)
 		{
 			g_exit_status = 127;
@@ -45,7 +43,7 @@ void	exce_arg(char **cmds, t_list *env, char **paths)
 		}
 	}
 	else
-		execve_exec(paths, cmds, env_matriz);
+		execve_exec(paths, cmds, NULL);
 }
 
 void	exec_cmd(char **cmds, t_list **env, char **paths)

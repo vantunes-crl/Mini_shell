@@ -50,7 +50,7 @@ char **list_cmds(char *str)
     t_list *quoted_lst;
     char **cmds;
 
-    str = ft_strjoin(str, "|");
+    ft_strlcat(str, " |", ft_strlen(str) + 3);
     quoted_lst = NULL;
     i = 0;
     cmds = NULL;

@@ -40,6 +40,4 @@ CRL-C
 CRL-\
 CRL-D
 '$USER'
-unset PATH segment fault
-redrect error FORK
 echo $user
