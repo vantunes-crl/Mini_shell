@@ -18,6 +18,8 @@ void	kill_handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
+		if (g_flag == 1)
+			exit(0);
 	}
 	g_exit_status = 130;
 	return ;
