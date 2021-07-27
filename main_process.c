@@ -8,11 +8,11 @@ void	child_main_process(char **cmds_list, t_fds *fds,
 
 	has_redirect = 0;
 	has_redirect = which_redirect(cmds_list[fds->i]);
-	if (has_redirect == 1 || has_redirect == 2)
+	if (has_redirect == 1 || has_redirect == 2 && check_quotes(cmds_list[fds->i]) == 0)
 		multiple_redirect(has_redirect, cmds_list[fds->i], env, paths);
-	else if (has_redirect == 4)
+	else if (has_redirect == 4 && check_quotes(cmds_list[fds->i]) == 0)
 		take_off(cmds_list, fds->i);
-	else if (has_redirect == 3)
+	else if (has_redirect == 3 && check_quotes(cmds_list[fds->i]) == 0)
 		red_in_simple(cmds_list, fds->i);
 	dup2(fds->fdd, 1);
 	dup2(fds->fd[0], 0);

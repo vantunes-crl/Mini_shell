@@ -13,13 +13,14 @@ void	kill_handler(int sig)
 		else
 		{
 			write(1,"\n",1);
+			rl_redisplay();
 			g_flag = 0;
 		}
 	}
 	else if (sig == SIGQUIT)
 	{
-		if (g_flag == 1)
-			exit(0);
+		write(1,"\b\b",3);
+		rl_redisplay();
 	}
 	g_exit_status = 130;
 	return ;

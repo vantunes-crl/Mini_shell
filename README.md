@@ -35,9 +35,3 @@ Your shell should:
 • When interactive:
  - [ ] ◦ ctrl-C print a new prompt on a newline.
  - [X] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
-
-CRL-C
-CRL-\
-CRL-D
-'$USER'
-echo $user

@@ -38,7 +38,6 @@ int main(int argc, char **argv, char **env)
 
     signal(SIGINT, kill_handler);
     signal(SIGQUIT, kill_handler);
-
     while (TRUE)
     {
         if (take_line(inputString))
