@@ -16,9 +16,9 @@ static char	*env_to_print(char *content, int i, int end, char *str)
 	def_var = ft_substr(temp_var, x, ft_strlen(temp_var) - x);
 	free(temp_var);
 	new = ft_substr(str, 0, i - 1);
-    temp = ft_strjoin(new, def_var);
-    free(new);
-    new = ft_strjoin(temp, ft_substr(str, end, ft_strlen(str) - end));
+	temp = ft_strjoin(new, def_var);
+	free(new);
+	new = ft_strjoin(temp, ft_substr(str, end, ft_strlen(str) - end));
 	return (new);
 }
 

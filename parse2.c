@@ -21,4 +21,3 @@ char	**parse_cmds(char *str, t_list **env)
 	free(temp_str);
 	return (cmds);
 }
-

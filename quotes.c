@@ -19,7 +19,6 @@ static void	case2(t_quotes *qt, char *str, t_list **list)
 {
 	char	*temp;
 
-	temp = NULL;
 	qt->start++;
 	qt->end = qt->start;
 	while (str[qt->end] != 39 && str[qt->end] != '\0')
@@ -30,17 +29,17 @@ static void	case2(t_quotes *qt, char *str, t_list **list)
 	qt->start = qt->end;
 }
 
-static	t_quotes	last_case(t_quotes qt, char *str, t_list *list, char *temp)
+static	void	last_case(t_quotes *qt, char *str, t_list **list)
 {
-	temp = NULL;
-	qt.end = qt.start;
-	while (str[qt.end] != 32 && str[qt.end] != '\0')
-		qt.end++;
-	temp = ft_substr(str, qt.start, qt.end - qt.start);
-	ft_lstadd_back(&list, ft_lstnew(temp));
-	qt.end++;
-	qt.start = qt.end;
-	return (qt);
+	char	*temp;
+
+	qt->end = qt->start;
+	while (str[qt->end] != 32 && str[qt->end] != '\0')
+		qt->end++;
+	temp = ft_substr(str, qt->start, qt->end - qt->start);
+	ft_lstadd_back(list, ft_lstnew(temp));
+	qt->end++;
+	qt->start = qt->end;
 }
 
 char	**parse_quotes(char *str)
@@ -51,9 +50,7 @@ char	**parse_quotes(char *str)
 	char		**cmds;
 
 	list = NULL;
-	qt.end = 0;
-	qt.start = 0;
-	temp = NULL;
+	ft_bzero(&qt, sizeof(qt));
 	while (str[qt.start])
 	{
 		if (str[qt.start] == '"')
@@ -63,16 +60,9 @@ char	**parse_quotes(char *str)
 		else if (str[qt.start] == ' ')
 			qt.start++;
 		else
-		{
-			qt.end = qt.start;
-			while (str[qt.end] != 32 && str[qt.end] != '\0')
-				qt.end++;
-			temp = ft_substr(str, qt.start, qt.end - qt.start);
-			ft_lstadd_back(&list, ft_lstnew(temp));
-			qt.end++;
-			qt.start = qt.end;
-		}
+			last_case(&qt, str, &list);
 	}
 	cmds = list_to_matriz(list);
+	ft_freelst(list);
 	return (cmds);
 }

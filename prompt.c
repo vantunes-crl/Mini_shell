@@ -6,21 +6,19 @@ void	kill_handler(int sig)
 	{
 		if (g_flag == 0)
 		{
-			rl_on_new_line();
-			write(1,"\n",1);
+			write(1, "\n", 1);
 			rl_redisplay();
+			rl_on_new_line();
 		}
 		else
 		{
-			write(1,"\n",1);
+			write(1, "\n", 1);
 			rl_redisplay();
 			g_flag = 0;
 		}
 	}
 	else if (sig == SIGQUIT)
 	{
-		write(1,"\b\b",3);
-		rl_redisplay();
 	}
 	g_exit_status = 130;
 	return ;

@@ -50,7 +50,7 @@ void	ft_unset(t_list *envp, char **temp_cmds)
 void	ft_export(t_list *envp, char **temp_cmds)
 {
 	char	**temp_dir;
-	int i;
+	int		i;
 	t_list	*temp;
 
 	temp_dir = ft_split(temp_cmds[0], ' ');
