@@ -1,4 +1,5 @@
-# Mini_shell
+#This project is one of the projects of the 42 school which consists in imitating the linux bash.
+##Mini_shell
 Your shell should:
  
 
@@ -16,8 +17,8 @@ Your shell should:
  - [x] ◦ unset with no options
  - [x] ◦ env with no options or arguments 
  - [x] ◦ exit with no options
- - [ ] • ’ inhibit all interpretation of a sequence of characters.
- - [ ] • " inhibit all interpretation of a sequence of characters except
+ - [x] • ’ inhibit all interpretation of a sequence of characters.
+ - [x] • " inhibit all interpretation of a sequence of characters except
        for $.
  - • Redirections:
  - [x] ◦ < should redirect input.
@@ -31,7 +32,7 @@ Your shell should:
        to their values.
  - [X] • $? should expands to the exit status of the most recently
        executed foreground pipeline.
- - [ ] • ctrl-C ctrl-D ctrl-\ should work like in bash.
+ - [x] • ctrl-C ctrl-D ctrl-\ should work like in bash.
 • When interactive:
- - [ ] ◦ ctrl-C print a new prompt on a newline.
+ - [x] ◦ ctrl-C print a new prompt on a newline.
  - [X] ◦ ctrl-D exit the shell. ◦ ctrl-\ do nothing.
